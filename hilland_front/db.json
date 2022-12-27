@@ -36,18 +36,6 @@
       "id": 5
     },
     {
-      "id": 6
-    },
-    {
-      "title": "News #4",
-      "content": "some news content #4",
-      "picture": "",
-      "id": 7
-    },
-    {
-      "id": 8
-    },
-    {
       "title": "aaaa",
       "content": "cccc",
       "date": "26/12/2022",
@@ -68,86 +56,23 @@
     {
       "title": "",
       "content": "",
-      "date": "26/12/2022",
+      "date": "27/12/2022",
       "picture": "",
       "id": 12
     },
     {
       "title": "",
       "content": "",
-      "date": "26/12/2022",
+      "date": "27/12/2022",
       "picture": "",
       "id": 13
     },
     {
+      "title": "",
+      "content": "",
+      "date": "27/12/2022",
+      "picture": "",
       "id": 14
-    },
-    {
-      "id": 15
-    },
-    {
-      "id": 16
-    },
-    {
-      "id": 17
-    },
-    {
-      "id": 18
-    },
-    {
-      "title": "Antti",
-      "content": "Pentti",
-      "date": "26/12/2022",
-      "id": 19
-    },
-    {
-      "title": "",
-      "content": "",
-      "date": "26/12/2022",
-      "picture": {},
-      "id": 20
-    },
-    {
-      "title": "",
-      "content": "",
-      "date": "26/12/2022",
-      "picture": {},
-      "id": 21
-    },
-    {
-      "title": "fsd",
-      "content": "sdf",
-      "date": "26/12/2022",
-      "picture": {},
-      "id": 22
-    },
-    {
-      "title": "",
-      "content": "",
-      "date": "26/12/2022",
-      "picture": {},
-      "id": 23
-    },
-    {
-      "title": "",
-      "content": "",
-      "date": "26/12/2022",
-      "picture": {},
-      "id": 24
-    },
-    {
-      "title": "wqe",
-      "content": "qew",
-      "date": "26/12/2022",
-      "picture": {},
-      "id": 25
-    },
-    {
-      "title": "",
-      "content": "",
-      "date": "26/12/2022",
-      "picture": {},
-      "id": 26
     }
   ]
 }
