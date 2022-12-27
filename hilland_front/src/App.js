@@ -41,7 +41,6 @@ const App = (props) => {
     setNewContent(event.target.value)
   }
 
-
   const convertBase64 = (file) => {
     return new Promise((resolve, reject) => {
       const fileReader = new FileReader();
@@ -57,9 +56,23 @@ const App = (props) => {
 
   const handlePhotoSelect = async (e) => {
     const file = e.target.files[0]
-    let base64 = await convertBase64(file)
-    console.log(base64)
-    setBase64(base64)
+    
+    const MAX_FILE_SIZE = 1000 // 300kB
+
+    if (file.name.split('.')[1]==="jpg" && file.size/1000 < MAX_FILE_SIZE ){
+      let base64 = await convertBase64(file)
+      //console.log(base64)
+      setBase64(base64)
+    } else {
+      alert("Kuvan maksimikoko on 1M ja sen pitää olla jpg")
+    }
+
+    //console.log(file.name.split('.')[1]==="jpg")
+    //console.log(file.size/1000)
+    //let base64 = await convertBase64(file)
+    
+    //console.log(base64)
+    //setBase64(base64)
   }
 
   const addNews = (event) => {
