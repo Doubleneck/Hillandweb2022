@@ -118,9 +118,6 @@ const News = ({ news, removeNews}) => {
   return (
     <ul >
       <li ><h3>{news.title}</h3></li>
-      DATAA <b>{data ? 'on' : 'ei'}</b> 
- 
-      <li><b>{data===undefined ? 'on' : 'ei'}</b> </li>
       <li> <Image data = {data} /> </li>
       <li>{news.content}</li>
       <button value = {news.id} onClick={removeNews}>
