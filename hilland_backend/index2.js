@@ -8,13 +8,33 @@ var bodyParser = require('body-parser')
 mongoose.connect(url)
 
 const newsSchema = new mongoose.Schema({
-  title: String,
-  content: String,
-  date: Date,
-  picture: String,
+    title: String,
+    content: String,
+    date: Date,
+    picture: String,
+  })
+  
+const News = mongoose.model('Note', newsSchema)
+
+const news = new News({
+    title: 'HÖlynpölyä',
+    content: 'HTML is Easy or is it',
+    date: new Date(),
+    picture: "",
+  })
+  
+news.save().then(result => {
+console.log('news saved!')
+//mongoose.connection.close()
 })
 
-const News = mongoose.model('News', newsSchema)
+/* const noteSchema = new mongoose.Schema({
+    content: String,
+    date: Date,
+    important: Boolean,
+  })
+  
+  const Note = mongoose.model('Note', noteSchema) */
 
 
 app.use(bodyParser({limit: '2mb'}))
@@ -31,7 +51,7 @@ const requestLogger = (request, response, next) => {
 }
 app.use(requestLogger)
 
-let news = [
+/* let news = [
   {
     id: 1,
     title: "Demonews #1",
@@ -50,7 +70,7 @@ let news = [
     content: "HTML is easy3",
     picture: "",
   },
-];
+]; */
 
 app.get("/", (req, res) => {
   res.send("<h1>Hello Hilland World!</h1>");
@@ -63,6 +83,12 @@ app.get("/api/news", (req, res) => {
   mongoose.connection.close()
   //res.json(news);
 });
+
+app.get('/api/notes', (request, response) => {
+    News.find({}).then(notes => {
+      response.json(notes)
+    })
+  })
 
 app.get('/api/news/:id', (request, response) => {
   const id = Number(request.params.id)
