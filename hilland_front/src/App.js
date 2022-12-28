@@ -1,5 +1,5 @@
 import { useState , useEffect } from 'react'
-import axios from 'axios'
+import newsService from './services/news'
 
 const News = ({ news }) => {
   const data = news.picture 
@@ -23,12 +23,11 @@ const App = (props) => {
   const [newContent, setNewContent] = useState('')
   const [base64, setBase64] = useState("");
 
+
   useEffect(() => {
-    //console.log('effect')
-    axios
-      .get('http://localhost:3001/news')
+    newsService
+      .getAll()
       .then(response => {
-       // console.log('promise fulfilled')
         setNews(response.data)
       })
   }, [])
@@ -56,9 +55,7 @@ const App = (props) => {
 
   const handlePhotoSelect = async (e) => {
     const file = e.target.files[0]
-    
     const MAX_FILE_SIZE = 1000 // 300kB
-
     if (file.name.split('.')[1]==="jpg" && file.size/1000 < MAX_FILE_SIZE ){
       let base64 = await convertBase64(file)
       //console.log(base64)
@@ -66,13 +63,6 @@ const App = (props) => {
     } else {
       alert("Kuvan maksimikoko on 1M ja sen pitää olla jpg")
     }
-
-    //console.log(file.name.split('.')[1]==="jpg")
-    //console.log(file.size/1000)
-    //let base64 = await convertBase64(file)
-    
-    //console.log(base64)
-    //setBase64(base64)
   }
 
   const addNews = (event) => {
@@ -80,7 +70,7 @@ const App = (props) => {
     const current = new Date()
     const date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`
     console.log("addNews")
-    console.log(base64)
+    //console.log(base64)
     
     const newsObject = {
       title: newTitle,
@@ -89,22 +79,15 @@ const App = (props) => {
       picture: base64 
     }
   
-    const getData = async () => {
-      try {
-      const response = await axios.post('http://localhost:3001/news', newsObject)
-      setNews(news.concat(response.data))
-      setNewTitle('')
-      setNewContent('')
-      setBase64('')
-      console.log("Axios async",response.data)
-      }
-      catch (e) {
-        console.log("problem")
-      }
-    };
-    getData()
-
-    console.log('button clicked', newsObject)
+    newsService
+      .create(newsObject)
+      .then(response => {
+        setNews(news.concat(response.data))
+        setNewTitle('')
+        setNewContent('')
+        setBase64('')
+        //console.log("Axios async",response.data)
+      })
   }
 
   return (
