@@ -1,8 +1,19 @@
 const express = require("express");
 const app = express();
 var bodyParser = require('body-parser')
+
 app.use(bodyParser({limit: '2mb'}))
 app.use(express.json())
+const cors = require('cors')
+app.use(cors())
+const requestLogger = (request, response, next) => {
+  console.log('Method:', request.method)
+  console.log('Path:  ', request.path)
+  console.log('Body:  ', request.body)
+  console.log('---')
+  next()
+}
+app.use(requestLogger)
 
 let news = [
   {
@@ -59,7 +70,14 @@ app.delete('/api/news/:id', (request, response) => {
   news = news.filter(n => n.id !== id)
   response.status(204).end()
 })
+
+const unknownEndpoint = (request, response) => {
+  response.status(404).send({ error: 'unknown endpoint' })
+}
+
+app.use(unknownEndpoint)
 const PORT = 3001;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
