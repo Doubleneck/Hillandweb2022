@@ -1,21 +1,7 @@
 import { useState , useEffect } from 'react'
 import newsService from './services/news'
 
-const News = ({ news }) => {
-  const data = news.picture 
-  const Example = ({ data }) => <img src={`data:jpeg;base64,${data}`} />
-  
-  return (
-    <ul >
-      <li ><h3>{news.title}</h3></li>
-      DATAA <b>{data ? 'on' : 'ei'}</b> 
- 
-      <li><b>{data===undefined ? 'on' : 'ei'}</b> </li>
-      <li> <Example data = {data} /> </li>
-      <li>{news.content}</li>
-    </ul>
-  )
-}
+
 
 const App = (props) => {
   const [news, setNews] = useState([])
@@ -65,6 +51,21 @@ const App = (props) => {
     }
   }
 
+  const removeNews = (event) => {
+    event.preventDefault()
+    const personnews =  news.filter(n => n.id.toString() === event.target.value.toString())[0]
+    if (window.confirm(`Delete ${news.title}?`)) {
+      newsService
+        .remove(event.target.value)
+        .then(() => {
+          alert(
+            `Removed ${news.title} from News `
+          )
+          setNews(news.filter(n => n.id.toString() !== event.target.value))
+      })
+    } 
+  }
+
   const addNews = (event) => {
     event.preventDefault()
     const current = new Date()
@@ -88,6 +89,11 @@ const App = (props) => {
         setBase64('')
         //console.log("Axios async",response.data)
       })
+      .catch(error => {
+        alert(
+          `Can´t get news`
+        )
+      })
   }
 
   return (
@@ -96,7 +102,7 @@ const App = (props) => {
       <h2>News</h2>
       <ul>
         {news.map(news=> 
-          <News key={news.id} news={news} />
+          <News key={news.id} news={news} removeNews = {removeNews} />
         )}
       </ul>
       < NewsForm addNews={addNews} newTitle = {newTitle} newContent = {newContent} handleTitleChange={handleTitleChange}
@@ -104,6 +110,26 @@ const App = (props) => {
     </div>
   )
 }
+
+const News = ({ news, removeNews}) => {
+  const data = news.picture 
+  const Image = ({ data }) => <img src={`data:jpeg;base64,${data}`} />
+  
+  return (
+    <ul >
+      <li ><h3>{news.title}</h3></li>
+      DATAA <b>{data ? 'on' : 'ei'}</b> 
+ 
+      <li><b>{data===undefined ? 'on' : 'ei'}</b> </li>
+      <li> <Image data = {data} /> </li>
+      <li>{news.content}</li>
+      <button value = {news.id} onClick={removeNews}>
+        delete 
+      </button>
+    </ul>
+  )
+}
+
 
 const NewsForm = (props) => {
   return(
