@@ -22,10 +22,12 @@ app.get("/", (req, res) => {
 });
 
 app.get("/api/news", (req, res) => {
-  News.find({}).then(news => {
+  News.find({})
+  .then(news => {
     res.json(news)
   })
-});
+  
+})
 
 app.get('/api/news/:id', (request, response) => {
   News.findById(request.params.id)
@@ -36,7 +38,10 @@ app.get('/api/news/:id', (request, response) => {
         response.status(404).end()
       }
     })
-    .catch(error => next(error))  
+    .catch(error => {
+      console.log(error)
+      response.status(500).end()
+    })
 })
 
 app.post('/api/news', (request, response) => {
