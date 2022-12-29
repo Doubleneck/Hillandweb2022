@@ -9,4 +9,5 @@
 |28.12.2022|6| node express installation, node express backend for news|
 |28.12.2022|3| mongo installation, mongo init configurations & tests|
 |29.12.2022|2| express backend to use mongo / neww: create, remove, all, refactoring|
-|Total Hours|29|
+|29.12.2022|2| Add new parameter "url" to news e2e"|
+|Total Hours|31|
