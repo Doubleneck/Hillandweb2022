@@ -13,8 +13,9 @@ mongoose.connect(url)
 const newsSchema = new mongoose.Schema({
   title: String,
   content: String,
+  url: String,
   date: Date,
-  picture: String,
+  image: String
 })
   
 newsSchema.set('toJSON', {

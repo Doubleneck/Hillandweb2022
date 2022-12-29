@@ -1,14 +1,12 @@
 import { useState , useEffect } from 'react'
 import newsService from './services/news'
 
-
-
 const App = (props) => {
   const [news, setNews] = useState([])
   const [newTitle, setNewTitle] = useState('')
   const [newContent, setNewContent] = useState('')
+  const [newURL, setNewURL] = useState('')
   const [base64, setBase64] = useState("");
-
 
   useEffect(() => {
     newsService
@@ -24,6 +22,11 @@ const App = (props) => {
 
   const handleContentChange = (event) => {
     setNewContent(event.target.value)
+  }
+
+  const handleURLChange = (event) => {
+    
+    setNewURL(event.target.value)
   }
 
   const convertBase64 = (file) => {
@@ -70,14 +73,13 @@ const App = (props) => {
     event.preventDefault()
     const current = new Date()
     const date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`
-    console.log("addNews")
-    //console.log(base64)
-    
+
     const newsObject = {
       title: newTitle,
       content: newContent,
+      url: newURL,
       date: date,
-      picture: base64 
+      image: base64
     }
   
     newsService
@@ -86,7 +88,8 @@ const App = (props) => {
         setNews(news.concat(response.data))
         setNewTitle('')
         setNewContent('')
-        setBase64('')
+        setNewURL('')
+        //setBase64('')
         //console.log("Axios async",response.data)
       })
       .catch(error => {
@@ -105,14 +108,15 @@ const App = (props) => {
           <News key={news.id} news={news} removeNews = {removeNews} />
         )}
       </ul>
-      < NewsForm addNews={addNews} newTitle = {newTitle} newContent = {newContent} handleTitleChange={handleTitleChange}
+      < NewsForm addNews={addNews} newURL = {newURL} newTitle = {newTitle} newContent = {newContent} 
+      handleURLChange = {handleURLChange} handleTitleChange={handleTitleChange}
       handleContentChange = {handleContentChange} handlePhotoSelect ={handlePhotoSelect} />
     </div>
   )
 }
 
 const News = ({ news, removeNews}) => {
-  const data = news.picture 
+  const data = news.image
   const Image = ({ data }) => <img src={`data:jpeg;base64,${data}`} />
   
   return (
@@ -120,6 +124,7 @@ const News = ({ news, removeNews}) => {
       <li ><h3>{news.title}</h3></li>
       <li> <Image data = {data} /> </li>
       <li>{news.content}</li>
+      <li>URL:{news.url}</li>
       <button value = {news.id} onClick={removeNews}>
         delete 
       </button>
@@ -134,6 +139,7 @@ const NewsForm = (props) => {
      <form onSubmit={props.addNews}>
         <div> title: <input value={props.newTitle} onChange={props.handleTitleChange}/></div>
         <div> content: <input value={props.newContent} onChange={props.handleContentChange}/></div> 
+        <div> url: <input value={props.newURL} onChange={props.handleURLChange}/></div> 
         <br />
         <div> file: <input type="file" value={props.newFile} onChange={props.handlePhotoSelect}/></div>
         <button type="submit">add</button>

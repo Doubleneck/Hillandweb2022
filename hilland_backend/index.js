@@ -46,7 +46,8 @@ app.put('/api/news/:id', (request, response, next) => {
   const news = {
     title: request.body.title,
     content: request.body.content,
-    picture: request.body.picture
+    url: request.body.url,
+    image: request.body.picture
   }
 
   News.findByIdAndUpdate(request.params.id, news, { new: true })
@@ -61,7 +62,8 @@ app.post('/api/news', (request, response) => {
     title: request.body.title,
     content: request.body.content,
     date: new Date(),
-    picture: request.body.picture
+    url: request.body.url,
+    image: request.body.image
   })
   news.save().then(savedNews => { 
     console.log('news saved!')
