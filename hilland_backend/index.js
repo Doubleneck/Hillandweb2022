@@ -1,6 +1,6 @@
 require('dotenv').config()
 const express = require('express')
-const app = express();
+const app = express()
 const News = require('./models/news')
 var bodyParser = require('body-parser')
 app.use(bodyParser({limit: '2mb'}))
@@ -18,15 +18,15 @@ const requestLogger = (request, response, next) => {
 }
 app.use(requestLogger)
 
-app.get("/", (req, res) => {
-  res.send("<h1>Hello Hilland World!</h1>");
-});
+app.get('/', (req, res) => {
+  res.send('<h1>Hello Hilland World!</h1>')
+})
 
-app.get("/api/news", (req, res) => {
+app.get('/api/news', (req, res) => {
   News.find({})
-  .then(news => {
-    res.json(news)
-  })
+    .then(news => {
+      res.json(news)
+    })
   
 })
 
@@ -99,6 +99,6 @@ app.use(errorHandler)
 
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+  console.log(`Server running on port ${PORT}`)
+})
 
