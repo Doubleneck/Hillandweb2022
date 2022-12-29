@@ -4,8 +4,9 @@ const app = express();
 const News = require('./models/news')
 var bodyParser = require('body-parser')
 app.use(bodyParser({limit: '2mb'}))
-app.use(express.json())
 app.use(express.static('build'))
+app.use(express.json())
+
 const cors = require('cors')
 app.use(cors())
 const requestLogger = (request, response, next) => {
@@ -38,10 +39,21 @@ app.get('/api/news/:id', (request, response) => {
         response.status(404).end()
       }
     })
-    .catch(error => {
-      console.log(error)
-      response.status(400).send({ error: 'malformatted id' })
+    .catch(error => next(error))
+})
+
+app.put('/api/news/:id', (request, response, next) => {
+  const news = {
+    title: request.body.title,
+    content: request.body.content,
+    picture: request.body.picture
+  }
+
+  News.findByIdAndUpdate(request.params.id, news, { new: true })
+    .then(updatedNews => {
+      response.json(updatedNews)
     })
+    .catch(error => next(error))
 })
 
 app.post('/api/news', (request, response) => {
@@ -57,6 +69,8 @@ app.post('/api/news', (request, response) => {
   }) 
 })
 
+
+
 app.delete('/api/news/:id', (request, response) => {
   News.findByIdAndRemove(request.params.id)
     .then(result => {
@@ -69,6 +83,15 @@ const unknownEndpoint = (request, response) => {
   response.status(404).send({ error: 'unknown endpoint' })
 }
 app.use(unknownEndpoint)
+
+const errorHandler = (error, request, response, next) => {
+  console.error(error.message)
+  if (error.name === 'CastError') {
+    return response.status(400).send({ error: 'malformatted id' })
+  }
+  next(error)
+}
+app.use(errorHandler)
 
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
