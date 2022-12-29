@@ -10,4 +10,6 @@
 |28.12.2022|3| mongo installation, mongo init configurations & tests|
 |29.12.2022|2| express backend to use mongo / neww: create, remove, all, refactoring|
 |29.12.2022|2| Add new parameter "url" to news e2e"|
-|Total Hours|31|
+|29.12.2022|1| Add eslint, clean code, remove obsolete sqlite3|
+|Total Hours|32
+|
