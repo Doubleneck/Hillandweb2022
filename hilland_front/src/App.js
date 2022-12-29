@@ -53,13 +53,13 @@ const App = (props) => {
 
   const removeNews = (event) => {
     event.preventDefault()
-    const personnews =  news.filter(n => n.id.toString() === event.target.value.toString())[0]
-    if (window.confirm(`Delete ${news.title}?`)) {
+    const thisnews =  news.filter(n => n.id.toString() === event.target.value.toString())[0]
+    if (window.confirm(`Delete ${thisnews.title}?`)) {
       newsService
         .remove(event.target.value)
         .then(() => {
           alert(
-            `Removed ${news.title} from News `
+            `Removed ${thisnews.title} from News `
           )
           setNews(news.filter(n => n.id.toString() !== event.target.value))
       })

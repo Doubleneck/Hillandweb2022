@@ -8,7 +8,7 @@ if (process.argv.length<3) {
 const password = process.argv[2]
 const url =
   `mongodb+srv://anttivuorenmaahilland:${password}@hillandweb.dnox1lg.mongodb.net/?retryWrites=true&w=majority`
-
+//dnox1lg
 mongoose.connect(url)
 
 const noteSchema = new mongoose.Schema({

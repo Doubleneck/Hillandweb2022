@@ -1,22 +1,8 @@
+require('dotenv').config()
 const express = require("express");
 const app = express();
-const mongoose = require('mongoose')
-const password = process.argv[2]
-const url =
-  `mongodb+srv://anttivuorenmaahilland:${password}@hillandweb.dnox1lg.mongodb.net/?retryWrites=true&w=majority`
+const News = require('./models/news')
 var bodyParser = require('body-parser')
-mongoose.connect(url)
-
-const newsSchema = new mongoose.Schema({
-  title: String,
-  content: String,
-  date: Date,
-  picture: String,
-})
-
-const News = mongoose.model('News', newsSchema)
-
-
 app.use(bodyParser({limit: '2mb'}))
 app.use(express.json())
 app.use(express.static('build'))
@@ -31,70 +17,52 @@ const requestLogger = (request, response, next) => {
 }
 app.use(requestLogger)
 
-let news = [
-  {
-    id: 1,
-    title: "Demonews #1",
-    content: "HTML is easy",
-    picture: "",
-  },
-  {
-    id: 2,
-    title: "Demonews #2",
-    content: "HTML is easy2",
-    picture: "",
-  },
-  {
-    id: 3,
-    title: "Demonews #3",
-    content: "HTML is easy3",
-    picture: "",
-  },
-];
-
 app.get("/", (req, res) => {
   res.send("<h1>Hello Hilland World!</h1>");
 });
 
 app.get("/api/news", (req, res) => {
   News.find({}).then(news => {
-    response.json(news)
+    res.json(news)
   })
-  mongoose.connection.close()
-  //res.json(news);
 });
 
 app.get('/api/news/:id', (request, response) => {
-  const id = Number(request.params.id)
-  const thisnews = news.find(n => n.id === id)
-  //response.json(thisnews)
-  if (thisnews) {
-    response.json(thisnews)
-  } else {
-    response.status(404).end()
-  }
+  News.findById(request.params.id)
+    .then(news => {
+      if (news) {
+        response.json(news)
+      } else {
+        response.status(404).end()
+      }
+    })
+    .catch(error => next(error))  
 })
 
 app.post('/api/news', (request, response) => {
-  const maxId = news.length > 0
-    ? Math.max(...news.map(n => n.id)) 
-    : 0
-
-  const thisnews = request.body
-  thisnews.id = maxId + 1
-  news = news.concat(thisnews)
-  response.json(news)
+  const news = new News({
+    title: request.body.title,
+    content: request.body.content,
+    date: new Date(),
+    picture: request.body.picture
+  })
+  news.save().then(savedNews => { 
+    console.log('news saved!')
+    response.json(savedNews)
+  }) 
 })
+
 app.delete('/api/news/:id', (request, response) => {
-  const id = Number(request.params.id)
-  news = news.filter(n => n.id !== id)
-  response.status(204).end()
+  News.findByIdAndRemove(request.params.id)
+    .then(result => {
+      response.status(204).end()
+    })
+    .catch(error => next(error))
 })
 
 const unknownEndpoint = (request, response) => {
   response.status(404).send({ error: 'unknown endpoint' })
 }
-
 app.use(unknownEndpoint)
 
 const PORT = process.env.PORT || 3001
