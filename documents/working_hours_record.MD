@@ -11,5 +11,5 @@
 |29.12.2022|2| express backend to use mongo / neww: create, remove, all, refactoring|
 |29.12.2022|2| Add new parameter "url" to news e2e"|
 |29.12.2022|1| Add eslint, clean code, remove obsolete sqlite3|
-|Total Hours|32
-|
+|30.12.2022|2| fully refactor backend, add Jest test-configuration|
+|Total Hours|34|
