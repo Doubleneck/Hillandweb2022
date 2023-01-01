@@ -1,11 +1,13 @@
 const newsRouter = require('express').Router()
 const News = require('../models/news')
   
-newsRouter.get('/', (req, res) => {
-  News.find({})
+newsRouter.get('/', async (req, res) => {
+  const news = await News.find({})
+  res.json(news)
+/*   News.find({})
     .then(news => {
       res.json(news)
-    })
+    }) */
 })
   
 newsRouter.get('/:id', (request, response) => {
