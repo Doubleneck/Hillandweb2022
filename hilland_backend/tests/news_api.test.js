@@ -48,6 +48,22 @@ test('the first news is about HTTP methods', async () => {
   expect(response.body[0].content).toBe('HTML is easy')
 })
 
+test('all news are returned', async () => {
+  const response = await api.get('/api/news')
+  
+  expect(response.body).toHaveLength(initialNews.length)
+})
+  
+test('a specific news is within the returned news', async () => {
+  const response = await api.get('/api/news')
+  
+  const contents = response.body.map(r => r.content)
+  
+  expect(contents).toContain(
+    'NOTHING is easy'
+  )
+})  
+
 afterAll(() => {
   mongoose.connection.close()
 })
