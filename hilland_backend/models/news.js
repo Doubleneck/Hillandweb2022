@@ -2,11 +2,14 @@ const mongoose = require('mongoose')
 
 const newsSchema = new mongoose.Schema({
   title: String,
-  content: String,
+  content: { 
+    type: String,
+    required: true
+  },
   url: String,
   date: { 
     type: Date,
-    required: true
+    required: true 
   },
   image: String
 })
