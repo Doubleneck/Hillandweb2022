@@ -62,7 +62,31 @@ test('a specific news is within the returned news', async () => {
   expect(contents).toContain(
     'NOTHING is easy'
   )
-})  
+})
+
+test('a valid news can be added ', async () => {
+  const newNews = {
+    title: 'Test news added_valid_news',  
+    content: 'Added this news',
+    date: new Date(),
+    url: 'www.testnews3.com',
+    image: ''
+  }
+  
+  await api
+    .post('/api/news')
+    .send(newNews)
+    .expect(200)
+    .expect('Content-Type', /application\/json/)
+  
+  const response = await api.get('/api/news')
+  const contents = response.body.map(r => r.content)
+  
+  expect(response.body).toHaveLength(initialNews.length + 1)
+  expect(contents).toContain(
+    'Added this news'
+  )
+})
 
 afterAll(() => {
   mongoose.connection.close()
