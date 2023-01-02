@@ -6,26 +6,13 @@ newsRouter.get('/', async (req, res) => {
   res.json(news)
 })
   
-newsRouter.get('/:id', async(request, response, next) => {
-  try {
-    const news= await News.findById(request.params.id)
-    if (news) {
-      response.json(news)
-    } else {
-      response.status(404).end()
-    }
-  } catch(exception) {
-    next(exception)
+newsRouter.get('/:id', async(request, response) => {
+  const news= await News.findById(request.params.id)
+  if (news) {
+    response.json(news)
+  } else {
+    response.status(404).end()
   }
- /*  News.findById(request.params.id)
-    .then(news => {
-      if (news) {
-        response.json(news)
-      } else {
-        response.status(404).end()
-      }
-    })
-    .catch(error => next(error)) */
 })
   
 newsRouter.put('/:id',  (request, response, next) => {
@@ -43,7 +30,7 @@ newsRouter.put('/:id',  (request, response, next) => {
     .catch(error => next(error))
 })
   
-newsRouter.post('/', async (request, response, next) => {
+newsRouter.post('/', async (request, response) => {
   const news = new News({
     title: request.body.title,
     content: request.body.content,
@@ -51,26 +38,13 @@ newsRouter.post('/', async (request, response, next) => {
     url: request.body.url,
     image: request.body.image
   })
-  try {
-    const savedNews = await news.save()
-    response.status(201).json(savedNews)
-  } catch(exception) {
-    next(exception)
-  }
+  const savedNews = await news.save()
+  response.status(201).json(savedNews)
 })
 
-newsRouter.delete('/:id', async (request, response, next) => {
-  try {
-    await News.findByIdAndRemove(request.params.id)
-    response.status(204).end()
-  } catch (exception) {
-    next(exception)
-  }
-/*   News.findByIdAndRemove(request.params.id)
-    .then(result => {
-      response.status(204).end()
-    })
-    .catch(error => next(error)) */
+newsRouter.delete('/:id', async (request, response) => {
+  await News.findByIdAndRemove(request.params.id)
+  response.status(204).end()
 })
 
 module.exports = newsRouter
