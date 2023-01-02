@@ -13,4 +13,5 @@
 |29.12.2022|1| Add eslint, clean code, remove obsolete sqlite3|
 |30.12.2022|2| fully refactor backend, add Jest test-configuration|
 |1.1.2023|4| add supertests for news, change news routes to async|
-|Total Hours|38|
+|2.1.2023|2| refactor tests, refactor async funcs news routes|  
+|Total Hours|40|
