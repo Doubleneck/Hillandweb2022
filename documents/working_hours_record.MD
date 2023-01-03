@@ -16,4 +16,5 @@
 |2.1.2023|2| refactor tests, refactor async funcs news routes|  
 |2.1.2023|1| add basic user functionality: model, controller, init tests|
 |3.1.2023|1| add requirements_specification|
-|Total Hours|42|
+|3.1.2023|3|add token-based login functionality to backend|
+|Total Hours|45|
