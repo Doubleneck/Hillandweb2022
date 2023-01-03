@@ -1,6 +1,17 @@
 const newsRouter = require('express').Router()
 const News = require('../models/news')
-  
+const User = require('../models/user')
+const jwt = require('jsonwebtoken')
+
+// ...
+const getTokenFrom = request => {
+  const authorization = request.get('authorization')
+  if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
+    return authorization.substring(7)
+  }
+  return null
+}
+
 newsRouter.get('/', async (req, res) => {
   const news = await News.find({})
   res.json(news)
@@ -31,6 +42,13 @@ newsRouter.put('/:id',  (request, response, next) => {
 })
   
 newsRouter.post('/', async (request, response) => {
+  const token = getTokenFrom(request)
+  const decodedToken = jwt.verify(token, process.env.SECRET)
+  if (!token || !decodedToken.id) {
+    return response.status(401).json({ error: 'token missing or invalid' })
+  }
+  const user = await User.findById(decodedToken.id)
+  
   const news = new News({
     title: request.body.title,
     content: request.body.content,
