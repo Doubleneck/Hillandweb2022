@@ -1,4 +1,6 @@
 const logger = require('./logger')
+const jwt = require('jsonwebtoken')
+const { get, post } = require('superagent')
 
 const requestLogger = (request, response, next) => {
   logger.info('Method:', request.method)
@@ -25,7 +27,7 @@ const errorHandler = (error, request, response, next) => {
     return response.status(401).json({
       error: 'invalid token'
     })
-    
+
   } else if (error.name === 'TokenExpiredError') {
     return response.status(401).json({
       error: 'token expired'
@@ -34,9 +36,37 @@ const errorHandler = (error, request, response, next) => {
   logger.error(error.message)
   next(error)
 }
-
+const tokenExtractor = (request, response, next) => {
+  const authorization = request.get('authorization')
+ 
+  if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
+    request.token = authorization.substring(7)
+  } else {
+    request.token = null
+  }
+  next()
+}
+ 
+const userExtractor = (request, response, next) => {
+  //const tokenDecoded = jwt.verify(request.token, process.env.SECRET)
+  //console.log(!(request.method === 'GET'))
+  if((request.method === 'POST')){
+    const tokenDecoded = jwt.verify(request.token, process.env.SECRET)
+    request.user = {
+      username : tokenDecoded.username,
+      role : tokenDecoded.role,
+      id : tokenDecoded.id
+    }
+    //console.log(request.user)
+  }
+ 
+  next()
+}
 module.exports = {
   requestLogger,
   unknownEndpoint,
-  errorHandler
+  errorHandler,
+  tokenExtractor,
+  userExtractor
+
 }
