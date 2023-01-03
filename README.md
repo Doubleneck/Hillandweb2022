@@ -9,4 +9,4 @@ These two tasks will joint to each other, since the everyday users can make song
 ## Documentation
 
 - [software requirements](https://github.com/Doubleneck/Hillandweb2022/blob/main/documents/requirements_specification.MD)  
-- [working hours ](https://github.com/Doubleneck/Hillandweb2022/blob/main/documents/working_hours.MD)  
+- [working hours ](https://github.com/Doubleneck/Hillandweb2022/blob/main/documents/working_hours_record.MD)  
