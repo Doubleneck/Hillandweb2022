@@ -17,4 +17,5 @@
 |2.1.2023|1| add basic user functionality: model, controller, init tests|
 |3.1.2023|1| add requirements_specification|
 |3.1.2023|3|add token-based login functionality to backend|
-|Total Hours|45|
+|3.1.2023|2| resolve user extractor problem|
+|Total Hours|47|
