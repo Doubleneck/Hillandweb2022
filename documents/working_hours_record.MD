@@ -18,4 +18,5 @@
 |3.1.2023|1| add requirements_specification|
 |3.1.2023|3|add token-based login functionality to backend|
 |3.1.2023|2| resolve user extractor problem|
-|Total Hours|47|
+|4.1.2023|4| update tests to pass with authentication, clean code|
+|Total Hours|51|
