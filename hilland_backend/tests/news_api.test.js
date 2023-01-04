@@ -12,19 +12,21 @@ let TOKEN = ''
 beforeAll(async () => {
   await User.deleteMany({})
   const passwordHash = await bcrypt.hash('sekret', 10)
-  const user = new User({ username: 'root', passwordHash })
+  const user = new User({ 
+    username: 'root', 
+    role: 'admin', passwordHash 
+  })
   await user.save()
 
   const userdata ={
     username: 'root',
     password: 'sekret'
-
   }  
   const response = await supertest(app)
     .post('/api/login')
     .send(userdata)
   TOKEN = response.body.token
-  console.log(response.body)
+  
 })
 
 describe('when there is initially some news saved', () => {
@@ -149,7 +151,7 @@ describe('addition of a new news', () => {
 
 describe('deletion and updating of a news', () => {
   beforeEach(async () => {
-    await News.deleteMany({})
+    await News.deleteMany({}) 
     let newsObject = new News(helper.initialNews[0])
     await newsObject.save()
     newsObject = new News(helper.initialNews[1])
@@ -161,6 +163,7 @@ describe('deletion and updating of a news', () => {
     const newsToDelete = newsAtStart[0]
     await api
       .delete(`/api/news/${newsToDelete.id}`)
+      .set('Authorization', `Bearer ${TOKEN}`)
       .expect(204)
   
     const newsAtEnd = await helper.newsInDb()
@@ -175,9 +178,9 @@ describe('deletion and updating of a news', () => {
     const newsAtStart = await helper.newsInDb()
     const newsToUpdate = newsAtStart[0]
     newsToUpdate.content = 'Updated content'
-   
     await api
       .put(`/api/news/${newsToUpdate.id}`)
+      .set('Authorization', `Bearer ${TOKEN}`)
       .send(newsToUpdate)
       .expect(200)
     
@@ -192,10 +195,8 @@ describe('deletion and updating of a news', () => {
 describe('when there is initially one user at db', () => {
   beforeEach(async () => {
     await User.deleteMany({})
-  
     const passwordHash = await bcrypt.hash('sekret', 10)
     const user = new User({ username: 'root', passwordHash })
-  
     await user.save()
   })
   
