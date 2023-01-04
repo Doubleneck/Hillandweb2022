@@ -38,9 +38,6 @@ newsRouter.post('/', async (request, response) => {
   if (!token || !decodedToken.id) {
     return response.status(401).json({ error: 'token missing or invalid' })
   }
-
-  console.log('user role:',request.user.role)
-  //const user = await User.findById(decodedToken.id)
   
   const news = new News({
     title: request.body.title,

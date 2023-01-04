@@ -7,6 +7,26 @@ const News = require('../models/news')
 const bcrypt = require('bcrypt')
 const User = require('../models/user')
 
+let TOKEN = ''
+
+beforeAll(async () => {
+  await User.deleteMany({})
+  const passwordHash = await bcrypt.hash('sekret', 10)
+  const user = new User({ username: 'root', passwordHash })
+  await user.save()
+
+  const userdata ={
+    username: 'root',
+    password: 'sekret'
+
+  }  
+  const response = await supertest(app)
+    .post('/api/login')
+    .send(userdata)
+  TOKEN = response.body.token
+  console.log(response.body)
+})
+
 describe('when there is initially some news saved', () => {
   beforeEach(async () => {
     await News.deleteMany({})
@@ -74,14 +94,14 @@ describe('viewing a specific news', () => {
       .expect(400)
   })
 })
-//const adminUser = supertest.agent(app)
-  
+
 describe('addition of a new news', () => {
   beforeEach(async () => {
     await User.deleteMany({})  
-    
+    await News.deleteMany({})
+    await News.insertMany(helper.initialNews)
   })
- 
+  
   test('succeeds with valid data ', async () => {
     
     const newNews = {
@@ -117,6 +137,7 @@ describe('addition of a new news', () => {
     }
     await api
       .post('/api/news')
+      .set('Authorization', `Bearer ${TOKEN}`)
       .send(newNews)
       .expect(400)
   
@@ -134,7 +155,7 @@ describe('deletion and updating of a news', () => {
     newsObject = new News(helper.initialNews[1])
     await newsObject.save()
   }) 
-  
+
   test('a news can be deleted', async () => {
     const newsAtStart = await helper.newsInDb()
     const newsToDelete = newsAtStart[0]
