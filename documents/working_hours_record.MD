@@ -19,4 +19,5 @@
 |3.1.2023|3|add token-based login functionality to backend|
 |3.1.2023|2| resolve user extractor problem|
 |4.1.2023|4| update tests to pass with authentication, clean code|
-|Total Hours|51|
+|4.1.2023|1| fix tests, add jwt check to update & delete news + tests| 
+|Total Hours|52|
