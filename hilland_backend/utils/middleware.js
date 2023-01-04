@@ -1,6 +1,6 @@
 const logger = require('./logger')
 const jwt = require('jsonwebtoken')
-const { get, post } = require('superagent')
+//const { get, post } = require('superagent')
 
 const requestLogger = (request, response, next) => {
   logger.info('Method:', request.method)
@@ -48,8 +48,7 @@ const tokenExtractor = (request, response, next) => {
 }
  
 const userExtractor = (request, response, next) => {
-  //const tokenDecoded = jwt.verify(request.token, process.env.SECRET)
-  //console.log(!(request.method === 'GET'))
+
   if((request.method === 'POST')){
     const tokenDecoded = jwt.verify(request.token, process.env.SECRET)
     request.user = {
@@ -57,7 +56,6 @@ const userExtractor = (request, response, next) => {
       role : tokenDecoded.role,
       id : tokenDecoded.id
     }
-    //console.log(request.user)
   }
  
   next()

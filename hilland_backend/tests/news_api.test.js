@@ -7,14 +7,6 @@ const News = require('../models/news')
 const bcrypt = require('bcrypt')
 const User = require('../models/user')
 
-beforeEach(async () => {
-  await News.deleteMany({})
-  let newsObject = new News(helper.initialNews[0])
-  await newsObject.save()
-  newsObject = new News(helper.initialNews[1])
-  await newsObject.save()
-})
-
 describe('when there is initially some news saved', () => {
   beforeEach(async () => {
     await News.deleteMany({})
@@ -54,7 +46,7 @@ describe('when there is initially some news saved', () => {
 })  
 
 describe('viewing a specific news', () => {
-
+   
   test('success with valid id', async () => {
     const newsAtStart = await helper.newsInDb()
     const newsToView = newsAtStart[0]
@@ -69,9 +61,6 @@ describe('viewing a specific news', () => {
 
   test('fails with statuscode 404 if note does not exist', async () => {
     const validNonexistingId = await helper.nonExistingId()
-
-    console.log(validNonexistingId)
-
     await api
       .get(`/api/news/${validNonexistingId}`)
       .expect(404)
@@ -85,9 +74,16 @@ describe('viewing a specific news', () => {
       .expect(400)
   })
 })
+//const adminUser = supertest.agent(app)
   
 describe('addition of a new news', () => {
+  beforeEach(async () => {
+    await User.deleteMany({})  
+    
+  })
+ 
   test('succeeds with valid data ', async () => {
+    
     const newNews = {
       title: 'Test news added_valid_news',  
       content: 'Added this news',
@@ -98,6 +94,7 @@ describe('addition of a new news', () => {
         
     await api
       .post('/api/news')
+      .set('Authorization', `Bearer ${TOKEN}`)
       .send(newNews)
       .expect(201)
       .expect('Content-Type', /application\/json/)
@@ -130,6 +127,14 @@ describe('addition of a new news', () => {
 })
 
 describe('deletion and updating of a news', () => {
+  beforeEach(async () => {
+    await News.deleteMany({})
+    let newsObject = new News(helper.initialNews[0])
+    await newsObject.save()
+    newsObject = new News(helper.initialNews[1])
+    await newsObject.save()
+  }) 
+  
   test('a news can be deleted', async () => {
     const newsAtStart = await helper.newsInDb()
     const newsToDelete = newsAtStart[0]
