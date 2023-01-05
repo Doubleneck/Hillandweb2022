@@ -7,7 +7,7 @@ on:
   push:
     branches: [ "main" ]
 env:
-  TEST_MONGODB_URI: test_mongo_connection
+  TEST_MONGODB_URI: supercharge/mongodb-github-action@1.8.0
 jobs:
   build:
 
@@ -29,15 +29,10 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
         cache-dependency-path: './hilland_backend/package-lock.json'
-    - name: Create mongo Docker container
-      id: build_mongo_docker
-      uses: DigiPie/mongo-action@v1.0.1
+    - name: Start MongoDB
+      uses: supercharge/mongodb-github-action@1.8.0
       with:
-        image-version: latest
-        port: 27017
-    - name: Test mongo connection
-      id: test_mongo_connection
-      run: "sudo mongo localhost:27017"      
+        mongodb-version: ${{ matrix.mongodb-version }}     
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
