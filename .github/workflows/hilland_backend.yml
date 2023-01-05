@@ -6,7 +6,10 @@ name: hilland_backend CI
 on:
   push:
     branches: [ "main" ]
-
+    
+defaults:
+      run: 
+        working-directory: hilland_backend
 jobs:
   build:
 
@@ -17,9 +20,6 @@ jobs:
       matrix:
         node-version: [16.x, 18.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-    defaults:
-      run: 
-        working-directory: hilland_backend
       
     steps:
     - uses: actions/checkout@v3
