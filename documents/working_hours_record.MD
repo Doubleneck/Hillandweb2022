@@ -24,4 +24,5 @@
 |4.1.2023|1| first tests with Github actions: problems, skip for a while|
 |5.1.2023|2| add front local storage token, add sorting for news, clean code|
 |5.1.2023|3| fix bug in create news|
-|Total Hours|59|
+|5.1.2023|2| learning to load static content from node back to react front|
+|Total Hours|61|
