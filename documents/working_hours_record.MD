@@ -25,4 +25,5 @@
 |5.1.2023|2| add front local storage token, add sorting for news, clean code|
 |5.1.2023|3| fix bug in create news|
 |5.1.2023|2| learning to load static content from node back to react front|
-|Total Hours|61|
+|6.1.2023|3| Github Actions for hilland_backend ok, mongo inst ok, path for tests fails| 
+|Total Hours|64|
