@@ -20,21 +20,7 @@ jobs:
       matrix:
         node-version: [14.x, 16.x, 18.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-    services:
-          mongo:
-            image: mongo
-            env:
-              MONGO_INITDB_ROOT_USERNAME: test
-              MONGO_INITDB_ROOT_PASSWORD: password
-              MONGO_INITDB_DATABASE: test
-            options: >-
-              --health-cmd mongo
-              --health-interval 10s
-              --health-timeout 5s
-              --health-retries 5
-            ports:
-              - 27017:27017
-  
+    
     steps:
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
@@ -43,6 +29,12 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
         cache-dependency-path: './hilland_backend/package-lock.json'
+    - name: Start MongoDB
+      uses: supercharge/mongodb-github-action@1.8.0
+      with:
+        mongodb-version: ${{ matrix.mongodb-version }}
+        mongodb-replica-set: TEST_MONGODB_URI
+        mongodb-port: 42069    
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
