@@ -21,5 +21,7 @@
 |4.1.2023|4| update tests to pass with authentication, clean code|
 |4.1.2023|1| fix tests, add jwt check to update & delete news + tests| 
 |4.1.2023|1| add front end login functionality: form|
-|4.1.2023|1| first tests with Github actions|
-|Total Hours|54|
+|4.1.2023|1| first tests with Github actions: problems, skip for a while|
+|5.1.2023|2| add front local storage token, add sorting for news, clean code|
+|5.1.2023|3| fix bug in create news|
+|Total Hours|59|
