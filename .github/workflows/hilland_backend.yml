@@ -7,7 +7,8 @@ on:
   push:
     branches: [ "main" ]
 env:
-  TEST_MONGODB_URI: localhost:27017
+  NODE_ENV: test
+  TEST_MONGODB_URI: mongodb://localhost:27017/testing
 jobs:
   build:
 
@@ -18,7 +19,7 @@ jobs:
     strategy:
     
       matrix:
-        node-version: [14.x]
+        node-version: [14.x,16.x,18.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
         mongodb-version: ['4.2', '4.4', '5.0', '6.0']
     steps:
