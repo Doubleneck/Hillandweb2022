@@ -6,8 +6,6 @@ name: hilland_backend CI
 on:
   push:
     branches: [ "main" ]
-env:
-  TEST_MONGODB_URI: test-mongo
 
 jobs:
   build:
@@ -19,7 +17,7 @@ jobs:
     strategy:
     
       matrix:
-        node-version: [14.x]
+        node-version: [14.x, 16.x, 18.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
         mongodb-version: ['4.2', '4.4', '5.0', '6.0']
     steps:
@@ -33,12 +31,12 @@ jobs:
     - name: Start MongoDB
       uses: supercharge/mongodb-github-action@1.8.0
       with:
-        mongodb-version: ${{ matrix.mongodb-version }}
-        mongodb-replica-set: test-mongo
-        mongodb-port: 42069    
+        mongodb-version: ${{ matrix.mongodb-version }}   
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
+      env:
+        CI: true
       
   
     
