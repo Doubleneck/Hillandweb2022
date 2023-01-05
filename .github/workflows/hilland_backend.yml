@@ -24,7 +24,7 @@ jobs:
           mongo:
             image: mongo
             env:
-            TEST_MONGODB_URI:: ${APP_MONGO_DB}
+              TEST_MONGODB_URI:: ${APP_MONGO_DB}
             ports:
               - 27017:27017
     steps:
