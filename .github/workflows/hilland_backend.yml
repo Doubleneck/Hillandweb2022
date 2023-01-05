@@ -9,6 +9,7 @@ on:
 env:
   NODE_ENV: test
   TEST_MONGODB_URI: mongodb://localhost:27017/testing
+  SECRET: actions
 jobs:
   build:
 
