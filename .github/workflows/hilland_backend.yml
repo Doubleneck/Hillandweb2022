@@ -24,9 +24,15 @@ jobs:
           mongo:
             image: mongo
             env:
-              TEST_MONGODB_URI:: ${APP_MONGO_DB}
-            ports:
-              - 27017:27017
+              MONGO_INITDB_ROOT_USERNAME: test
+              MONGO_INITDB_ROOT_PASSWORD: password
+              MONGO_INITDB_DATABASE: test
+            options: >-
+              --health-cmd mongo
+              --health-interval 10s
+              --health-timeout 5s
+              --health-retries 5
+  
     steps:
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
