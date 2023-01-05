@@ -7,7 +7,7 @@ on:
   push:
     branches: [ "main" ]
 env:
-  TEST_MONGODB_URI: supercharge/mongodb-github-action@1.8.0
+  TEST_MONGODB_URI: mongodb://mongodb0.example.com:27017
 jobs:
   build:
 
