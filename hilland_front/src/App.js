@@ -60,7 +60,6 @@ const App = (props) => {
   }
 
   const handleURLChange = (event) => {
-    
     setNewURL(event.target.value)
   }
 
@@ -103,6 +102,7 @@ const App = (props) => {
       })
     } 
   }
+  
   const addNews = (event) => {
     const current = new Date()
     const date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`
@@ -124,44 +124,8 @@ const App = (props) => {
         error('something went wrong while trying to add a news', error.message)
       })
   }
-/*   const addNews = async (event) => {
-    event.preventDefault()
-    const current = await new Date()
-    const date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`
-
-    const newsObject = await{
-      title: newTitle,
-      content: newContent,
-      url: newURL,
-      date: date,
-      image: base64
-    }
-    const response = await newsService.create(newsObject)
-    await alert ('created a news!')
-    //await news.concat(response.data)
-    await setNews(news.concat(response.data))
-    setNewTitle('')
-        setNewContent('')
-        setNewURL('')
-      } */
-
-  /*   newsService
-      .create(newsObject)
-      .then(response => {
-        setNews(news.concat(response.data))
-        setNewTitle('')
-        setNewContent('')
-        setNewURL('')
-        //setBase64('')
-        //console.log("Axios async",response.data)
-      })
-      .catch(error => {
-        alert(
-          `Can´t get news`
-        )
-      }) */
   
-  const News = ({ news, removeNews}) => {
+  const News = ({ news, removeNews, updateNews}) => {
     const data = news.image
     const Image = ({ data }) => <img src={`data:jpeg;base64,${data}`} alt = 'alt description'/>
     
@@ -204,6 +168,8 @@ const App = (props) => {
     </div>   
   )
 
+
+  
   const newsForm = () => {
     return(
       <div>
@@ -223,7 +189,7 @@ const App = (props) => {
     <div>
       
       <h1>Hilland Demo</h1>
-      
+      <img src="http://localhost:3001/testpict.jpg" alt = "testikuva"/>
       {user === '' ?
       loginForm() :
       <div>
@@ -231,73 +197,14 @@ const App = (props) => {
         {newsForm()}
       </div>
     }
-      
       <h2>News</h2>
       <ul>
         {news.map(news=> 
           <News key={news.id} news={news} removeNews = {removeNews} />
         )}
       </ul>
-     
     </div>
   )
 }
-
-/* const News = ({ news, removeNews}) => {
-  const data = news.image
-  const Image = ({ data }) => <img src={`data:jpeg;base64,${data}`} alt = 'alt description'/>
-  
-  return (
-    <ul >
-      <li ><h3>{news.title}</h3></li>
-      <li> <Image data = {data} /> </li>
-      <li>{news.content}</li>
-      <li>URL:{news.url}</li>
-      <button value = {news.id} onClick={removeNews}>
-        delete 
-      </button>
-    </ul>
-  )
-} */
-
-
-/* const NewsForm = (props) => {
-  return(
-    <div>
-     <form onSubmit={props.addNews}>
-        <div> title: <input value={props.newTitle} onChange={props.handleTitleChange}/></div>
-        <div> content: <input value={props.newContent} onChange={props.handleContentChange}/></div> 
-        <div> url: <input value={props.newURL} onChange={props.handleURLChange}/></div> 
-        <br />
-        <div> file: <input type="file" value={props.newFile} onChange={props.handlePhotoSelect}/></div>
-        <button type="submit">add</button>
-      </form>
-    </div>
-  )
-} */
-
-/* const loginForm = () => (
-  <form onSubmit={handleLogin}>
-    <div>
-      username
-        <input
-        type="text"
-        value={username}
-        name="Username"
-        onChange={({ target }) => setUsername(target.value)}
-      />
-    </div>
-    <div>
-      password
-        <input
-        type="password"
-        value={password}
-        name="Password"
-        onChange={({ target }) => setPassword(target.value)}
-      />
-    </div>
-    <button type="submit">login</button>
-  </form>      
-) */
 
 export default App
