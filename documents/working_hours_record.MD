@@ -26,4 +26,5 @@
 |5.1.2023|3| fix bug in create news|
 |5.1.2023|2| learning to load static content from node back to react front|
 |6.1.2023|3| Github Actions for hilland_backend ok, mongo inst ok, path for tests fails| 
-|Total Hours|64|
+|6.1.2023|1| Github Actions CI working for backend|
+|Total Hours|65|
