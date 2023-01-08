@@ -6,7 +6,7 @@ const NewsForm = ({ createNews }) => {
     const [newTitle, setNewTitle] = useState('')
     const [newContent, setNewContent] = useState('')
     const [newURL, setNewURL] = useState('')
-    const [base64, setBase64] = useState("")
+    const [imageURL, setImageURL] = useState("")
 
     const handleTitleChange = (event) => {
         setNewTitle(event.target.value)
@@ -20,7 +20,7 @@ const NewsForm = ({ createNews }) => {
         setNewURL(event.target.value)
       }
     
-      const convertBase64 = (file) => {
+    /*   const convertBase64 = (file) => {
         return new Promise((resolve, reject) => {
           const fileReader = new FileReader();
           fileReader.readAsDataURL(file)
@@ -31,15 +31,15 @@ const NewsForm = ({ createNews }) => {
             reject(error);
           }
         })
-      }
+      } */
     
       const handlePhotoSelect = async (e) => {
         const file = e.target.files[0]
         const MAX_FILE_SIZE = 1000 // 300kB
         if (file.name.split('.')[1]==="jpg" && file.size/1000 < MAX_FILE_SIZE ){
-          let base64 = await convertBase64(file)
+          //let base64 = await convertBase64(file)
           //console.log(base64)
-          setBase64(base64)
+          //setBase64(base64)
         } else {
           alert("Kuvan maksimikoko on 1M ja sen pitää olla jpg")
         }
@@ -49,7 +49,7 @@ const NewsForm = ({ createNews }) => {
       content: newContent,
       url: newURL,
       date: date,
-      image: base64
+      imageURL: imageURL
     }
     const addNews = (event) => {
         event.preventDefault()
@@ -57,7 +57,7 @@ const NewsForm = ({ createNews }) => {
         setNewTitle('')
         setNewContent('')
         setNewURL('')
-        setBase64('')
+        setImageURL('')
     }
 return(
     <div>

@@ -31,7 +31,7 @@ newsRouter.put('/:id',  (request, response, next) => {
     title: request.body.title,
     content: request.body.content,
     url: request.body.url,
-    image: request.body.picture
+    imageURL: request.body.imageURL
   })
  
   News.findByIdAndUpdate(request.params.id, news, { new: true })
@@ -56,7 +56,7 @@ newsRouter.post('/', async (request, response) => {
     content: request.body.content,
     date: new Date(),
     url: request.body.url,
-    image: request.body.image
+    imageURL: request.body.imageURL
   })
   const savedNews = await news.save()
  

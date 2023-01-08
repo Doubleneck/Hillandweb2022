@@ -11,7 +11,7 @@ const newsSchema = new mongoose.Schema({
     type: Date,
     required: true 
   },
-  image: String
+  imageURL: String
 })
   
 newsSchema.set('toJSON', {

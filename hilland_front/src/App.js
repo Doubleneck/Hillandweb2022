@@ -64,12 +64,13 @@ const App = () => {
   }
   
   const NewsObject = ({ newsObject, removeNewsObject, updateNews}) => {
-    const data = newsObject.image
-    const Image = ({ data }) => <img src={`data:jpeg;base64,${data}`} alt = 'newsphoto'/>
+    //const data = newsObject.image
+    //const Image = ({ data }) => <img src={`data:jpeg;base64,${data}`} alt = 'newsphoto'/>
     return (
-      <ul >
+      <ul>
         <li ><h3>{newsObject.title}</h3></li>
-        <li> <Image data = {data} /> </li>
+        <li> <img src={newsObject.imageURL}/> </li>
+       
         <li>{newsObject.content}</li>
         <li>URL:{newsObject.url}</li>
         <button value = {newsObject.id} onClick={removeNewsObject}>
