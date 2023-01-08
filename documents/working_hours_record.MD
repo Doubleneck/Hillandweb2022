@@ -27,4 +27,6 @@
 |5.1.2023|2| learning to load static content from node back to react front|
 |6.1.2023|3| Github Actions for hilland_backend ok, mongo inst ok, path for tests fails| 
 |6.1.2023|1| Github Actions CI working for backend|
-|Total Hours|65|
+|8.1.2023|3| Refactor front end to Components: LoginForm, NewsForm, Togglable |
+|8.1.2023|2| new Direction: Base64 image files in DB too slow, Amazon S3 orientation| 
+|Total Hours|70|
