@@ -29,4 +29,5 @@
 |6.1.2023|1| Github Actions CI working for backend|
 |8.1.2023|3| Refactor front end to Components: LoginForm, NewsForm, Togglable |
 |8.1.2023|2| new Direction: Base64 image files in DB too slow, Amazon S3 orientation| 
-|Total Hours|70|
+|8.1.2023|2| more Amazon S3: establishing AWS account, learning buckets & ACL |
+|Total Hours|72|
