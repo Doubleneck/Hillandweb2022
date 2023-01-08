@@ -58,7 +58,7 @@ const NewsForm = ({ createNews }) => {
         setNewContent('')
         setNewURL('')
         setBase64('')
-      }
+    }
 return(
     <div>
        <h2>Add news: </h2>

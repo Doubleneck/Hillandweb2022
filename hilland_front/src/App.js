@@ -7,10 +7,7 @@ import Togglable from './components/Togglable'
 
 const App = () => {
   const [news, setNews] = useState([])
-  const [username, setUsername] = useState('') 
-  const [password, setPassword] = useState('') 
   const [user, setUser] = useState('')
-  //const [loginVisible, setLoginVisible] = useState(false)
 
   useEffect(() => {
     newsService
@@ -27,9 +24,10 @@ const App = () => {
     }
   }, [])
   
-  const handleLogin = async (event) => {
-    event.preventDefault()
-    console.log('logging in with', username, password)
+  const handleLogin = async (userObject) => {
+    console.log('logging in with', userObject.username, userObject.password)
+    const username = userObject.username
+    const password = userObject.password
     try {
       const user = await loginService.login({
         username, password
@@ -37,17 +35,10 @@ const App = () => {
       window.localStorage.setItem(
         'loggedHillandappUser', JSON.stringify(user)
       ) 
-      //console.log('user', user.token)
       newsService.setToken(user.token)
       setUser(user)
-      setUsername('')
-      setPassword('')
     } catch (exception) {
-      
       alert('wrong credentials')
-      /* setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000) */
     }
   }
 
@@ -67,16 +58,6 @@ const App = () => {
   }
   
   const addNews = (newsObject) => {
-   /*  const current = new Date()
-    const date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`
-
-    const newsObject = {
-      title: newTitle,
-      content: newContent,
-      url: newURL,
-      date: date,
-      image: base64
-    } */
     newsService
       .create(newsObject)
       .then(returnedNews=> {
@@ -114,13 +95,7 @@ const App = () => {
       </Togglable>
       
       {user === '' ?
-      <LoginForm 
-      username={username}
-      password={password}
-      handleUsernameChange={({ target }) => setUsername(target.value)}
-      handlePasswordChange={({ target }) => setPassword(target.value)}
-      handleSubmit={handleLogin}
-    /> :
+      <LoginForm handleSubmit={handleLogin} /> :
       <div>
       <p>{user.name} logged in</p>
       <Togglable buttonLabel="Add News">
