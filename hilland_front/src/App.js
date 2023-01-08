@@ -1,8 +1,9 @@
 import { useState , useEffect } from 'react'
 import newsService from './services/news'
 import loginService from './services/login'
+import LoginForm from './components/LoginForm'
 
-const App = (props) => {
+const App = () => {
   const [news, setNews] = useState([])
   const [newTitle, setNewTitle] = useState('')
   const [newContent, setNewContent] = useState('')
@@ -11,6 +12,7 @@ const App = (props) => {
   const [username, setUsername] = useState('') 
   const [password, setPassword] = useState('') 
   const [user, setUser] = useState('')
+  const [loginVisible, setLoginVisible] = useState(false)
 
   useEffect(() => {
     newsService
@@ -141,7 +143,7 @@ const App = (props) => {
       </ul>
     )
   }
-  const loginForm = () => (
+/*   const loginForm = () => (
     <div>
     <h2>Login</h2>
     <form onSubmit={handleLogin}>
@@ -166,7 +168,7 @@ const App = (props) => {
       <button type="submit">login</button>
     </form>   
     </div>   
-  )
+  ) */
 
 
   
@@ -191,7 +193,13 @@ const App = (props) => {
       <h1>Hilland Demo</h1>
       <img src="http://localhost:3001/testpict.jpg" alt = "testikuva"/>
       {user === '' ?
-      loginForm() :
+      <LoginForm 
+      username={username}
+      password={password}
+      handleUsernameChange={({ target }) => setUsername(target.value)}
+      handlePasswordChange={({ target }) => setPassword(target.value)}
+      handleSubmit={handleLogin}
+    /> :
       <div>
         <p>{user.name} logged in</p>
         {newsForm()}
