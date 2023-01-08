@@ -2,17 +2,15 @@ import { useState , useEffect } from 'react'
 import newsService from './services/news'
 import loginService from './services/login'
 import LoginForm from './components/LoginForm'
+import NewsForm from './components/NewsForm'
+import Togglable from './components/Togglable'
 
 const App = () => {
   const [news, setNews] = useState([])
-  const [newTitle, setNewTitle] = useState('')
-  const [newContent, setNewContent] = useState('')
-  const [newURL, setNewURL] = useState('')
-  const [base64, setBase64] = useState("")
   const [username, setUsername] = useState('') 
   const [password, setPassword] = useState('') 
   const [user, setUser] = useState('')
-  const [loginVisible, setLoginVisible] = useState(false)
+  //const [loginVisible, setLoginVisible] = useState(false)
 
   useEffect(() => {
     newsService
@@ -53,43 +51,6 @@ const App = () => {
     }
   }
 
-  const handleTitleChange = (event) => {
-    setNewTitle(event.target.value)
-  }
-
-  const handleContentChange = (event) => {
-    setNewContent(event.target.value)
-  }
-
-  const handleURLChange = (event) => {
-    setNewURL(event.target.value)
-  }
-
-  const convertBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file)
-      fileReader.onload = () => {
-        resolve(fileReader.result.split(',')[1]);
-      }
-      fileReader.onerror = (error) => {
-        reject(error);
-      }
-    })
-  }
-
-  const handlePhotoSelect = async (e) => {
-    const file = e.target.files[0]
-    const MAX_FILE_SIZE = 1000 // 300kB
-    if (file.name.split('.')[1]==="jpg" && file.size/1000 < MAX_FILE_SIZE ){
-      let base64 = await convertBase64(file)
-      //console.log(base64)
-      setBase64(base64)
-    } else {
-      alert("Kuvan maksimikoko on 1M ja sen pitää olla jpg")
-    }
-  }
-
   const removeNews = (event) => {
     event.preventDefault()
     const thisnews =  news.filter(n => n.id.toString() === event.target.value.toString())[0]
@@ -105,8 +66,8 @@ const App = () => {
     } 
   }
   
-  const addNews = (event) => {
-    const current = new Date()
+  const addNews = (newsObject) => {
+   /*  const current = new Date()
     const date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`
 
     const newsObject = {
@@ -115,7 +76,7 @@ const App = () => {
       url: newURL,
       date: date,
       image: base64
-    }
+    } */
     newsService
       .create(newsObject)
       .then(returnedNews=> {
@@ -143,55 +104,15 @@ const App = () => {
       </ul>
     )
   }
-/*   const loginForm = () => (
-    <div>
-    <h2>Login</h2>
-    <form onSubmit={handleLogin}>
-      <div>
-        username
-          <input
-          type="text"
-          value={username}
-          name="Username"
-          onChange={({ target }) => setUsername(target.value)}
-        />
-      </div>
-      <div>
-        password
-          <input
-          type="password"
-          value={password}
-          name="Password"
-          onChange={({ target }) => setPassword(target.value)}
-        />
-      </div>
-      <button type="submit">login</button>
-    </form>   
-    </div>   
-  ) */
-
-
   
-  const newsForm = () => {
-    return(
-      <div>
-       <h2>Add news: </h2>
-       <form onSubmit={addNews}>
-          <div> title: <input value={newTitle} onChange={handleTitleChange}/></div>
-          <div> content: <input value={newContent} onChange={handleContentChange}/></div> 
-          <div> url: <input value={newURL} onChange={handleURLChange}/></div> 
-          <br />
-          <div> file: <input type="file" onChange={handlePhotoSelect}/></div>
-          <button type="submit">add</button>
-        </form>
-      </div>
-    )
-  }
   return (
     <div>
       
       <h1>Hilland Demo</h1>
+      <Togglable buttonLabel="Static pict">
       <img src="http://localhost:3001/testpict.jpg" alt = "testikuva"/>
+      </Togglable>
+      
       {user === '' ?
       <LoginForm 
       username={username}
@@ -201,8 +122,10 @@ const App = () => {
       handleSubmit={handleLogin}
     /> :
       <div>
-        <p>{user.name} logged in</p>
-        {newsForm()}
+      <p>{user.name} logged in</p>
+      <Togglable buttonLabel="Add News">
+        <NewsForm createNews={addNews}/>
+      </Togglable>
       </div>
     }
       <h2>News</h2>
