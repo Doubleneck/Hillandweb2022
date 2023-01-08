@@ -13,7 +13,7 @@ const App = () => {
     newsService
       .getAll()
       .then(news => setNews( news.sort((a, b) => b.date.localeCompare(a.date) )))
-  }, [news])
+  }, [])
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedHillandappUser')
@@ -25,24 +25,18 @@ const App = () => {
   }, [])
   
   const handleLogin = async (userObject) => {
-    console.log('logging in with', userObject.username, userObject.password)
-    const username = userObject.username
-    const password = userObject.password
     try {
-      const user = await loginService.login({
-        username, password
-      })
-      window.localStorage.setItem(
-        'loggedHillandappUser', JSON.stringify(user)
-      ) 
+      const user = await loginService.login(userObject)
+      window.localStorage.setItem('loggedHillandappUser', JSON.stringify(user)) 
       newsService.setToken(user.token)
       setUser(user)
+      console.log('logging in with', userObject.username, userObject.password)
     } catch (exception) {
       alert('wrong credentials')
     }
   }
 
-  const removeNews = (event) => {
+  const removeNewsObject = (event) => {
     event.preventDefault()
     const thisnews =  news.filter(n => n.id.toString() === event.target.value.toString())[0]
     if (window.confirm(`Delete ${thisnews.title}?`)) {
@@ -69,17 +63,16 @@ const App = () => {
       })
   }
   
-  const News = ({ news, removeNews, updateNews}) => {
-    const data = news.image
-    const Image = ({ data }) => <img src={`data:jpeg;base64,${data}`} alt = 'alt description'/>
-    
+  const NewsObject = ({ newsObject, removeNewsObject, updateNews}) => {
+    const data = newsObject.image
+    const Image = ({ data }) => <img src={`data:jpeg;base64,${data}`} alt = 'newsphoto'/>
     return (
       <ul >
-        <li ><h3>{news.title}</h3></li>
+        <li ><h3>{newsObject.title}</h3></li>
         <li> <Image data = {data} /> </li>
-        <li>{news.content}</li>
-        <li>URL:{news.url}</li>
-        <button value = {news.id} onClick={removeNews}>
+        <li>{newsObject.content}</li>
+        <li>URL:{newsObject.url}</li>
+        <button value = {newsObject.id} onClick={removeNewsObject}>
           delete 
         </button>
       </ul>
@@ -88,7 +81,6 @@ const App = () => {
   
   return (
     <div>
-      
       <h1>Hilland Demo</h1>
       <Togglable buttonLabel="Static pict">
       <img src="http://localhost:3001/testpict.jpg" alt = "testikuva"/>
@@ -105,8 +97,8 @@ const App = () => {
     }
       <h2>News</h2>
       <ul>
-        {news.map(news=> 
-          <News key={news.id} news={news} removeNews = {removeNews} />
+        {news.map(newsObject=> 
+          <NewsObject key={newsObject.id} newsObject={newsObject} removeNewsObject = {removeNewsObject} />
         )}
       </ul>
     </div>
