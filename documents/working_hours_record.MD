@@ -31,4 +31,5 @@
 |8.1.2023|2| new Direction: Base64 image files in DB too slow, Amazon S3 orientation| 
 |8.1.2023|2| more Amazon S3: establishing AWS account, config|
 |9.1.2023|1| update front&back to use news field:image => imageURL for AWS S3|
-|Total Hours|73|
+|9.1.2023|2| configure S3 secrets & policies & create user profile|
+|Total Hours|75|
