@@ -32,4 +32,6 @@
 |8.1.2023|2| more Amazon S3: establishing AWS account, config|
 |9.1.2023|1| update front&back to use news field:image => imageURL for AWS S3|
 |9.1.2023|2| configure S3 secrets & policies & create user profile|
-|Total Hours|75|
+|10.1.2023|7| learning to run S3 images from React, made a small test app|  
+|10.1.2023|1| s3 React-Node test app working, needs refactoring to require-syntax|
+|Total Hours|83|
