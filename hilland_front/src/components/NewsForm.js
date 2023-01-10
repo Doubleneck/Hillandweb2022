@@ -1,14 +1,14 @@
-import { useState } from "react"
+import { useState } from 'react'
 
 const NewsForm = ({ createNews }) => {
   const current = new Date()
   const date = `${current.getDate()}/${
     current.getMonth() + 1
   }/${current.getFullYear()}`
-  const [newTitle, setNewTitle] = useState("")
-  const [newContent, setNewContent] = useState("")
-  const [newURL, setNewURL] = useState("")
-  const [imageURL, setImageURL] = useState("")
+  const [newTitle, setNewTitle] = useState('')
+  const [newContent, setNewContent] = useState('')
+  const [newURL, setNewURL] = useState('')
+  const [imageURL, setImageURL] = useState('')
   const [imageFile, setImageFile] = useState('')
 
   const handleTitleChange = (event) => {
@@ -23,34 +23,32 @@ const NewsForm = ({ createNews }) => {
     setNewURL(event.target.value)
   }
 
-
   const handlePhotoSelect = async (e) => {
     e.preventDefault()
     const file = e.target.files[0]
-    const MAX_FILE_SIZE = 1000 
-    if ( file.size / 1000 < MAX_FILE_SIZE) {
+    const MAX_FILE_SIZE = 1000
+    if (file.size / 1000 < MAX_FILE_SIZE) {
       setImageFile(file)
     } else {
-      alert("Kuvan maksimikoko on 1M")
+      alert('Kuvan maksimikoko on 1M')
     }
   }
   const newsObject = {
-    title: newTitle, 
+    title: newTitle,
     content: newContent,
     url: newURL,
     date: date,
     imageURL: imageURL,
-    imageFile: imageFile
+    imageFile: imageFile,
   }
   const addNews = (event) => {
     event.preventDefault()
     createNews(newsObject)
-    setNewTitle("")
-    setNewContent("")
-    setNewURL("")
-    setImageURL("")
-    setImageFile("")
-    
+    setNewTitle('')
+    setNewContent('')
+    setNewURL('')
+    setImageURL('')
+    setImageFile('')
   }
   return (
     <div>
@@ -68,11 +66,7 @@ const NewsForm = ({ createNews }) => {
         <br />
         <div>
           file:
-          <input
-            type='file'
-            accept='image/*'
-            onChange={handlePhotoSelect}
-          />
+          <input type='file' accept='image/*' onChange={handlePhotoSelect} />
         </div>
         <button type='submit'>Upload</button>
       </form>
