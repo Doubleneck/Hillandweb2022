@@ -9,7 +9,7 @@
 |28.12.2022|6| node express installation, node express backend for news|
 |28.12.2022|3| mongo installation, mongo init configurations & tests|
 |29.12.2022|2| express backend to use mongo / neww: create, remove, all, refactoring|
-|29.12.2022|2| Add new parameter "url" to news e2e"|
+|29.12.2022|1| Add new parameter "url" to news e2e"|
 |29.12.2022|1| Add eslint, clean code, remove obsolete sqlite3|
 |30.12.2022|2| fully refactor backend, add Jest test-configuration|
 |1.1.2023|4| add supertests for news, change news routes to async|
@@ -36,4 +36,5 @@
 |10.1.2023|1| put s3 React-Node test app working, needs refactoring to require-syntax|
 |11.1.2023|2| Refactoring s3 test app, upgrading Hilland app to use S3 storage| 
 |11.1.2023|1| Refactoring front |
+|11.1.2023|1| upgraded alerts to  Error & Update notification / front|
 |Total Hours|86|
