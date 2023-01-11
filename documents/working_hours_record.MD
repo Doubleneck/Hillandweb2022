@@ -35,4 +35,5 @@
 |10.1.2023|7| learning to run S3 images from React, made a small test app|  
 |10.1.2023|1| put s3 React-Node test app working, needs refactoring to require-syntax|
 |11.1.2023|2| Refactoring s3 test app, upgrading Hilland app to use S3 storage| 
-|Total Hours|85|
+|11.1.2023|1| Refactoring front |
+|Total Hours|86|
