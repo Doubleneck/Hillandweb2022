@@ -3,6 +3,7 @@ import newsService from './services/news'
 import loginService from './services/login'
 import LoginForm from './components/LoginForm'
 import NewsForm from './components/NewsForm'
+import NewsObject from './components/NewsObject'
 import Togglable from './components/Togglable'
 
 const App = () => {
@@ -55,18 +56,10 @@ const App = () => {
     console.log('addNewssissä', newsObject.imageFile.size)
     const file = newsObject.imageFile
     try {
-      /*  const newsDataObject = {
-        title: newsObject.title, 
-        content: newsObject.content,
-        url: newsObject.URL,
-        date: newsObject.date,
-        imageURL: ""
-      } */
       const { url } = await fetch('http://localhost:3001/s3Url').then((res) =>
         res.json()
       )
       console.log('url', url)
-      //console.log(file.size / 1000)
       console.log('addNewssissä koko ennen fetchiä:', newsObject.imageFile.size)
       await fetch(url, {
         method: 'put',
@@ -92,26 +85,6 @@ const App = () => {
     } catch (exception) {
       alert('something went wrong while trying to create news')
     }
-  }
-
-  const NewsObject = ({ newsObject, removeNewsObject, updateNews }) => {
-    return (
-      <ul>
-        <li>
-          <h3>{newsObject.title}</h3>
-        </li>
-        <li>
-          {' '}
-          <img src={newsObject.imageURL} />{' '}
-        </li>
-
-        <li>{newsObject.content}</li>
-        <li>URL:{newsObject.url}</li>
-        <button value={newsObject.id} onClick={removeNewsObject}>
-          delete
-        </button>
-      </ul>
-    )
   }
 
   return (

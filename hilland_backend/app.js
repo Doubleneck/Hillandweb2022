@@ -8,7 +8,6 @@ const s3 = require('./s3.js')
 const newsRouter = require('./controllers/news')
 const usersRouter = require('./controllers/users')
 const loginRouter = require('./controllers/login')
-
 const middleware = require('./utils/middleware')
 const logger = require('./utils/logger')
 const mongoose = require('mongoose')
@@ -29,7 +28,6 @@ app.use(express.json())
 
 app.use(middleware.requestLogger)
 app.use(middleware.tokenExtractor)
-//app.use(middleware.userExtractor)
 app.get('/s3Url', async (req, res) => {
   const url = await s3.generateUploadURL()
   console.log(url)
