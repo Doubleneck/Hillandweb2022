@@ -9,6 +9,8 @@ import Togglable from './components/Togglable'
 const App = () => {
   const [news, setNews] = useState([])
   const [user, setUser] = useState('')
+  const [errorMessage, setErrorMessage] = useState(null)
+  const [updateMessage, setUpdateMessage] = useState(null)
 
   useEffect(() => {
     newsService
@@ -35,20 +37,34 @@ const App = () => {
       setUser(user)
       console.log('logging in with', userObject.username, userObject.password)
     } catch (exception) {
-      alert('wrong credentials')
+      setErrorMessage('wrong credentials')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
     }
   }
 
   const removeNewsObject = (event) => {
     event.preventDefault()
-    const thisnews = news.filter(
+    try {
+    const newsObject = news.filter(
       (n) => n.id.toString() === event.target.value.toString()
     )[0]
-    if (window.confirm(`Delete ${thisnews.title}?`)) {
+    if (window.confirm(`Delete ${newsObject.title}?`)) {
       newsService.remove(event.target.value).then(() => {
-        alert(`Removed ${thisnews.title} from News `)
+        setUpdateMessage(`Removed ${newsObject.title} from News `)
+        setTimeout(() => {
+          setUpdateMessage(null)
+        }, 5000)
         setNews(news.filter((n) => n.id.toString() !== event.target.value))
       })
+    }
+    } catch (exception) {
+      setErrorMessage('something went wrong while trying to remove news')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+
     }
   }
 
@@ -81,27 +97,36 @@ const App = () => {
       setNews(
         news.concat(returnedNews).sort((a, b) => b.date.localeCompare(a.date))
       )
-      alert(`A news: ${newsObject.title}  added !!!`)
-      //await alert(`A news: ${newsObject.title}  added !!!`)
+      setUpdateMessage(`A news: ${newsObject.title}  added !!!`)
+      setTimeout(() => {
+        setUpdateMessage(null)
+      }, 5000)
     } catch (exception) {
-      alert('something went wrong while trying to create news')
+      setErrorMessage('something went wrong while trying to create news')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
     }
   }
 
   return (
     <div>
+      
       <h1>Hilland Demo</h1>
       {user === '' ? (
         <LoginForm handleSubmit={handleLogin} />
       ) : (
         <div>
           <p>{user.name} logged in</p>
+          < SuccessNotification message = {updateMessage} />
+          < ErrorNotification message = {errorMessage} />
           <Togglable buttonLabel='Add News'>
             <NewsForm createNews={addNews} />
           </Togglable>
         </div>
       )}
       <h2>News</h2>
+
       <ul>
         {news.map((newsObject) => (
           <NewsObject
@@ -114,5 +139,25 @@ const App = () => {
     </div>
   )
 }
+const SuccessNotification = ({ message }) => {
+  if (message === null) {
+    return null
+  }
+  return (
+    <div className="update">
+      {message}
+    </div>
+  )
+}
 
+const ErrorNotification = ({ message }) => {
+  if (message === null) {
+    return null
+  }
+  return (
+    <div className="error">
+      {message}
+    </div>
+  )
+}
 export default App
