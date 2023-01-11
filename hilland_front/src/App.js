@@ -56,8 +56,8 @@ const App = () => {
     console.log('addNewssissä', newsObject.imageFile.size)
     const file = newsObject.imageFile
     try {
-      const { url } = await fetch('http://localhost:3001/s3Url').then((res) =>
-        res.json()
+      const { url } = await fetch('http://localhost:3001/api/s3url').then(
+        (res) => res.json()
       )
       console.log('url', url)
       console.log('addNewssissä koko ennen fetchiä:', newsObject.imageFile.size)
@@ -82,6 +82,7 @@ const App = () => {
         news.concat(returnedNews).sort((a, b) => b.date.localeCompare(a.date))
       )
       alert(`A news: ${newsObject.title}  added !!!`)
+      //await alert(`A news: ${newsObject.title}  added !!!`)
     } catch (exception) {
       alert('something went wrong while trying to create news')
     }
