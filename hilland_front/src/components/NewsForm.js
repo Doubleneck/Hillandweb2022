@@ -8,7 +8,6 @@ const NewsForm = ({ createNews }) => {
   const [newTitle, setNewTitle] = useState('')
   const [newContent, setNewContent] = useState('')
   const [newURL, setNewURL] = useState('')
-  const [imageURL, setImageURL] = useState('')
   const [imageFile, setImageFile] = useState('')
 
   const handleTitleChange = (event) => {
@@ -38,7 +37,6 @@ const NewsForm = ({ createNews }) => {
     content: newContent,
     url: newURL,
     date: date,
-    imageURL: imageURL,
     imageFile: imageFile,
   }
   const addNews = (event) => {
@@ -47,7 +45,6 @@ const NewsForm = ({ createNews }) => {
     setNewTitle('')
     setNewContent('')
     setNewURL('')
-    setImageURL('')
     setImageFile('')
   }
   return (

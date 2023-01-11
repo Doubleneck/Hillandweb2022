@@ -1,13 +1,13 @@
-import { useState, useEffect } from "react"
-import newsService from "./services/news"
-import loginService from "./services/login"
-import LoginForm from "./components/LoginForm"
-import NewsForm from "./components/NewsForm"
-import Togglable from "./components/Togglable"
+import { useState, useEffect } from 'react'
+import newsService from './services/news'
+import loginService from './services/login'
+import LoginForm from './components/LoginForm'
+import NewsForm from './components/NewsForm'
+import Togglable from './components/Togglable'
 
 const App = () => {
   const [news, setNews] = useState([])
-  const [user, setUser] = useState("")
+  const [user, setUser] = useState('')
 
   useEffect(() => {
     newsService
@@ -18,7 +18,7 @@ const App = () => {
   }, [])
 
   useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem("loggedHillandappUser")
+    const loggedUserJSON = window.localStorage.getItem('loggedHillandappUser')
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       setUser(user)
@@ -29,12 +29,12 @@ const App = () => {
   const handleLogin = async (userObject) => {
     try {
       const user = await loginService.login(userObject)
-      window.localStorage.setItem("loggedHillandappUser", JSON.stringify(user))
+      window.localStorage.setItem('loggedHillandappUser', JSON.stringify(user))
       newsService.setToken(user.token)
       setUser(user)
-      console.log("logging in with", userObject.username, userObject.password)
+      console.log('logging in with', userObject.username, userObject.password)
     } catch (exception) {
-      alert("wrong credentials")
+      alert('wrong credentials')
     }
   }
 
@@ -52,21 +52,45 @@ const App = () => {
   }
 
   const addNews = async (newsObject) => {
-    //console.log('addNewssissä',newsObject.imageFile.size)
+    console.log('addNewssissä', newsObject.imageFile.size)
+    const file = newsObject.imageFile
     try {
-      const newsDataObject = {
+      /*  const newsDataObject = {
         title: newsObject.title, 
         content: newsObject.content,
         url: newsObject.URL,
         date: newsObject.date,
         imageURL: ""
+      } */
+      const { url } = await fetch('http://localhost:3001/s3Url').then((res) =>
+        res.json()
+      )
+      console.log('url', url)
+      //console.log(file.size / 1000)
+      console.log('addNewssissä koko ennen fetchiä:', newsObject.imageFile.size)
+      await fetch(url, {
+        method: 'put',
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+        body: file,
+      })
+      const imageUrl = await url.split('?')[0]
+      console.log('imageurl, AddNews frontissa:', imageUrl)
+      const newsDataObject = {
+        title: newsObject.title,
+        content: newsObject.content,
+        url: newsObject.URL,
+        date: newsObject.date,
+        imageURL: imageUrl,
       }
-    
       const returnedNews = await newsService.create(newsDataObject)
-      setNews(news.concat(returnedNews).sort((a, b) => b.date.localeCompare(a.date)))
+      setNews(
+        news.concat(returnedNews).sort((a, b) => b.date.localeCompare(a.date))
+      )
       alert(`A news: ${newsObject.title}  added !!!`)
     } catch (exception) {
-      alert("something went wrong while trying to create news")
+      alert('something went wrong while trying to create news')
     }
   }
 
@@ -77,8 +101,8 @@ const App = () => {
           <h3>{newsObject.title}</h3>
         </li>
         <li>
-          {" "}
-          <img src={newsObject.imageURL} />{" "}
+          {' '}
+          <img src={newsObject.imageURL} />{' '}
         </li>
 
         <li>{newsObject.content}</li>
@@ -93,7 +117,7 @@ const App = () => {
   return (
     <div>
       <h1>Hilland Demo</h1>
-      {user === "" ? (
+      {user === '' ? (
         <LoginForm handleSubmit={handleLogin} />
       ) : (
         <div>
