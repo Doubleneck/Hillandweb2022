@@ -1,4 +1,6 @@
-const NewsObject = ({ newsObject, removeNewsObject, updateNews }) => {
+import Togglable from '../components/Togglable'
+import UpdateNewsForm from '../components/UpdateNewsForm'
+const NewsObject = ({ newsObject, removeNewsObject, updateNewsObject }) => {
   return (
     <ul>
       <li>
@@ -13,6 +15,10 @@ const NewsObject = ({ newsObject, removeNewsObject, updateNews }) => {
       <button value={newsObject.id} onClick={removeNewsObject}>
         delete
       </button>
+      <Togglable buttonLabel='Update'>
+            <UpdateNewsForm updateThisNews = {updateNewsObject} newsObjectToBeUpdated={newsObject}/>
+      </Togglable>
+     
     </ul>
   )
 }

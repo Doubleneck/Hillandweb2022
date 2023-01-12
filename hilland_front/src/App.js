@@ -52,7 +52,7 @@ const App = () => {
     
     if (window.confirm(`Delete ${newsObject.title}?`)) {
       try {
-          const response = await newsService.remove(event.target.value)
+          await newsService.remove(event.target.value)
           setUpdateMessage(`Removed ${newsObject.title} from News `)
           setTimeout(() => {
             setUpdateMessage(null)
@@ -65,39 +65,32 @@ const App = () => {
       }, 5000)
     }
   }}
-  /* const removeNewsObject = (event) => {
-    event.preventDefault()
+
+  const updateNewsObject = async (newsObject) => {
+    
     try {
-      const newsObject = news.filter(
-        (n) => n.id.toString() === event.target.value.toString()
-        )[0]
-    if (window.confirm(`Delete ${newsObject.title}?`)) {
-      newsService.remove(event.target.value).then(() => {
-        setUpdateMessage(`Removed ${newsObject.title} from News `)
-        setTimeout(() => {
-          setUpdateMessage(null)
-        }, 5000)
-        setNews(news.filter((n) => n.id.toString() !== event.target.value))
-      })
-    }
+      const returnedNews = await newsService.update(newsObject.id,newsObject)
+      console.log(returnedNews)
+      setUpdateMessage(`Updated ${newsObject.title}, please refresh the browser`)
+      setTimeout(() => {
+        setUpdateMessage(null)
+      }, 6000)
+      setNews(news.filter(n => n.id !== newsObject.id))
     } catch (exception) {
       setErrorMessage('something went wrong while trying to remove news')
       setTimeout(() => {
         setErrorMessage(null)
       }, 5000)
+    } 
+ }
 
-    }
-  } */
 
   const addNews = async (newsObject) => {
-    console.log('addNewssissä', newsObject.imageFile.size)
     const file = newsObject.imageFile
     try {
       const { url } = await fetch('http://localhost:3001/api/s3url').then(
         (res) => res.json()
       )
-      console.log('url', url)
-      console.log('addNewssissä koko ennen fetchiä:', newsObject.imageFile.size)
       await fetch(url, {
         method: 'put',
         headers: {
@@ -106,7 +99,7 @@ const App = () => {
         body: file,
       })
       const imageUrl = await url.split('?')[0]
-      console.log('imageurl, AddNews frontissa:', imageUrl)
+      
       const newsDataObject = {
         title: newsObject.title,
         content: newsObject.content,
@@ -154,6 +147,7 @@ const App = () => {
             key={newsObject.id}
             newsObject={newsObject}
             removeNewsObject={removeNewsObject}
+            updateNewsObject={updateNewsObject}
           />
         ))}
       </ul>

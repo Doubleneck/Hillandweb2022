@@ -52,10 +52,10 @@ const NewsForm = ({ createNews }) => {
       <h2>Add news: </h2>
       <form onSubmit={addNews}>
         <div>
-          title: <input value={newTitle} onChange={handleTitleChange} />
+          title: <input size="50" value={newTitle} onChange={handleTitleChange} />
         </div>
         <div>
-          content: <input value={newContent} onChange={handleContentChange} />
+          content: <input size="50" value={newContent} onChange={handleContentChange} />
         </div>
         <div>
           url: <input value={newURL} onChange={handleURLChange} />
