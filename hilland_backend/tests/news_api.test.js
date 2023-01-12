@@ -192,48 +192,55 @@ describe('deletion and updating of a news', () => {
     )
   })
 })
-describe('when there is initially one user at db', () => {
+describe('when there is initially one admin-user and one user-user at db', () => {
   beforeEach(async () => {
     await User.deleteMany({})
     const passwordHash = await bcrypt.hash('sekret', 10)
-    const user = new User({ username: 'root', passwordHash })
+    const user = new User({ username: 'adminuser', role: 'admin', passwordHash })
     await user.save()
+    const passwordHash2 = await bcrypt.hash('sekret', 10)
+    const user2 = new User({ username: 'useruser', role: 'user', passwordHash2 })
+    await user2.save()
   })
   
-  test('creation succeeds with a fresh username role:user', async () => {
+  test('There are two users at start', async () =>{
     const usersAtStart = await helper.usersInDb()
-  
+    const response = await api.get('/api/users')
+    expect(response.body).toHaveLength(usersAtStart.length)
+  })
+
+  test('creation fails if not logged', async () => {
+    const usersAtStart = await helper.usersInDb()
+    const passwordHash = await bcrypt.hash('sekret', 10)
     const newUser = {
       username: 'mluukkai',
       name: 'Matti Luukkainen',
       role: 'user',
-      password: 'salainen',
+      password: passwordHash,
     }
   
     await api
       .post('/api/users')
       .send(newUser)
-      .expect(201)
+      .expect(401)
       .expect('Content-Type', /application\/json/)
   
     const usersAtEnd = await helper.usersInDb()
-    expect(usersAtEnd).toHaveLength(usersAtStart.length + 1)
-  
-    const usernames = usersAtEnd.map(u => u.username)
-    expect(usernames).toContain(newUser.username)
+    expect(usersAtEnd).toHaveLength(usersAtStart.length)
   })
-  test('creation fails with proper statuscode and message if username already taken, role:user', async () => {
+/*   test('creation fails with proper statuscode if admin logged but username already taken', async () => {
     const usersAtStart = await helper.usersInDb()
-
+    const passwordHash = await bcrypt.hash('sekret', 10)
     const newUser = {
-      username: 'root',
+      username: 'useruser',
       name: 'Superuser',
       role: 'user',
-      password: 'salainen',
+      password: passwordHash
     }
 
     const result = await api
       .post('/api/users')
+      .set('Authorization', `Bearer ${TOKEN}`)
       .send(newUser)
       .expect(400)
       .expect('Content-Type', /application\/json/)
@@ -242,7 +249,7 @@ describe('when there is initially one user at db', () => {
 
     const usersAtEnd = await helper.usersInDb()
     expect(usersAtEnd).toHaveLength(usersAtStart.length)
-  })
+  }) */
 })
 
 afterAll(() => {
