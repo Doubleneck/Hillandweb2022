@@ -44,12 +44,33 @@ const App = () => {
     }
   }
 
-  const removeNewsObject = (event) => {
+  const removeNewsObject = async (event) => {
     event.preventDefault()
-    try {
     const newsObject = news.filter(
       (n) => n.id.toString() === event.target.value.toString()
-    )[0]
+      )[0]
+    
+    if (window.confirm(`Delete ${newsObject.title}?`)) {
+      try {
+          const response = await newsService.remove(event.target.value)
+          setUpdateMessage(`Removed ${newsObject.title} from News `)
+          setTimeout(() => {
+            setUpdateMessage(null)
+          }, 5000)
+          setNews(news.filter((n) => n.id.toString() !== event.target.value))
+      } catch (exception) {
+      setErrorMessage('something went wrong while trying to remove news')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    }
+  }}
+  /* const removeNewsObject = (event) => {
+    event.preventDefault()
+    try {
+      const newsObject = news.filter(
+        (n) => n.id.toString() === event.target.value.toString()
+        )[0]
     if (window.confirm(`Delete ${newsObject.title}?`)) {
       newsService.remove(event.target.value).then(() => {
         setUpdateMessage(`Removed ${newsObject.title} from News `)
@@ -66,7 +87,7 @@ const App = () => {
       }, 5000)
 
     }
-  }
+  } */
 
   const addNews = async (newsObject) => {
     console.log('addNewssissä', newsObject.imageFile.size)
