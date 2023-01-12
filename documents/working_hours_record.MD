@@ -37,4 +37,8 @@
 |11.1.2023|2| Refactoring s3 test app, upgrading Hilland app to use S3 storage| 
 |11.1.2023|1| Refactoring front |
 |11.1.2023|1| upgraded alerts to  Error & Update notification / front|
-|Total Hours|86|
+|12.1.2023|2| updating s3 test app to delete images from S3|
+|12.1.2023|1| fix bug in delete news|
+|12.1.2023|1| upgrading permissions for users and news|
+|12.1.2023|4| add update news functionality|
+|Total Hours|94|
