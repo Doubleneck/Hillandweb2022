@@ -35,9 +35,23 @@ const App = () => {
       window.localStorage.setItem('loggedHillandappUser', JSON.stringify(user))
       newsService.setToken(user.token)
       setUser(user)
+      console.log(user)
       console.log('logging in with', userObject.username, userObject.password)
     } catch (exception) {
       setErrorMessage('wrong credentials')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    }
+  }
+  const handleLogout = async (event) => {
+    try {
+      window.localStorage.setItem('loggedHillandappUser', '')
+      newsService.setToken(null)
+      setUser('')
+      console.log('logging out')
+    } catch (exception) {
+      setErrorMessage('logout failed')
       setTimeout(() => {
         setErrorMessage(null)
       }, 5000)
@@ -132,6 +146,9 @@ const App = () => {
 
   return (
     <div>
+      <button type='submit' onClick={handleLogout}>
+        logout
+      </button>
       <h1>Hilland Demo</h1>
       {user === '' ? (
         <LoginForm handleSubmit={handleLogin} />
