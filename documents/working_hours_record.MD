@@ -44,4 +44,5 @@ test-configuration|
 |12.1.2023|1| upgrading permissions for users and news|
 |12.1.2023|4| add update news functionality|
 |13.1.2023|1| add s3 file delete functionality to app|
-|Total Hours|97|
+|13.1.2023|1| add logout functionality, fix user creation permissions|
+|Total Hours|98|
