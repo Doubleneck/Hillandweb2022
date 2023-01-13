@@ -31,4 +31,26 @@ async function generateUploadURL() {
   console.log('uploadUrl', uploadURL)
   return uploadURL
 }
+
+async function deleteImage(id) {
+  console.log('deletoitavan id S3ssa:', id)
+  const params = {
+    Bucket: bucketName,
+    Key: id, //if any sub folder-> path/of/the/folder.ext
+  }
+  try {
+    await s3.headObject(params).promise()
+    console.log('File Found in S3')
+    try {
+      await s3.deleteObject(params).promise()
+      console.log('file deleted Successfully')
+    } catch (err) {
+      console.log('ERROR in file Deleting : ' + JSON.stringify(err))
+    }
+  } catch (err) {
+    console.log('File not Found ERROR : ' + err.code)
+  }
+}
+
 module.exports.generateUploadURL = generateUploadURL
+module.exports.deleteImage = deleteImage

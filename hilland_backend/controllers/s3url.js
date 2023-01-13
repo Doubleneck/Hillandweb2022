@@ -7,4 +7,10 @@ s3urlRouter.get('/', async (req, res) => {
   await res.send({ url })
 })
 
+s3urlRouter.post('/', async (req, res) => {
+  const toBeDeletedInS3Id = req.body.id
+  await s3.deleteImage(toBeDeletedInS3Id)
+  return
+})
+
 module.exports = s3urlRouter

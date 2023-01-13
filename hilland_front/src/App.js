@@ -18,7 +18,7 @@ const App = () => {
       .then((news) =>
         setNews(news.sort((a, b) => b.date.localeCompare(a.date)))
       )
-  }, [])
+  }, [news])
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedHillandappUser')
@@ -46,44 +46,51 @@ const App = () => {
 
   const removeNewsObject = async (event) => {
     event.preventDefault()
-    const newsObject = news.filter(
+    const newsObject = await news.filter(
       (n) => n.id.toString() === event.target.value.toString()
-      )[0]
-    
+    )[0]
+    const data = await { id: newsObject.imageURL.split('/')[3] }
+    const url = 'http://localhost:3001/api/s3url'
     if (window.confirm(`Delete ${newsObject.title}?`)) {
       try {
-          await newsService.remove(event.target.value)
-          setUpdateMessage(`Removed ${newsObject.title} from News `)
-          setTimeout(() => {
-            setUpdateMessage(null)
-          }, 5000)
-          setNews(news.filter((n) => n.id.toString() !== event.target.value))
+        await newsService.remove(event.target.value)
+        await fetch(url, {
+          method: 'post',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        })
+        await setUpdateMessage(`Removed ${newsObject.title} from News `)
+        setNews(news.filter((n) => n.id.toString() !== event.target.value))
+        setTimeout(() => {
+          setUpdateMessage(null)
+        }, 5000)
       } catch (exception) {
-      setErrorMessage('something went wrong while trying to remove news')
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
+        setErrorMessage('something went wrong while trying to remove news')
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
+      }
     }
-  }}
+  }
 
   const updateNewsObject = async (newsObject) => {
-    
     try {
-      const returnedNews = await newsService.update(newsObject.id,newsObject)
+      const returnedNews = await newsService.update(newsObject.id, newsObject)
       console.log(returnedNews)
-      setUpdateMessage(`Updated ${newsObject.title}, please refresh the browser`)
+      setUpdateMessage(`Updated ${newsObject.title} !!`)
       setTimeout(() => {
         setUpdateMessage(null)
       }, 6000)
-      setNews(news.filter(n => n.id !== newsObject.id))
+      setNews(news.filter((n) => n.id !== newsObject.id))
     } catch (exception) {
       setErrorMessage('something went wrong while trying to remove news')
       setTimeout(() => {
         setErrorMessage(null)
       }, 5000)
-    } 
- }
-
+    }
+  }
 
   const addNews = async (newsObject) => {
     const file = newsObject.imageFile
@@ -99,7 +106,7 @@ const App = () => {
         body: file,
       })
       const imageUrl = await url.split('?')[0]
-      
+
       const newsDataObject = {
         title: newsObject.title,
         content: newsObject.content,
@@ -125,15 +132,14 @@ const App = () => {
 
   return (
     <div>
-      
       <h1>Hilland Demo</h1>
       {user === '' ? (
         <LoginForm handleSubmit={handleLogin} />
       ) : (
         <div>
           <p>{user.name} logged in</p>
-          < SuccessNotification message = {updateMessage} />
-          < ErrorNotification message = {errorMessage} />
+          <SuccessNotification message={updateMessage} />
+          <ErrorNotification message={errorMessage} />
           <Togglable buttonLabel='Add News'>
             <NewsForm createNews={addNews} />
           </Togglable>
@@ -158,21 +164,13 @@ const SuccessNotification = ({ message }) => {
   if (message === null) {
     return null
   }
-  return (
-    <div className="update">
-      {message}
-    </div>
-  )
+  return <div className='update'>{message}</div>
 }
 
 const ErrorNotification = ({ message }) => {
   if (message === null) {
     return null
   }
-  return (
-    <div className="error">
-      {message}
-    </div>
-  )
+  return <div className='error'>{message}</div>
 }
 export default App

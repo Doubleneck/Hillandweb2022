@@ -1,27 +1,30 @@
 import { useState } from 'react'
 
-const UpdateNewsForm = ({updateThisNews, newsObjectToBeUpdated}) => { 
-    //console.log(newsObjectToBeUpdated)
+const UpdateNewsForm = ({ updateThisNews, newsObjectToBeUpdated }) => {
+  //console.log(newsObjectToBeUpdated)
   const [newTitle, setNewTitle] = useState(newsObjectToBeUpdated.title)
   const [newContent, setNewContent] = useState(newsObjectToBeUpdated.content)
-
+  const [newURL, setNewURL] = useState(newsObjectToBeUpdated.url)
 
   const handleTitleChange = (event) => {
     setNewTitle(event.target.value)
-    console.log(event.target.value)
   }
 
   const handleContentChange = (event) => {
     setNewContent(event.target.value)
   }
 
+  const handleURLChange = (event) => {
+    setNewURL(event.target.value)
+  }
+
   const updatedNewsObject = {
     title: newTitle,
-    content: newContent,  
-    url: newsObjectToBeUpdated.URL,
+    content: newContent,
+    url: newURL,
     date: newsObjectToBeUpdated.date,
     imageURL: newsObjectToBeUpdated.imageUrl,
-    id: newsObjectToBeUpdated.id
+    id: newsObjectToBeUpdated.id,
   }
 
   const updateNews = (event) => {
@@ -29,16 +32,22 @@ const UpdateNewsForm = ({updateThisNews, newsObjectToBeUpdated}) => {
     updateThisNews(updatedNewsObject)
     setNewTitle('')
     setNewContent('')
+    setNewURL('')
   }
   return (
     <div>
       <h2>Update this news: </h2>
       <form onSubmit={updateNews}>
         <div>
-          title: <input value={newTitle} size="50" onChange={handleTitleChange} />
+          title:{' '}
+          <input value={newTitle} size='50' onChange={handleTitleChange} />
         </div>
         <div>
-          content: <input  value={newContent} size="50" onChange={handleContentChange} />
+          content:{' '}
+          <input value={newContent} size='50' onChange={handleContentChange} />
+        </div>
+        <div>
+          url: <input value={newURL} size='50' onChange={handleURLChange} />
         </div>
         <br />
         <button type='submit'>Update</button>
