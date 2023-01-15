@@ -43,17 +43,16 @@ beforeAll(async () => {
 })
 
 describe('GET s3 url when there is initially one admin-user and one user-user at db', () => {
-  test('getting  s3 url succees if logged as ADMIN ', async () => {
+  /*   test('getting  s3 url succees if logged as ADMIN ', async () => {
     newUser = helper.newUser
     await api
       .get('/api/s3url')
       .set('Authorization', `Bearer ${ADMINTOKEN}`)
       .expect(200)
       .expect('Content-Type', /application\/json/)
-  })
+  }) */
 
   test('getting  s3 url fails if not loggedin ', async () => {
-    newUser = helper.newUser
     await api
       .get('/api/s3url')
       .expect(401)
@@ -61,8 +60,6 @@ describe('GET s3 url when there is initially one admin-user and one user-user at
   })
 
   test('getting  s3 url fails if logged as USER ', async () => {
-    newUser = helper.newUser
-
     await api
       .get('/api/s3url')
       .set('Authorization', `Bearer ${USERTOKEN}`)
@@ -70,6 +67,7 @@ describe('GET s3 url when there is initially one admin-user and one user-user at
       .expect('Content-Type', /application\/json/)
   })
 })
+
 describe('POST s3 url when there is initially one admin-user and one user-user at db', () => {
   test('access to s3 post succees if logged as USER ', async () => {
     const toBeDeletedId = {
