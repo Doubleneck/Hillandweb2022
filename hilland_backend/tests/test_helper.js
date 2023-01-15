@@ -7,27 +7,25 @@ const initialNews = [
     content: 'HTML is easy',
     date: new Date(),
     url: 'www.testnews.com',
-    image: ''
+    image: '',
   },
   {
-    title: 'Test news #2',  
+    title: 'Test news #2',
     content: 'NOTHING is easy',
     date: new Date(),
     url: 'www.testnews2.com',
-    image: ''
+    image: '',
   },
 ]
 
 const nonExistingId = async () => {
-  const news = new News(
-    {
-      title: 'Test news to be removed',  
-      content: 'will be remnoved',
-      date: new Date(),
-      url: 'www.testnews2.com',
-      image: ''
-    }
-  )
+  const news = new News({
+    title: 'Test news to be removed',
+    content: 'will be remnoved',
+    date: new Date(),
+    url: 'www.testnews2.com',
+    image: '',
+  })
   await news.save()
   await news.remove()
 
@@ -36,17 +34,33 @@ const nonExistingId = async () => {
 
 const newsInDb = async () => {
   const news = await News.find({})
-  return news.map(n => n.toJSON())
+  return news.map((n) => n.toJSON())
 }
 const usersInDb = async () => {
   const users = await User.find({})
-  return users.map(u => u.toJSON())
+  return users.map((u) => u.toJSON())
 }
 
+const newNews = {
+  title: 'Test news added_valid_news',
+  content: 'Added this news',
+  date: new Date(),
+  url: 'www.testnews3.com',
+  imageURL: 'www.s3.com/something',
+}
+
+const newUser = {
+  username: 'someuser',
+  name: 'Some User',
+  role: 'user',
+  password: 'somepasswordhash',
+}
 
 module.exports = {
-  initialNews, 
-  nonExistingId, 
-  newsInDb, 
-  usersInDb
+  initialNews,
+  nonExistingId,
+  newsInDb,
+  usersInDb,
+  newUser,
+  newNews,
 }
