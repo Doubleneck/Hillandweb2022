@@ -93,12 +93,4 @@ describe('POST s3 url when there is initially one admin-user and one user-user a
       .expect(401)
       .expect('Content-Type', /application\/json/)
   })
-  /*     test('getting  s3 url fails if logged as USER ', async () => {
-      newUser = helper.newUser
-      await api
-        .get('/api/s3url')
-        .set('Authorization', `Bearer ${USERTOKEN}`)
-        .expect(401)
-        .expect('Content-Type', /application\/json/)
-    }) */
 })
