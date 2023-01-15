@@ -45,4 +45,5 @@ test-configuration|
 |12.1.2023|4| add update news functionality|
 |13.1.2023|1| add s3 file delete functionality to app|
 |13.1.2023|1| add logout functionality, fix user creation permissions|
-|Total Hours|98|
+|15.1.2023|2| refactor tests, new class user_api.tests, add tests for wrong auth|
+|Total Hours|100|
