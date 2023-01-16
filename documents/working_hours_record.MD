@@ -11,8 +11,7 @@
 |29.12.2022|2| express backend to use mongo / neww: create, remove, all, refactoring|
 |29.12.2022|1| Add new parameter "url" to news e2e"|
 |29.12.2022|1| Add eslint, clean code, remove obsolete sqlite3|
-|30.12.2022|2 (st 33)| fully refactor backend, add Jest 
-test-configuration|
+|30.12.2022|2 (st 33)| fully refactor backend, add Jest test-configuration|
 |1.1.2023|4| add supertests for news, change news routes to async|
 |2.1.2023|2| refactor tests, refactor async funcs news routes|  
 |2.1.2023|1| add basic user functionality: model, controller, init tests|
@@ -47,4 +46,5 @@ test-configuration|
 |13.1.2023|1| add logout functionality, fix user creation permissions|
 |15.1.2023|2| refactor tests, new class user_api.tests, add tests for wrong auth|
 |15.1.2023|1| add tests to check unauth access to s3 routes |
-|Total Hours|101|
+|16.1.2023|2| refactor front new service s3.js, fix s3url path auth failure|
+|Total Hours|103|

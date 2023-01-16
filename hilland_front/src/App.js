@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import newsService from './services/news'
 import loginService from './services/login'
+import s3Service from './services/s3'
 import LoginForm from './components/LoginForm'
 import NewsForm from './components/NewsForm'
 import NewsObject from './components/NewsObject'
@@ -34,6 +35,7 @@ const App = () => {
       const user = await loginService.login(userObject)
       window.localStorage.setItem('loggedHillandappUser', JSON.stringify(user))
       newsService.setToken(user.token)
+      s3Service.setToken(user.token)
       setUser(user)
       console.log(user)
       console.log('logging in with', userObject.username, userObject.password)
@@ -109,17 +111,7 @@ const App = () => {
   const addNews = async (newsObject) => {
     const file = newsObject.imageFile
     try {
-      const { url } = await fetch('http://localhost:3001/api/s3url').then(
-        (res) => res.json()
-      )
-      await fetch(url, {
-        method: 'put',
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-        body: file,
-      })
-      const imageUrl = await url.split('?')[0]
+      const imageUrl = await s3Service.sendToS3(file)
 
       const newsDataObject = {
         title: newsObject.title,
