@@ -47,4 +47,5 @@
 |15.1.2023|2| refactor tests, new class user_api.tests, add tests for wrong auth|
 |15.1.2023|1| add tests to check unauth access to s3 routes |
 |16.1.2023|2| refactor front new service s3.js, fix s3url path auth failure|
-|Total Hours|103|
+|17.1.2023|3| fix and change delete img from S3 functionality|
+|Total Hours|106|
