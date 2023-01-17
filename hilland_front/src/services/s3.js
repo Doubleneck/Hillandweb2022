@@ -1,3 +1,4 @@
+import axios from 'axios'
 const baseUrl = 'http://localhost:3001/api/s3url'
 let token = null
 
@@ -10,7 +11,6 @@ const sendToS3 = async (file) => {
     headers: { Authorization: token },
   }
   const { url } = await fetch(baseUrl, config).then((res) => res.json()) ///FIX THIS !!!
-
   await fetch(url, {
     method: 'put',
     headers: {
@@ -22,4 +22,11 @@ const sendToS3 = async (file) => {
   return imageUrl
 }
 
-export default { setToken, sendToS3 }
+const deleteFromS3 = async (id) => {
+  const config = {
+    headers: { Authorization: token },
+  }
+  await axios.post(baseUrl, id, config)
+}
+
+export default { setToken, sendToS3, deleteFromS3 }

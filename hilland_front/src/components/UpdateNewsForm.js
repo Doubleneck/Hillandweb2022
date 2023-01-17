@@ -1,7 +1,6 @@
 import { useState } from 'react'
 
 const UpdateNewsForm = ({ updateThisNews, newsObjectToBeUpdated }) => {
-  //console.log(newsObjectToBeUpdated)
   const [newTitle, setNewTitle] = useState(newsObjectToBeUpdated.title)
   const [newContent, setNewContent] = useState(newsObjectToBeUpdated.content)
   const [newURL, setNewURL] = useState(newsObjectToBeUpdated.url)

@@ -2,15 +2,15 @@ import axios from 'axios'
 const baseUrl = 'http://localhost:3001/api/news'
 let token = null
 
-const setToken = newToken => {
+const setToken = (newToken) => {
   token = `bearer ${newToken}`
 }
-const getAll =  () => {
+const getAll = () => {
   const request = axios.get(baseUrl)
-  return request.then(response => response.data)
+  return request.then((response) => response.data)
 }
 
-const create = async newObject => {
+const create = async (newObject) => {
   const config = {
     headers: { Authorization: token },
   }
@@ -18,7 +18,7 @@ const create = async newObject => {
   return response.data
 }
 
-const update = async(id, newObject) => {
+const update = async (id, newObject) => {
   const config = {
     headers: { Authorization: token },
   }
@@ -31,6 +31,6 @@ const remove = async (id) => {
     headers: { Authorization: token },
   }
   await axios.delete(`${baseUrl}/${id}`, config)
-  }
+}
 
-export default { getAll, create, update, remove , setToken}
+export default { getAll, create, update, remove, setToken }

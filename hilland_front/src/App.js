@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useReducer } from 'react'
 import newsService from './services/news'
 import loginService from './services/login'
 import s3Service from './services/s3'
@@ -12,6 +12,7 @@ const App = () => {
   const [user, setUser] = useState('')
   const [errorMessage, setErrorMessage] = useState(null)
   const [updateMessage, setUpdateMessage] = useState(null)
+  const [reducervalue, forceUpdate] = useReducer((x) => x + 1, 0)
 
   useEffect(() => {
     newsService
@@ -19,7 +20,11 @@ const App = () => {
       .then((news) =>
         setNews(news.sort((a, b) => b.date.localeCompare(a.date)))
       )
-  }, [news])
+  }, [reducervalue])
+
+  function handleClick() {
+    forceUpdate()
+  }
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedHillandappUser')
@@ -50,6 +55,7 @@ const App = () => {
     try {
       window.localStorage.setItem('loggedHillandappUser', '')
       newsService.setToken(null)
+      s3Service.setToken(null)
       setUser('')
       console.log('logging out')
     } catch (exception) {
@@ -65,19 +71,13 @@ const App = () => {
     const newsObject = await news.filter(
       (n) => n.id.toString() === event.target.value.toString()
     )[0]
-    const data = await { id: newsObject.imageURL.split('/')[3] }
-    const url = 'http://localhost:3001/api/s3url'
+    const toBeRemovedFromS3Id = await { id: newsObject.imageURL.split('/')[3] }
+    console.log('removeNwes', toBeRemovedFromS3Id)
     if (window.confirm(`Delete ${newsObject.title}?`)) {
       try {
         await newsService.remove(event.target.value)
-        await fetch(url, {
-          method: 'post',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data),
-        })
-        await setUpdateMessage(`Removed ${newsObject.title} from News `)
+        await s3Service.deleteFromS3(toBeRemovedFromS3Id)
+        setUpdateMessage(`Removed ${newsObject.title} from News `)
         setNews(news.filter((n) => n.id.toString() !== event.target.value))
         setTimeout(() => {
           setUpdateMessage(null)
@@ -93,13 +93,11 @@ const App = () => {
 
   const updateNewsObject = async (newsObject) => {
     try {
-      const returnedNews = await newsService.update(newsObject.id, newsObject)
-      console.log(returnedNews)
-      setUpdateMessage(`Updated ${newsObject.title} !!`)
+      await newsService.update(newsObject.id, newsObject)
+      setUpdateMessage(`Updated ${newsObject.title} , please refresh!!`)
       setTimeout(() => {
         setUpdateMessage(null)
       }, 6000)
-      setNews(news.filter((n) => n.id !== newsObject.id))
     } catch (exception) {
       setErrorMessage('something went wrong while trying to remove news')
       setTimeout(() => {
@@ -116,7 +114,7 @@ const App = () => {
       const newsDataObject = {
         title: newsObject.title,
         content: newsObject.content,
-        url: newsObject.URL,
+        url: newsObject.url,
         date: newsObject.date,
         imageURL: imageUrl,
       }

@@ -20,7 +20,8 @@ s3urlRouter.get('/', async (req, res) => {
 })
 
 s3urlRouter.post('/', async (req, res) => {
-  const token = req.token
+  console.log('kukkuu')
+  const token = await req.token
   const decodedToken = jwt.verify(token, process.env.SECRET)
   if (!token || !decodedToken.id) {
     return res.status(401).json({ error: 'token missing or invalid' })
@@ -31,9 +32,10 @@ s3urlRouter.post('/', async (req, res) => {
       .status(401)
       .json({ error: 'you don´t have rights for this operation' })
   }
-  const toBeDeletedInS3Id = req.body.id
+  const toBeDeletedInS3Id = await req.body.id
+  console.log('delete id', toBeDeletedInS3Id)
   await s3.deleteImage(toBeDeletedInS3Id)
-  return
+  return null
 })
 
 module.exports = s3urlRouter
