@@ -48,4 +48,5 @@
 |15.1.2023|1| add tests to check unauth access to s3 routes |
 |16.1.2023|2| refactor front new service s3.js, fix s3url path auth failure|
 |17.1.2023|3| fix and change delete img from S3 functionality|
-|Total Hours|106|
+|18.1.2023|1| fix & update removeNews, add proxy, add forceUpdate to updatenews|
+|Total Hours|107|
