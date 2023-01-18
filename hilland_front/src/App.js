@@ -32,6 +32,7 @@ const App = () => {
       const user = JSON.parse(loggedUserJSON)
       setUser(user)
       newsService.setToken(user.token)
+      s3Service.setToken(user.token)
     }
   }, [])
 
@@ -66,22 +67,18 @@ const App = () => {
     }
   }
 
-  const removeNewsObject = async (event) => {
-    event.preventDefault()
-    const newsObject = await news.filter(
-      (n) => n.id.toString() === event.target.value.toString()
-    )[0]
-    const toBeRemovedFromS3Id = await { id: newsObject.imageURL.split('/')[3] }
-    console.log('removeNwes', toBeRemovedFromS3Id)
+  const removeNewsObject = async (newsObject) => {
+    const toBeRemovedS3Id = await { id: newsObject.imageURL.split('/')[3] }
+
     if (window.confirm(`Delete ${newsObject.title}?`)) {
       try {
-        await newsService.remove(event.target.value)
-        await s3Service.deleteFromS3(toBeRemovedFromS3Id)
+        await newsService.remove(newsObject.id)
         setUpdateMessage(`Removed ${newsObject.title} from News `)
-        setNews(news.filter((n) => n.id.toString() !== event.target.value))
         setTimeout(() => {
           setUpdateMessage(null)
         }, 5000)
+        setNews(news.filter((n) => n.id.toString() !== newsObject.id))
+        await s3Service.deleteFromS3(toBeRemovedS3Id)
       } catch (exception) {
         setErrorMessage('something went wrong while trying to remove news')
         setTimeout(() => {
@@ -94,7 +91,8 @@ const App = () => {
   const updateNewsObject = async (newsObject) => {
     try {
       await newsService.update(newsObject.id, newsObject)
-      setUpdateMessage(`Updated ${newsObject.title} , please refresh!!`)
+      await forceUpdate()
+      setUpdateMessage(`Updated ${newsObject.title}`)
       setTimeout(() => {
         setUpdateMessage(null)
       }, 6000)

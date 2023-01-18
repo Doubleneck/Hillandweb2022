@@ -29,9 +29,6 @@ const UpdateNewsForm = ({ updateThisNews, newsObjectToBeUpdated }) => {
   const updateNews = (event) => {
     event.preventDefault()
     updateThisNews(updatedNewsObject)
-    setNewTitle('')
-    setNewContent('')
-    setNewURL('')
   }
   return (
     <div>

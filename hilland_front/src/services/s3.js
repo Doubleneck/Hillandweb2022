@@ -1,5 +1,6 @@
 import axios from 'axios'
-const baseUrl = 'http://localhost:3001/api/s3url'
+//const baseUrl = 'http://localhost:3001/api/s3url'
+const baseUrl = '/api/s3url'
 let token = null
 
 const setToken = (newToken) => {
