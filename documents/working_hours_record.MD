@@ -49,4 +49,5 @@
 |16.1.2023|2| refactor front new service s3.js, fix s3url path auth failure|
 |17.1.2023|3| fix and change delete img from S3 functionality|
 |18.1.2023|1| fix & update removeNews, add proxy, add forceUpdate to updatenews|
-|Total Hours|107|
+|29.1.2023|1| add notification to wrong creds login, add build scripts, build |
+|Total Hours|108|
