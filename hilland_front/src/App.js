@@ -134,14 +134,18 @@ const App = () => {
 
   return (
     <div>
-      <button type='submit' onClick={handleLogout}>
-        logout
-      </button>
       <h1>Hilland Demo</h1>
       {user === '' ? (
-        <LoginForm handleSubmit={handleLogin} />
+        <>
+          <SuccessNotification message={updateMessage} />
+          <ErrorNotification message={errorMessage} />
+          <LoginForm handleSubmit={handleLogin} />
+        </>
       ) : (
         <div>
+          <button type='submit' onClick={handleLogout}>
+            logout
+          </button>
           <p>{user.name} logged in</p>
           <SuccessNotification message={updateMessage} />
           <ErrorNotification message={errorMessage} />
