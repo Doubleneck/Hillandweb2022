@@ -50,4 +50,5 @@
 |17.1.2023|3| fix and change delete img from S3 functionality|
 |18.1.2023|1| fix & update removeNews, add proxy, add forceUpdate to updatenews|
 |29.1.2023|1| add notification to wrong creds login, add build scripts, build |
-|Total Hours|108|
+|9.2.2023|4| refactor app to use react-redux: notification|
+|Total Hours|112|
