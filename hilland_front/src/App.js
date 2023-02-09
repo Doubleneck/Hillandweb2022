@@ -6,12 +6,13 @@ import LoginForm from './components/LoginForm'
 import NewsForm from './components/NewsForm'
 import NewsObject from './components/NewsObject'
 import Togglable from './components/Togglable'
+import Notification from './components/Notification'
+import { setNotification } from './reducers/notificationReducer'
+import store from './store'
 
 const App = () => {
   const [news, setNews] = useState([])
   const [user, setUser] = useState('')
-  const [errorMessage, setErrorMessage] = useState(null)
-  const [updateMessage, setUpdateMessage] = useState(null)
   const [reducervalue, forceUpdate] = useReducer((x) => x + 1, 0)
 
   useEffect(() => {
@@ -46,10 +47,11 @@ const App = () => {
       console.log(user)
       console.log('logging in with', userObject.username, userObject.password)
     } catch (exception) {
-      setErrorMessage('wrong credentials')
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
+      store.dispatch(
+        setNotification(
+          'wrong credentials', 3, 'error'
+        )
+      )
     }
   }
   const handleLogout = async (event) => {
@@ -60,10 +62,11 @@ const App = () => {
       setUser('')
       console.log('logging out')
     } catch (exception) {
-      setErrorMessage('logout failed')
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
+      store.dispatch(
+        setNotification(
+          'logout failed', 3, 'error'
+        )
+      )
     }
   }
 
@@ -73,17 +76,19 @@ const App = () => {
     if (window.confirm(`Delete ${newsObject.title}?`)) {
       try {
         await newsService.remove(newsObject.id)
-        setUpdateMessage(`Removed ${newsObject.title} from News `)
-        setTimeout(() => {
-          setUpdateMessage(null)
-        }, 5000)
+        store.dispatch(
+          setNotification(
+            `Removed ${newsObject.title} from News `, 5, 'update'
+          )
+        )
         setNews(news.filter((n) => n.id.toString() !== newsObject.id))
         await s3Service.deleteFromS3(toBeRemovedS3Id)
       } catch (exception) {
-        setErrorMessage('something went wrong while trying to remove news')
-        setTimeout(() => {
-          setErrorMessage(null)
-        }, 5000)
+        store.dispatch(
+          setNotification(
+            'something went wrong while trying to remove news', 5, 'error'
+          )
+        )
       }
     }
   }
@@ -92,15 +97,17 @@ const App = () => {
     try {
       await newsService.update(newsObject.id, newsObject)
       await forceUpdate()
-      setUpdateMessage(`Updated ${newsObject.title}`)
-      setTimeout(() => {
-        setUpdateMessage(null)
-      }, 6000)
+      store.dispatch(
+        setNotification(
+          `Updated ${newsObject.title}`, 5, 'update'
+        )
+      )
     } catch (exception) {
-      setErrorMessage('something went wrong while trying to remove news')
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
+      store.dispatch(
+        setNotification(
+          'something went wrong while trying to update news', 5, 'error'
+        )
+      )
     }
   }
 
@@ -120,15 +127,17 @@ const App = () => {
       setNews(
         news.concat(returnedNews).sort((a, b) => b.date.localeCompare(a.date))
       )
-      setUpdateMessage(`A news: ${newsObject.title}  added !!!`)
-      setTimeout(() => {
-        setUpdateMessage(null)
-      }, 5000)
+      store.dispatch(
+        setNotification(
+          `A news: ${newsObject.title}  added !!!`, 5, 'update'
+        )
+      )
     } catch (exception) {
-      setErrorMessage('something went wrong while trying to create news')
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
+      store.dispatch(
+        setNotification(
+          'something went wrong while trying to create news', 5, 'error'
+        )
+      )
     }
   }
 
@@ -136,9 +145,8 @@ const App = () => {
     <div>
       <h1>Hilland Demo</h1>
       {user === '' ? (
-        <>
-          <SuccessNotification message={updateMessage} />
-          <ErrorNotification message={errorMessage} />
+        <> 
+          <Notification />
           <LoginForm handleSubmit={handleLogin} />
         </>
       ) : (
@@ -147,8 +155,7 @@ const App = () => {
             logout
           </button>
           <p>{user.name} logged in</p>
-          <SuccessNotification message={updateMessage} />
-          <ErrorNotification message={errorMessage} />
+          <Notification />
           <Togglable buttonLabel='Add News'>
             <NewsForm createNews={addNews} />
           </Togglable>
@@ -169,17 +176,5 @@ const App = () => {
     </div>
   )
 }
-const SuccessNotification = ({ message }) => {
-  if (message === null) {
-    return null
-  }
-  return <div className='update'>{message}</div>
-}
 
-const ErrorNotification = ({ message }) => {
-  if (message === null) {
-    return null
-  }
-  return <div className='error'>{message}</div>
-}
 export default App
