@@ -1,6 +1,25 @@
 import { useState } from 'react'
+import newsService from '../services/news'
+import { setNotification } from '../reducers/notificationReducer'
+import store from '../store'
 
-const UpdateNewsForm = ({ updateThisNews, newsObjectToBeUpdated }) => {
+const updateThisNews = async (newsObject) => {
+    try {
+      await newsService.update(newsObject.id, newsObject)
+      store.dispatch(
+        setNotification(
+          `Updated ${newsObject.title}`, 5, 'update'
+        )
+      )
+    } catch (exception) {
+      store.dispatch(
+        setNotification(
+          'something went wrong while trying to update news', 5, 'error'
+        )
+      )
+    }
+  } 
+const UpdateNewsForm = ({  newsObjectToBeUpdated }) => {
   const [newTitle, setNewTitle] = useState(newsObjectToBeUpdated.title)
   const [newContent, setNewContent] = useState(newsObjectToBeUpdated.content)
   const [newURL, setNewURL] = useState(newsObjectToBeUpdated.url)
@@ -26,10 +45,10 @@ const UpdateNewsForm = ({ updateThisNews, newsObjectToBeUpdated }) => {
     id: newsObjectToBeUpdated.id,
   }
 
-  const updateNews = (event) => {
+   const updateNews = (event) => {
     event.preventDefault()
     updateThisNews(updatedNewsObject)
-  }
+  } 
   return (
     <div>
       <h2>Update this news: </h2>

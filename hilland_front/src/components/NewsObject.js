@@ -19,8 +19,7 @@ const removeNewsObject = async (newsObject) => {
           `Removed ${newsObject.title} from News `, 5, 'update'
         )
       )
-      
-      //setNews(news.filter((n) => n.id.toString() !== newsObject.id))
+
       await s3Service.deleteFromS3(toBeRemovedS3Id)
     } catch (exception) {
       store.dispatch(
@@ -31,7 +30,7 @@ const removeNewsObject = async (newsObject) => {
     }
   }
 } 
-//, removeNewsObject, updateNewsObject
+
 const NewsObject = ({ newsObject }) => {
   const handleDelete = () => {
     removeNewsObject(newsObject)
@@ -52,7 +51,9 @@ const NewsObject = ({ newsObject }) => {
         delete
       </button>
       <Togglable buttonLabel='Update'>
-       
+      <UpdateNewsForm
+         newsObjectToBeUpdated={newsObject}
+      />
       </Togglable>
     </ul>
   )

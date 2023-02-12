@@ -1,4 +1,4 @@
-import { useState, useEffect, useReducer } from 'react'
+import { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import newsService from './services/news'
 import loginService from './services/login'
@@ -13,11 +13,8 @@ import { setNews } from './reducers/newsReducer'
 import store from './store'
 
 const App = () => {
-  //const [news, setNews] = useState([])
   const news = useSelector((state) => state.news)
   const [user, setUser] = useState('')
-  //const [reducervalue, forceUpdate] = useReducer((x) => x + 1, 0)
-
   
   useEffect(() => {
     newsService
@@ -27,10 +24,6 @@ const App = () => {
       )
   }, [news])
 
- /*  function handleForce() {
-    forceUpdate()
-  }
- */
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedHillandappUser')
     if (loggedUserJSON) {
@@ -73,24 +66,6 @@ const App = () => {
       )
     }
   }
-
- /*  const updateNewsObject = async (newsObject) => {
-    try {
-      await newsService.update(newsObject.id, newsObject)
-      await forceUpdate()
-      store.dispatch(
-        setNotification(
-          `Updated ${newsObject.title}`, 5, 'update'
-        )
-      )
-    } catch (exception) {
-      store.dispatch(
-        setNotification(
-          'something went wrong while trying to update news', 5, 'error'
-        )
-      )
-    }
-  } */
 
   return (
     <div>
