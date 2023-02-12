@@ -1,6 +1,38 @@
 import Togglable from '../components/Togglable'
 import UpdateNewsForm from '../components/UpdateNewsForm'
-const NewsObject = ({ newsObject, removeNewsObject, updateNewsObject }) => {
+import Notification from '../components/Notification'
+import { setNotification } from '../reducers/notificationReducer'
+import store from '../store'
+import newsService from '../services/news'
+import s3Service from '../services/s3'
+import { removeNewsobject } from '../reducers/newsReducer'
+
+const removeNewsObject = async (newsObject) => {
+  const toBeRemovedS3Id = await { id: newsObject.imageURL.split('/')[3] }
+
+  if (window.confirm(`Delete ${newsObject.title}?`)) {
+    try {
+      await newsService.remove(newsObject.id)
+      store.dispatch(removeNewsobject(newsObject.id))
+      store.dispatch(
+        setNotification(
+          `Removed ${newsObject.title} from News `, 5, 'update'
+        )
+      )
+      
+      //setNews(news.filter((n) => n.id.toString() !== newsObject.id))
+      await s3Service.deleteFromS3(toBeRemovedS3Id)
+    } catch (exception) {
+      store.dispatch(
+        setNotification(
+          'something went wrong while trying to remove news', 5, 'error'
+        )
+      )
+    }
+  }
+} 
+//, removeNewsObject, updateNewsObject
+const NewsObject = ({ newsObject }) => {
   const handleDelete = () => {
     removeNewsObject(newsObject)
   }
@@ -15,14 +47,12 @@ const NewsObject = ({ newsObject, removeNewsObject, updateNewsObject }) => {
       </li>
       <li>{newsObject.content}</li>
       <li>URL:{newsObject.url}</li>
+      <Notification />
       <button value={newsObject} onClick={handleDelete}>
         delete
       </button>
       <Togglable buttonLabel='Update'>
-        <UpdateNewsForm
-          updateThisNews={updateNewsObject}
-          newsObjectToBeUpdated={newsObject}
-        />
+       
       </Togglable>
     </ul>
   )
