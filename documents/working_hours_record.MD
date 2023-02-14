@@ -44,7 +44,7 @@
 |12.1.2023|4| add update news functionality|
 |13.1.2023|1| add s3 file delete functionality to app|
 |13.1.2023|1| add logout functionality, fix user creation permissions|
-|15.1.2023|2| refactor tests, new class user_api.tests, add tests for wrong auth|
+|15.1.2023|2 st 100| refactor tests, new class user_api.tests, add tests for wrong auth|
 |15.1.2023|1| add tests to check unauth access to s3 routes |
 |16.1.2023|2| refactor front new service s3.js, fix s3url path auth failure|
 |17.1.2023|3| fix and change delete img from S3 functionality|
@@ -52,4 +52,5 @@
 |29.1.2023|1| add notification to wrong creds login, add build scripts, build |
 |9.2.2023|4| refactor app to use react-redux reducers: notification|
 |12.2.2023|6| refactor app to use react-redux reducers: news|
-|Total Hours|118|
+|14.2.2023|5| refactor app to use react-redux reducers: login & news|
+|Total Hours|123|
