@@ -53,4 +53,5 @@
 |9.2.2023|4| refactor app to use react-redux reducers: notification|
 |12.2.2023|6| refactor app to use react-redux reducers: news|
 |14.2.2023|5| refactor app to use react-redux reducers: login & news|
-|Total Hours|123|
+|15.2.2023|2| add automatic logout token expiration functionality to front|
+|Total Hours|125|
