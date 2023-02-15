@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import newsService from './services/news'
 import s3Service from './services/s3'
@@ -10,6 +10,7 @@ import Notification from './components/Notification'
 import { setNotification } from './reducers/notificationReducer'
 import { setNews } from './reducers/newsReducer'
 import store from './store'
+import jwt_decode from 'jwt-decode'
 import {
   setUser,
 } from './reducers/loginFormReducer'
@@ -35,6 +36,30 @@ const App = () => {
       s3Service.setToken(user.token)
     }
   }, [])
+
+  useEffect(() => {
+    const loggedUserJSON = window.localStorage.getItem('loggedHillandappUser')
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      const decodedToken = jwt_decode(user.token)
+      const expiresAtMillis = decodedToken.exp * 1000
+      //console.log('Datenow', Date.now())
+      //console.log('expiresAtMillis', expiresAtMillis)
+      
+      if (expiresAtMillis < Date.now()) {
+        window.localStorage.setItem('loggedHillandappUser', '')
+        store.dispatch(setUser(''))
+        newsService.setToken(null)
+        s3Service.setToken(null)
+        console.log('logout', user)
+        store.dispatch(
+          setNotification(
+            'Automaticly logged out', 3, 'error'
+          )
+        )  
+      } 
+    }
+  })
 
   const handleLogout = async (event) => {
     try {
