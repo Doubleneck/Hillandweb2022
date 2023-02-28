@@ -37,19 +37,21 @@ const NewsObject = ({ newsObject }) => {
   const handleDelete = () => {
     removeNewsObject(newsObject)
   }
+
   return (
     <div>
     <ul>
       <li>
-        <h3 className="text-center" style={{width: "100%"}}>{newsObject.title}</h3>
+        <h3 className="text-center" style={{width: "100%", }}>{newsObject.title}</h3>
       </li>
       <li>
         {' '}
         <img src={newsObject.imageURL} className='img-fluid shadow-4' />{' '}
       </li>
       <li>{newsObject.content}</li>
-      <li>URL:{newsObject.url}</li>
-
+      <li>
+      <a href={'https://' + newsObject.url}>{newsObject.url}</a>
+      </li>
       {user === '' ? (
         <> 
         </>
