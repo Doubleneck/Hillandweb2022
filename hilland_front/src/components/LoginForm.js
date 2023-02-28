@@ -4,12 +4,18 @@ import loginService from '../services/login'
 import s3Service from '../services/s3'
 import store from '../store'
 import { setNotification } from '../reducers/notificationReducer'
+import Notification from './Notification'
 import {
   setUser,
 } from '../reducers/loginFormReducer'
+import {
+  // ...
+  useNavigate
+} from 'react-router-dom'
 const LoginForm = () => {
     const [username, setUsername] = useState('') 
-    const [password, setPassword] = useState('')  
+    const [password, setPassword] = useState('') 
+    const navigate = useNavigate() 
 
     const handleUsernameChange = (event) => {
       setUsername(event.target.value)
@@ -32,7 +38,7 @@ const LoginForm = () => {
         store.dispatch(setUser(user))
         setUsername('')
         setPassword('')
-        //navigate('/')
+        navigate('/')
       } catch (exception) {
         store.dispatch(setNotification('Wrong credentials', 3, 'error'))
       }
@@ -40,7 +46,7 @@ const LoginForm = () => {
    return (
      <div>
        <h2>Login</h2>
- 
+       <Notification />
        <form onSubmit={handleSubmit}>
          <div>
            username

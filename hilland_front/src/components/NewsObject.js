@@ -6,6 +6,7 @@ import store from '../store'
 import newsService from '../services/news'
 import s3Service from '../services/s3'
 import { removeNewsobject } from '../reducers/newsReducer'
+import { useSelector } from 'react-redux'
 
 const removeNewsObject = async (newsObject) => {
   const toBeRemovedS3Id = await { id: newsObject.imageURL.split('/')[3] }
@@ -32,6 +33,7 @@ const removeNewsObject = async (newsObject) => {
 } 
 
 const NewsObject = ({ newsObject }) => {
+  const user = useSelector((state) => state.loginForm.user)
   const handleDelete = () => {
     removeNewsObject(newsObject)
   }
@@ -46,15 +48,23 @@ const NewsObject = ({ newsObject }) => {
       </li>
       <li>{newsObject.content}</li>
       <li>URL:{newsObject.url}</li>
-      <Notification />
-      <button value={newsObject} onClick={handleDelete}>
-        delete
-      </button>
-      <Togglable buttonLabel='Update'>
-      <UpdateNewsForm
-         newsObjectToBeUpdated={newsObject}
-      />
-      </Togglable>
+
+      {user === '' ? (
+        <> 
+        </>
+      ) : (
+        <div>
+          <Notification />
+            <button value={newsObject} onClick={handleDelete}>
+              delete
+            </button>
+          <Togglable buttonLabel='Update'>
+            <UpdateNewsForm
+              newsObjectToBeUpdated={newsObject}
+            />
+          </Togglable>
+        </div>
+      )}
     </ul>
   )
 }
