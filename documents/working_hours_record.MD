@@ -55,4 +55,5 @@
 |14.2.2023|5| refactor app to use react-redux reducers: login & news|
 |15.2.2023|2| add automatic logout token expiration functionality to front|
 |28.2.2023|4| Refactor app to use React router|
-|Total Hours|129|
+|28.2.2023|3| Add React Bootstrap, tweak navbar & news scene|
+|Total Hours|132|
