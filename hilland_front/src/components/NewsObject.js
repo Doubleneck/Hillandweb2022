@@ -7,7 +7,7 @@ import newsService from '../services/news'
 import s3Service from '../services/s3'
 import { removeNewsobject } from '../reducers/newsReducer'
 import { useSelector } from 'react-redux'
-
+import '../App.css'
 const removeNewsObject = async (newsObject) => {
   const toBeRemovedS3Id = await { id: newsObject.imageURL.split('/')[3] }
 
@@ -38,13 +38,14 @@ const NewsObject = ({ newsObject }) => {
     removeNewsObject(newsObject)
   }
   return (
+    <div>
     <ul>
       <li>
-        <h3>{newsObject.title}</h3>
+        <h3 className="text-center" style={{width: "100%"}}>{newsObject.title}</h3>
       </li>
       <li>
         {' '}
-        <img src={newsObject.imageURL} />{' '}
+        <img src={newsObject.imageURL} className='img-fluid shadow-4' />{' '}
       </li>
       <li>{newsObject.content}</li>
       <li>URL:{newsObject.url}</li>
@@ -66,6 +67,7 @@ const NewsObject = ({ newsObject }) => {
         </div>
       )}
     </ul>
+    </div>  
   )
 }
 export default NewsObject

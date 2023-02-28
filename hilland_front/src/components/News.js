@@ -14,6 +14,7 @@ import store from '../store'
 import {
   setUser,
 } from '../reducers/loginFormReducer'
+import Container from 'react-bootstrap/Container'
 
 const News = () => {
   const news = useSelector((state) => state.news)
@@ -78,6 +79,7 @@ const News = () => {
   }
 }
   return (
+    <Container>
     <div>
       {user === '' ? (
         <> 
@@ -103,6 +105,7 @@ const News = () => {
         ))}
       </ul>
     </div>
+    </Container>
   )
 }
 
