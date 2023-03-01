@@ -1,4 +1,5 @@
 import './App.css'
+import myLogo from './hlogo.png';
 import {
     BrowserRouter as Router,
     Routes, Route, Link
@@ -12,20 +13,24 @@ import LoginForm from './components/LoginForm'
 import { useSelector } from 'react-redux'
   const App = () => {
     const user = useSelector((state) => state.loginForm.user)
-    const padding = {
+   /*  const padding = {
       padding: 5
-    }
+    } */
   
     return (
        
       <Router>
-<Navbar  collapseOnSelect expand="lg" className="color-nav" >
-  <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+<Navbar collapseOnSelect expand="lg" className="justify-content-center color-nav" >
+  
+  <Navbar.Toggle aria-controls="responsive-navbar-nav"> <img style={{ width: 170, height: 85 }} src={myLogo} alt="Hilland logo"/> </Navbar.Toggle>
   <Navbar.Collapse id="responsive-navbar-nav"> 
     <Nav className="mr-auto">
-      <Navbar.Brand href="/" className="linkText">HOME</Navbar.Brand>
-      <Navbar.Brand href="/news" className="linkText">NEWS</Navbar.Brand>
-      <Navbar.Brand href="/releases" className="linkText">RELEASES</Navbar.Brand>
+      <Navbar.Brand href="/" className="linkText m-auto">HOME</Navbar.Brand>
+      <Navbar.Brand href="/news" className="linkText m-auto">NEWS</Navbar.Brand>
+      <Navbar.Brand href="/videos" className="linkText m-auto">VIDEOS</Navbar.Brand>
+      <Navbar.Brand href="/releases" className="linkText m-auto">RELEASES</Navbar.Brand>
+      <Navbar.Brand href="/truckercaps" className="linkText m-auto">TRUCKER CAPS</Navbar.Brand>
+      <Navbar.Brand href="/archive" className="linkText m-auto">ARCHIVE</Navbar.Brand>
       {user ? (
         <Navbar.Brand href="/">{user.username} logged in</Navbar.Brand>
        ) : (
@@ -46,10 +51,11 @@ import { useSelector } from 'react-redux'
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<LoginForm  />} />
         </Routes>
-  
-        <div>
-          <i>Hilland app, Andy´s web 2023</i>
-        </div>
+
+      <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.05)' }}>
+        © 2023 Copyright: Andy's Web Factory
+      </div>
+       
       </Router>
       
     )

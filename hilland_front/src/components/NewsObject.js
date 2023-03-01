@@ -40,19 +40,23 @@ const NewsObject = ({ newsObject }) => {
 
   return (
     <div>
-    <ul>
+    <ul className='gallery'>
       <li>
-        <h3 className="text-center" style={{width: "100%", }}>{newsObject.title}</h3>
+        <h3 className="text-center">{newsObject.title}</h3>
       </li>
       <li>
         {' '}
         <img src={newsObject.imageURL} className='img-fluid shadow-4' />{' '}
       </li>
-      <li>{newsObject.content}</li>
-      <li>
+      <li className="text-center">{newsObject.content}</li>
+      <li className="text-center">
       <a href={'https://' + newsObject.url}>{newsObject.url}</a>
+      <p></p>
+      <p></p>
       </li>
       {user === '' ? (
+
+
         <> 
         </>
       ) : (

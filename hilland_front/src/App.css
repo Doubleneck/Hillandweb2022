@@ -39,6 +39,21 @@
 .newsText{ color: rgb(150, 75, 31) ; }
 /* Modify brand and text color */
  
+.gallery {
+  padding: .5rem;
+  margin: .5rem;
+  border: .1rem solid #ccc;
+  float: none;
+  display: inline-block;
+}
+
+.gallerynogrid {
+  padding: .5rem;
+  margin: .5rem;
+  border: .001rem solid #ffffff;
+  float: none;
+  display: inline-block;
+}
 
 
 @keyframes App-logo-spin {

@@ -79,7 +79,7 @@ const News = () => {
   }
 }
   return (
-    <Container>
+   
     <div>
       {user === '' ? (
         <> 
@@ -95,17 +95,23 @@ const News = () => {
           </Togglable>
         </div>
       )}
-      
-      <ul>
+      <p></p>
+      <h1 className="text-center" >News:</h1>
+      <p></p>
+      <ul className='gallerynogrid'>
+       
         {news.map((newsObject) => (
-          <NewsObject
+          <NewsObject 
             key={newsObject.id}
             newsObject={newsObject}
           />
+          
         ))}
+        
       </ul>
+     
     </div>
-    </Container>
+  
   )
 }
 
