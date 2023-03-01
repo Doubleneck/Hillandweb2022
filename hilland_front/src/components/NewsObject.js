@@ -46,7 +46,7 @@ const NewsObject = ({ newsObject }) => {
       </li>
       <li>
         {' '}
-        <img src={newsObject.imageURL} className='img-fluid shadow-4' />{' '}
+        <img  src={newsObject.imageURL} className='img-fluid shadow-4' />{' '}
       </li>
       <li className="text-center">{newsObject.content}</li>
       <li className="text-center">
