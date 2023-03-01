@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+/* import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import newsService from './services/news'
 import s3Service from './services/s3'
@@ -111,3 +111,4 @@ const App = () => {
 }
 
 export default App
+ */
