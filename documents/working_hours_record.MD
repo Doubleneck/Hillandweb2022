@@ -58,4 +58,5 @@
 |28.2.2023|3| Add React Bootstrap, tweak navbar & news scene|
 |1.3.2023|5| Add frontend functionality: send song request, tweak news|
 |2.3.2023|2| Debug build problem: only home rendered|
-|Total Hours|139|
+|2.3.2023|1| Fix Safari rendering problem|
+|Total Hours|140|

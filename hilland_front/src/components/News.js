@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import newsService from '../services/news'
 import s3Service from '../services/s3'
-import LoginForm from '../components/LoginForm'
+
 import NewsForm from '../components/NewsForm'
 import NewsObject from '../components/NewsObject'
 import Togglable from '../components/Togglable'
@@ -10,14 +10,14 @@ import Notification from '../components/Notification'
 import { setNotification } from '../reducers/notificationReducer'
 import { setNews } from '../reducers/newsReducer'
 import store from '../store'
-//import jwt_decode from 'jwt-decode'
 import {
   setUser,
 } from '../reducers/loginFormReducer'
-import Container from 'react-bootstrap/Container'
+
 
 const News = () => {
   const news = useSelector((state) => state.news)
+  const news2 = ['abc','def','ghj']
   const user = useSelector((state) => state.loginForm.user)
 
   useEffect(() => {
@@ -26,7 +26,7 @@ const News = () => {
       .then((news) =>
       store.dispatch(setNews(news.sort((a, b) => b.date.localeCompare(a.date))))
       )
-  }, [news])
+  }, [])
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedHillandappUser')
@@ -98,13 +98,16 @@ const News = () => {
       <p></p>
       <h1 className="text-center" >News:</h1>
       <p></p>
-      <ul className='gallerynogrid'>
+      <ul className="gallerynogrid" >
        
         {news.map((newsObject) => (
-          <NewsObject 
+        <div >
+       <NewsObject 
             key={newsObject.id}
             newsObject={newsObject}
           />
+          
+         </div>
           
         ))}
         

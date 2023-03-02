@@ -58,7 +58,7 @@ import { useSelector } from 'react-redux'
           )}
 </>
         <Routes>
-          <Route path="/news" element={<News />} />
+          <Route path="/news" element={<News/>} />
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<LoginForm  />} />
         </Routes>
