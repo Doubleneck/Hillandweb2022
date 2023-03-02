@@ -13,28 +13,39 @@ import LoginForm from './components/LoginForm'
 import { useSelector } from 'react-redux'
   const App = () => {
     const user = useSelector((state) => state.loginForm.user)
-   /*  const padding = {
+     const padding = {
       padding: 5
-    } */
+    } 
   
     return (
        
       <Router>
+       
 <Navbar collapseOnSelect expand="lg" className="justify-content-center color-nav" >
   
   <Navbar.Toggle aria-controls="responsive-navbar-nav"> <img style={{ width: 170, height: 85 }} src={myLogo} alt="Hilland logo"/> </Navbar.Toggle>
   <Navbar.Collapse id="responsive-navbar-nav"> 
-    <Nav className="mr-auto">
+    <Nav className="justify-content-center">
       <Navbar.Brand href="/" className="linkText m-auto">HOME</Navbar.Brand>
-      <Navbar.Brand href="/news" className="linkText m-auto">NEWS</Navbar.Brand>
-      <Navbar.Brand href="/videos" className="linkText m-auto">VIDEOS</Navbar.Brand>
-      <Navbar.Brand href="/releases" className="linkText m-auto">RELEASES</Navbar.Brand>
-      <Navbar.Brand href="/truckercaps" className="linkText m-auto">TRUCKER CAPS</Navbar.Brand>
-      <Navbar.Brand href="/archive" className="linkText m-auto">ARCHIVE</Navbar.Brand>
+      <Navbar.Brand href="/news" className="linkText m-auto">
+        <Link style={padding} className="linkText text-decoration-none" to="/news">NEWS</Link>
+      </Navbar.Brand>
+      <Navbar.Brand href="/videos" className="linkText m-auto">
+        <Link style={padding} className="linkText text-decoration-none" to="/news">VIDEOS</Link>
+      </Navbar.Brand>
+      <Navbar.Brand href="#" className="linkText m-auto">
+        <Link style={padding} className="linkText text-decoration-none" to="/releases">RELEASES</Link>
+      </Navbar.Brand>
+      <Navbar.Brand href="#" className="linkText m-auto">
+        <Link style={padding} className="linkText text-decoration-none" to="/truckercaps">TRUCKER CAPS</Link>
+      </Navbar.Brand>
+      <Navbar.Brand href="#" className="linkText m-auto">
+        <Link style={padding} className="linkText text-decoration-none" to="/archive">ARCHIVE</Link>
+      </Navbar.Brand>
       {user ? (
         <Navbar.Brand href="/">{user.username} logged in</Navbar.Brand>
        ) : (
-       <Navbar.Brand href="/login">LOGIN</Navbar.Brand>
+       <Navbar.Brand href="#"><Link style={padding} className="linkText text-decoration-none" to="/login">login (siirrä tää muualle)</Link></Navbar.Brand>
       )}
     </Nav>       
   </Navbar.Collapse>

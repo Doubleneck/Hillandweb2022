@@ -57,4 +57,5 @@
 |28.2.2023|4| Refactor app to use React router|
 |28.2.2023|3| Add React Bootstrap, tweak navbar & news scene|
 |1.3.2023|5| Add frontend functionality: send song request, tweak news|
-|Total Hours|137|
+|2.3.2023|2| Debug build problem: only home rendered|
+|Total Hours|139|
