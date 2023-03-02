@@ -1,25 +1,10 @@
 import { useState } from 'react'
-import newsService from '../services/news'
 import { setNotification } from '../reducers/notificationReducer'
-import store from '../store'
+import { useDispatch } from 'react-redux'
+import newsService from '../services/news'
 
-const updateThisNews = async (newsObject) => {
-    try {
-      await newsService.update(newsObject.id, newsObject)
-      store.dispatch(
-        setNotification(
-          `Updated ${newsObject.title}`, 5, 'update'
-        )
-      )
-    } catch (exception) {
-      store.dispatch(
-        setNotification(
-          'something went wrong while trying to update news', 5, 'error'
-        )
-      )
-    }
-  } 
 const UpdateNewsForm = ({  newsObjectToBeUpdated }) => {
+  const dispatch = useDispatch()
   const [newTitle, setNewTitle] = useState(newsObjectToBeUpdated.title)
   const [newContent, setNewContent] = useState(newsObjectToBeUpdated.content)
   const [newURL, setNewURL] = useState(newsObjectToBeUpdated.url)
@@ -48,6 +33,23 @@ const UpdateNewsForm = ({  newsObjectToBeUpdated }) => {
    const updateNews = (event) => {
     event.preventDefault()
     updateThisNews(updatedNewsObject)
+  } 
+
+  const updateThisNews = async (newsObject) => {
+    try {
+      await newsService.update(newsObject.id, newsObject)
+      dispatch(
+        setNotification(
+          `Updated ${newsObject.title}`, 5, 'update'
+        )
+      )
+    } catch (exception) {
+      dispatch(
+        setNotification(
+          'something went wrong while trying to update news', 5, 'error'
+        )
+      )
+    }
   } 
   return (
     <div>

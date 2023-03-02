@@ -1,42 +1,39 @@
 import { useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import newsService from '../services/news'
 import s3Service from '../services/s3'
-
 import NewsForm from '../components/NewsForm'
 import NewsObject from '../components/NewsObject'
 import Togglable from '../components/Togglable'
 import Notification from '../components/Notification'
 import { setNotification } from '../reducers/notificationReducer'
 import { setNews } from '../reducers/newsReducer'
-import store from '../store'
 import {
   setUser,
 } from '../reducers/loginFormReducer'
 
-
 const News = () => {
   const news = useSelector((state) => state.news)
-  const news2 = ['abc','def','ghj']
   const user = useSelector((state) => state.loginForm.user)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     newsService
       .getAll()
       .then((news) =>
-      store.dispatch(setNews(news.sort((a, b) => b.date.localeCompare(a.date))))
+       dispatch(setNews(news.sort((a, b) => b.date.localeCompare(a.date))))
       )
-  }, [])
+  }, [dispatch])
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedHillandappUser')
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
-      store.dispatch(setUser(user))
+      dispatch(setUser(user))
       newsService.setToken(user.token)
       s3Service.setToken(user.token)
     }
-  }, [])
+  }, [dispatch])
 
 /*   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedHillandappUser')
@@ -66,12 +63,12 @@ const News = () => {
     try {
     event.preventDefault()
     window.localStorage.setItem('loggedHillandappUser', '')
-    store.dispatch(setUser(''))
+    dispatch(setUser(''))
     newsService.setToken(null)
     s3Service.setToken(null)
     console.log('logout', user)
   }catch (exception) {
-    store.dispatch(
+    dispatch(
       setNotification(
         'logout failed', 3, 'error'
       )
@@ -102,17 +99,13 @@ const News = () => {
        
         {news.map((newsObject) => (
         <div >
-       <NewsObject 
+          <NewsObject 
             key={newsObject.id}
             newsObject={newsObject}
           />
-          
          </div>
-          
         ))}
-        
       </ul>
-     
     </div>
   
   )

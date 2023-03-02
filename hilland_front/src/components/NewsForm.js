@@ -1,38 +1,12 @@
 import { useState } from 'react'
-import store from '../store'
 import { appendNewsobject } from '../reducers/newsReducer'
+import { setNotification } from '../reducers/notificationReducer'
+import { useDispatch } from 'react-redux'
 import s3Service from '../services/s3'
 import newsService from '../services/news'
-import { setNotification } from '../reducers/notificationReducer'
 
-const createNews = async (newsObject) => {
-  const file = newsObject.imageFile
-  try {
-    const imageUrl = await s3Service.sendToS3(file)
-
-    const newsDataObject = {
-      title: newsObject.title,
-      content: newsObject.content,
-      url: newsObject.url,
-      date: newsObject.date,
-      imageURL: imageUrl,
-    }
-    const returnedNews = await newsService.create(newsDataObject)
-    appendNewsobject(returnedNews)
-    store.dispatch(
-      setNotification(
-        `A news: ${newsObject.title}  added !!!`, 5, 'update'
-      )
-    )
-  } catch (exception) {
-    store.dispatch(
-      setNotification(
-        'something went wrong while trying to create news', 5, 'error'
-      )
-    )
-  }
-} 
 const NewsForm = () => {
+  const dispatch = useDispatch()
   const current = new Date()
   const date = `${current.getDate()}/${
     current.getMonth() + 1
@@ -79,6 +53,34 @@ const NewsForm = () => {
     setNewURL('')
     setImageFile('')
   }
+  const createNews = async (newsObject) => {
+    const file = newsObject.imageFile
+    
+    try {
+      const imageUrl = await s3Service.sendToS3(file)
+  
+      const newsDataObject = {
+        title: newsObject.title,
+        content: newsObject.content,
+        url: newsObject.url,
+        date: newsObject.date,
+        imageURL: imageUrl,
+      }
+      const returnedNews = await newsService.create(newsDataObject)
+      appendNewsobject(returnedNews)
+      dispatch(
+        setNotification(
+          `A news: ${newsObject.title}  added !!!`, 5, 'update'
+        )
+      )
+    } catch (exception) {
+      dispatch(
+        setNotification(
+          'something went wrong while trying to create news', 5, 'error'
+        )
+      )
+    }
+  } 
   return (
     <div>
       <h2>Add news: </h2>

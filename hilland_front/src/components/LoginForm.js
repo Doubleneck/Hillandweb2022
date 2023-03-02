@@ -2,9 +2,9 @@ import { useState } from 'react'
 import newsService from '../services/news'
 import loginService from '../services/login'
 import s3Service from '../services/s3'
-import store from '../store'
 import { setNotification } from '../reducers/notificationReducer'
 import Notification from './Notification'
+import { useDispatch } from 'react-redux'
 import {
   setUser,
 } from '../reducers/loginFormReducer'
@@ -16,6 +16,7 @@ const LoginForm = () => {
     const [username, setUsername] = useState('') 
     const [password, setPassword] = useState('') 
     const navigate = useNavigate() 
+    const dispatch = useDispatch()
 
     const handleUsernameChange = (event) => {
       setUsername(event.target.value)
@@ -35,12 +36,12 @@ const LoginForm = () => {
         window.localStorage.setItem('loggedHillandappUser', JSON.stringify(user))
         newsService.setToken(user.token)
         s3Service.setToken(user.token)
-        store.dispatch(setUser(user))
+        dispatch(setUser(user))
         setUsername('')
         setPassword('')
         navigate('/')
       } catch (exception) {
-        store.dispatch(setNotification('Wrong credentials', 3, 'error'))
+        dispatch(setNotification('Wrong credentials', 3, 'error'))
       }
     } 
    return (

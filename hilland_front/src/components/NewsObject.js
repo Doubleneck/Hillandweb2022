@@ -1,43 +1,43 @@
+
+import { setNotification } from '../reducers/notificationReducer'
+import { removeNewsobject } from '../reducers/newsReducer'
+import { useDispatch, useSelector } from 'react-redux'
+import '../App.css'
 import Togglable from '../components/Togglable'
 import UpdateNewsForm from '../components/UpdateNewsForm'
 import Notification from '../components/Notification'
-import { setNotification } from '../reducers/notificationReducer'
-import store from '../store'
 import newsService from '../services/news'
 import s3Service from '../services/s3'
-import { removeNewsobject } from '../reducers/newsReducer'
-import { useSelector } from 'react-redux'
-import '../App.css'
-const removeNewsObject = async (newsObject) => {
-  const toBeRemovedS3Id = await { id: newsObject.imageURL.split('/')[3] }
-
-  if (window.confirm(`Delete ${newsObject.title}?`)) {
-    try {
-      await newsService.remove(newsObject.id)
-      store.dispatch(removeNewsobject(newsObject.id))
-      store.dispatch(
-        setNotification(
-          `Removed ${newsObject.title} from News `, 5, 'update'
-        )
-      )
-
-      await s3Service.deleteFromS3(toBeRemovedS3Id)
-    } catch (exception) {
-      store.dispatch(
-        setNotification(
-          'something went wrong while trying to remove news', 5, 'error'
-        )
-      )
-    }
-  }
-} 
 
 const NewsObject = ({ newsObject }) => {
+  const dispatch = useDispatch()
   const user = useSelector((state) => state.loginForm.user)
   const handleDelete = () => {
     removeNewsObject(newsObject)
   }
 
+  const removeNewsObject = async (newsObject) => {
+    const toBeRemovedS3Id = await { id: newsObject.imageURL.split('/')[3] }
+  
+    if (window.confirm(`Delete ${newsObject.title}?`)) {
+      try {
+        await newsService.remove(newsObject.id)
+        dispatch(removeNewsobject(newsObject.id))
+        dispatch(
+          setNotification(
+            `Removed ${newsObject.title} from News `, 5, 'update'
+          )
+        )
+        await s3Service.deleteFromS3(toBeRemovedS3Id)
+      } catch (exception) {
+        dispatch(
+          setNotification(
+            'something went wrong while trying to remove news', 5, 'error'
+          )
+        )
+      }
+    }
+  } 
   return (
     <div>
     <ul className='gallery'>
@@ -55,8 +55,6 @@ const NewsObject = ({ newsObject }) => {
       <p></p>
       </li>
       {user === '' ? (
-
-
         <> 
         </>
       ) : (

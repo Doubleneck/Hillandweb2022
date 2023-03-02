@@ -1,18 +1,14 @@
 import { useState } from 'react' 
-import Button from 'react-bootstrap/Button';
-import store from '../store'
-import {
-  // ...
-  useNavigate
-} from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import { setNotification } from '../reducers/notificationReducer'
+import Button from 'react-bootstrap/Button'
 import Notification from './Notification'
 
 const SongRequestForm = () => {
+    const dispatch = useDispatch()
     const [artist, setArtist] = useState('') 
     const [song, setSong] = useState('') 
-    const navigate = useNavigate() 
-
+ 
     const handleArtistChange = (event) => {
       setArtist(event.target.value)
     }
@@ -32,9 +28,9 @@ const SongRequestForm = () => {
         console.log(songRequest)
         setArtist('')
         setSong('')
-        store.dispatch(setNotification('Thank you!!', 3, 'update'))
+        dispatch(setNotification('Thank you!!', 3, 'update'))
       } catch (exception) {
-        store.dispatch(setNotification('Wrong credentials', 3, 'error'))
+        dispatch(setNotification('Wrong credentials', 3, 'error'))
       }
     } 
    return (
