@@ -16,7 +16,7 @@
 |2.1.2023|2| refactor tests, refactor async funcs news routes|  
 |2.1.2023|1| add basic user functionality: model, controller, init tests|
 |3.1.2023|1| add requirements_specification|
-|3.1.2023|3|add token-based login functionality to backend|
+|3.1.2023|3| add token-based login functionality to backend|
 |3.1.2023|2| resolve user extractor problem|
 |4.1.2023|4| update tests to pass with authentication, clean code|
 |4.1.2023|1| fix tests, add jwt check to update & delete news + tests| 
@@ -25,8 +25,8 @@
 |5.1.2023|2| add front local storage token, add sorting for news, clean code|
 |5.1.2023|3| fix bug in create news|
 |5.1.2023|2 (st60)| learning to load static content from node back to react front|
-|6.1.2023|3| Github Actions for hilland_backend ok, mongo inst ok, path for tests fails| 
-|6.1.2023|1| Github Actions CI working for backend|
+|6.1.2023|3| Github Actions for hilland_backend, mongo inst (path for tests fails)| 
+|6.1.2023|1| Github Actions: CI working for backend|
 |8.1.2023|3| Refactor front end to Components: LoginForm, NewsForm, Togglable |
 |8.1.2023|2| new Direction: Base64 image files in DB too slow, Amazon S3 orientation| 
 |8.1.2023|2| more Amazon S3: establishing AWS account, config|
@@ -61,4 +61,5 @@
 |2.3.2023|1| Fix Safari rendering problem|
 |2.3.2023|1| Add Videos route & rendering component for Youtube embeds front|
 |3.3.2023|1| Add Trucker Cap Component & link to the webstore front|
-|Total Hours|142|
+|3.3.2023|1| Add Google Maps & FB Link to Home Page front|
+|Total Hours|143|
