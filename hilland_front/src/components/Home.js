@@ -39,13 +39,13 @@ const Home= () => (
         <p className="text-center" > <SongRequest/></p>
         <p></p>
         <h2 className="text-center">Visit Hilland Mondays: </h2>
-        <p>Every Monday our weekly country music club at Juttutupa (Paasitorni) Helsinki offers an 
+        <p>Every Monday our weekly country music club at Juttutupa,  Helsinki offers an 
           international level two hour live music experience with a six piece top notch band: Hilland Playboys!  </p>
         <p></p>
         <img src="https://hillandwebimgs.s3.eu-central-1.amazonaws.com/PLAYBOYS.jpg"
         className='img-fluid shadow-4' alt= 'Hilland Playboys band'/>
         <p></p>
-        <h2 className="text-center">Welcome to Juttutupa (Paasitorni): </h2>
+        <h2 className="text-center">Welcome to Juttutupa: </h2>
         <p></p>
         <GoogleMap />
         <p></p>
