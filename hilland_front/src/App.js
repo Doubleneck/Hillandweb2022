@@ -4,18 +4,20 @@ import {
     BrowserRouter as Router,
     Routes, Route, Link
   } from 'react-router-dom'
-//import Container from 'react-bootstrap/Container'
+import { useSelector } from 'react-redux'
 import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
 import Home from './components/Home'
 import News from './components/News'
+import Videos from './components/Videos'
 import LoginForm from './components/LoginForm'
-import { useSelector } from 'react-redux'
-  const App = () => {
-    const user = useSelector((state) => state.loginForm.user)
-     const padding = {
+import TruckerCaps from './components/TruckerCaps';
+
+const App = () => {
+  const user = useSelector((state) => state.loginForm.user)
+  const padding = {
       padding: 5
-    } 
+  } 
   
     return (
        
@@ -28,10 +30,10 @@ import { useSelector } from 'react-redux'
     <Nav className="justify-content-center">
       <Navbar.Brand href="/" className="linkText m-auto">HOME</Navbar.Brand>
       <Navbar.Brand href="/news" className="linkText m-auto">
-        <Link style={padding} className="linkText text-decoration-none" to="/news">NEWS</Link>
+        <Link className="linkText text-decoration-none" to="/news">NEWS</Link>
       </Navbar.Brand>
       <Navbar.Brand href="/videos" className="linkText m-auto">
-        <Link style={padding} className="linkText text-decoration-none" to="/news">VIDEOS</Link>
+        <Link style={padding} className="linkText text-decoration-none" to="/videos">VIDEOS</Link>
       </Navbar.Brand>
       <Navbar.Brand href="#" className="linkText m-auto">
         <Link style={padding} className="linkText text-decoration-none" to="/releases">RELEASES</Link>
@@ -60,6 +62,8 @@ import { useSelector } from 'react-redux'
         <Routes>
           <Route path="/news" element={<News/>} />
           <Route path="/" element={<Home />} />
+          <Route path="/videos" element={<Videos  />} />
+          <Route path="/truckercaps" element={<TruckerCaps  />} />
           <Route path="/login" element={<LoginForm  />} />
         </Routes>
 

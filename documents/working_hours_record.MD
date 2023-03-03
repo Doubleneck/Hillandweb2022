@@ -59,4 +59,6 @@
 |1.3.2023|5| Add frontend functionality: send song request, tweak news|
 |2.3.2023|2| Debug build problem: only home rendered|
 |2.3.2023|1| Fix Safari rendering problem|
-|Total Hours|140|
+|2.3.2023|1| Add Videos route & rendering component for Youtube embeds front|
+|3.3.2023|1| Add Trucker Cap Component & link to the webstore front|
+|Total Hours|142|

@@ -36,7 +36,7 @@ const SongRequestForm = () => {
    return (
      <div>
        
-       <Notification />
+       
        <form onSubmit={handleSubmit}>
          <div>
          <h3 className="text-center text-danger"  >Artist:</h3>
@@ -47,6 +47,7 @@ const SongRequestForm = () => {
          <p className="text-center text-danger">(You can leave this blank)</p>  
          </div>
          <div>
+         <Notification />
          <h3 className="text-center text-danger"> Song: </h3>
            <input
              type="song"
