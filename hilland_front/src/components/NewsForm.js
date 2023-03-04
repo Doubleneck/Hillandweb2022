@@ -71,7 +71,7 @@ const NewsForm = () => {
       appendNewsobject(returnedNews)
       dispatch(
         setNotification(
-          `A news: ${newsObject.title}  added !!!`, 5, 'update'
+          `A news: ${newsObject.title}  added, please refresh !!!`, 5, 'update'
         )
       )
     } catch (error) {

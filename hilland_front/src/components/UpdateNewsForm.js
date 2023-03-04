@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { setNotification } from '../reducers/notificationReducer'
 import { useDispatch } from 'react-redux'
 import newsService from '../services/news'
+import Button from 'react-bootstrap/esm/Button'
 
 const UpdateNewsForm = ({  newsObjectToBeUpdated }) => {
   const dispatch = useDispatch()
@@ -40,7 +41,7 @@ const UpdateNewsForm = ({  newsObjectToBeUpdated }) => {
       await newsService.update(newsObject.id, newsObject)
       dispatch(
         setNotification(
-          `Updated ${newsObject.title}`, 5, 'update'
+          `Updated ${newsObject.title}, please refresh`, 5, 'update'
         )
       )
     } catch (exception) {
@@ -67,7 +68,7 @@ const UpdateNewsForm = ({  newsObjectToBeUpdated }) => {
           url: <input value={newURL} size='50' onChange={handleURLChange} />
         </div>
         <br />
-        <button type='submit'>Update</button>
+        <Button variant='success' type='submit'>Update</Button>
       </form>
     </div>
   )

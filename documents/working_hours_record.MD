@@ -63,5 +63,6 @@
 |3.3.2023|1| Add Trucker Cap Component & link to the webstore front|
 |3.3.2023|1| Add Google Maps & FB Link to Home Page front|
 |4.3.2023|5| Add Insta Link, upgrade buttons & forms:news, refactor routing, fix news refresh bug|
-|Total Hours|148|
+|4.3.2023|1| Add song request functionality e2e|
+|Total Hours|149|
 refactor routing, fix news refresh bug

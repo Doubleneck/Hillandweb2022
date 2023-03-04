@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import newsService from '../services/news'
 import NewsForm from '../components/NewsForm'
@@ -7,7 +7,7 @@ import Togglable from '../components/Togglable'
 import Notification from '../components/Notification'
 import { setNews } from '../reducers/newsReducer'
 
-const News = () => {
+const News =  () => {
   const news = useSelector((state) => state.news)
   const user = useSelector((state) => state.loginForm.user)
   const dispatch = useDispatch()

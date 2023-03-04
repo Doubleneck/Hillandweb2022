@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { setNotification } from '../reducers/notificationReducer'
 import Button from 'react-bootstrap/Button'
 import Notification from './Notification'
-
+import songrequestService from  '../services/songrequests'
 const SongRequestForm = () => {
     const dispatch = useDispatch()
     const [artist, setArtist] = useState('') 
@@ -17,20 +17,19 @@ const SongRequestForm = () => {
 
     const handleSubmit = async (event) => {
       event.preventDefault()
-      const date = Date.now()
 
       try {
          const songRequest = {
           artist,
           song,
-          date
         }
         console.log(songRequest)
+        await songrequestService.create(songRequest)
         setArtist('')
         setSong('')
         dispatch(setNotification('Thank you!!', 3, 'update'))
       } catch (exception) {
-        dispatch(setNotification('Wrong credentials', 3, 'error'))
+        dispatch(setNotification('We couldn´t take your request, try again later..', 3, 'error'))
       }
     } 
    return (

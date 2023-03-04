@@ -8,6 +8,7 @@ import UpdateNewsForm from '../components/UpdateNewsForm'
 import Notification from '../components/Notification'
 import newsService from '../services/news'
 import s3Service from '../services/s3'
+import Button from 'react-bootstrap/esm/Button'
 
 const NewsObject = ({ newsObject }) => {
   const dispatch = useDispatch()
@@ -60,9 +61,9 @@ const NewsObject = ({ newsObject }) => {
       ) : (
         <div>
           <Notification />
-            <button value={newsObject} onClick={handleDelete}>
+            <Button variant="danger" value={newsObject} onClick={handleDelete}>
               delete
-            </button>
+            </Button>
           <Togglable buttonLabel='Update'>
             <UpdateNewsForm
               newsObjectToBeUpdated={newsObject}
