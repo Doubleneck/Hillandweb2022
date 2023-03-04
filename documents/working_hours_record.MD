@@ -62,4 +62,6 @@
 |2.3.2023|1| Add Videos route & rendering component for Youtube embeds front|
 |3.3.2023|1| Add Trucker Cap Component & link to the webstore front|
 |3.3.2023|1| Add Google Maps & FB Link to Home Page front|
-|Total Hours|143|
+|4.3.2023|5| Add Insta Link, upgrade buttons & forms:news, refactor routing, fix news refresh bug|
+|Total Hours|148|
+refactor routing, fix news refresh bug
