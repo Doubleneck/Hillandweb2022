@@ -8,7 +8,6 @@ const SongRequestForm = () => {
     const dispatch = useDispatch()
     const [artist, setArtist] = useState('') 
     const [song, setSong] = useState('') 
- 
     const handleArtistChange = (event) => {
       setArtist(event.target.value)
     }
@@ -19,6 +18,7 @@ const SongRequestForm = () => {
     const handleSubmit = async (event) => {
       event.preventDefault()
       const date = Date.now()
+
       try {
          const songRequest = {
           artist,
@@ -34,9 +34,7 @@ const SongRequestForm = () => {
       }
     } 
    return (
-     <div>
-       
-       
+     <div>   
        <form onSubmit={handleSubmit}>
          <div>
          <h3 className="text-center text-danger"  >Artist:</h3>
@@ -57,9 +55,7 @@ const SongRequestForm = () => {
            <p></p>
            <p className="text-center"> <Button  type="submit" variant="danger">Send !!</Button></p>
         
-        <div>   </div>
        </div>
-       
        </form>
      </div>
    )

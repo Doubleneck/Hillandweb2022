@@ -2,7 +2,8 @@ import Button from 'react-bootstrap/Button'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Popover from 'react-bootstrap/Popover'
 import SongRequestForm from './SongRequestForm'
-import fbLogo from '../fbLogo.png';
+import fbLogo from '../fbLogo72.png'
+import instaLogo from '../InstagramLogo.png'
 import GoogleMap from './GoogleMap';
 const popover = (
   <Popover id="popover-basic">
@@ -50,17 +51,20 @@ const Home= () => (
         <GoogleMap />
         <p></p>
 
-        
-
-       
-
-
         <p></p>
         <div className="text-center">
         <a href={'https://www.facebook.com/hillandrecords/'}>
           <img style={{ width: 85, height: 85 }} src={fbLogo} alt="Facebook logo"/>
         </a>
+        <p></p>        
+        </div>
+
         <p></p>
+        <div className="text-center">
+        <a href={'https://www.instagram.com/hillandrecords/'}>
+          <img style={{ width: 85, height: 85 }} src={instaLogo} alt="Instagram logo"/>
+        </a>
+        <p></p>        
         </div>
     </div>
 )
