@@ -1,17 +1,13 @@
 import { useState } from 'react' 
+import { setNotification } from '../reducers/notificationReducer'
+import { useDispatch } from 'react-redux'
+import { setUser } from '../reducers/loginFormReducer'
+import { useNavigate } from 'react-router-dom'
+import Notification from './Notification'
 import newsService from '../services/news'
 import loginService from '../services/login'
 import s3Service from '../services/s3'
-import { setNotification } from '../reducers/notificationReducer'
-import Notification from './Notification'
-import { useDispatch } from 'react-redux'
-import {
-  setUser,
-} from '../reducers/loginFormReducer'
-import {
-  // ...
-  useNavigate
-} from 'react-router-dom'
+
 const LoginForm = () => {
     const [username, setUsername] = useState('') 
     const [password, setPassword] = useState('') 
@@ -33,7 +29,8 @@ const LoginForm = () => {
           username,
           password,
         })
-        window.localStorage.setItem('loggedHillandappUser', JSON.stringify(user))
+
+        window.localStorage.setItem('loggedUser', JSON.stringify(user))
         newsService.setToken(user.token)
         s3Service.setToken(user.token)
         dispatch(setUser(user))
@@ -47,7 +44,7 @@ const LoginForm = () => {
    return (
      <div>
        <h2>Login</h2>
-       <Notification />
+       <Notification/>
        <form onSubmit={handleSubmit}>
          <div>
            username

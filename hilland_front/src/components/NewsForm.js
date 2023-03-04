@@ -4,6 +4,7 @@ import { setNotification } from '../reducers/notificationReducer'
 import { useDispatch } from 'react-redux'
 import s3Service from '../services/s3'
 import newsService from '../services/news'
+import Button from 'react-bootstrap/Button'
 
 const NewsForm = () => {
   const dispatch = useDispatch()
@@ -73,33 +74,36 @@ const NewsForm = () => {
           `A news: ${newsObject.title}  added !!!`, 5, 'update'
         )
       )
-    } catch (exception) {
+    } catch (error) {
+      console.log(error.response.data.error)
       dispatch(
         setNotification(
-          'something went wrong while trying to create news', 5, 'error'
+          error.response.data.error, 5, 'error'
         )
       )
     }
   } 
   return (
-    <div>
+
+    <div className='text-center'>
       <h2>Add news: </h2>
+      
       <form onSubmit={addNews}>
         <div>
           title: <input size="50" value={newTitle} onChange={handleTitleChange} />
         </div>
-        <div>
-          content: <input size="50" value={newContent} onChange={handleContentChange} />
+        <div>    
+        content: <input size='50' rows='2' value={newContent} onChange={handleContentChange} />
         </div>
         <div>
-          url: <input value={newURL} onChange={handleURLChange} />
+          url: <input size='50' value={newURL} onChange={handleURLChange} />
         </div>
         <br />
         <div>
           file:
           <input type='file' accept='image/*' onChange={handlePhotoSelect} />
         </div>
-        <button type='submit'>Upload</button>
+        <Button variant='success' type='submit'>Create news</Button>
       </form>
     </div>
   )

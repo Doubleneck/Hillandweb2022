@@ -8,7 +8,7 @@ const Videos = () => (
         allow='autoplay; encrypted-media'
         width="100%"
         height="360"
-        allowfullscreen
+        allowFullScreen
         title='video'
         />
         <p></p>
@@ -18,7 +18,7 @@ const Videos = () => (
         allow='autoplay; encrypted-media'
         width="100%"
         height="360"
-        allowfullscreen
+        allowFullScreen
         title='video'
         />
         <p></p>
@@ -28,7 +28,7 @@ const Videos = () => (
         allow='autoplay; encrypted-media'
         width="100%"
         height="360"
-        allowfullscreen
+        allowFullScreen
         title='video'
         />
         <p></p>
@@ -43,7 +43,7 @@ const Videos = () => (
         allow='autoplay; encrypted-media'
         width="100%"
         height="360"
-        allowfullscreen
+        allowFullScreen
         title='video'
         />
         <p></p>
@@ -55,13 +55,12 @@ const Videos = () => (
         allow='autoplay; encrypted-media'
         width="100%"
         height="360"
-        allowfullscreen
+        allowFullScreen
         title='video'
         />
         <p></p>
         <p></p>
     </div>
-
 )
 
 export default Videos

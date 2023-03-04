@@ -28,6 +28,7 @@ newsRouter.put('/:id', (request, response, next) => {
       .status(401)
       .json({ error: 'you don´t have rights for this operation' })
   }
+
   const news = {
     title: request.body.title,
     content: request.body.content,
@@ -55,6 +56,13 @@ newsRouter.post('/', async (request, response) => {
       .json({ error: 'you don´t have rights for this operation' })
   }
 
+  if (request.body.title === '' || request.body.content === '') {
+    console.log(response)
+    return response
+      .status(400)
+      .json({ error: 'news must have a title and some content' })
+  }
+
   const news = new News({
     title: request.body.title,
     content: request.body.content,
@@ -63,7 +71,6 @@ newsRouter.post('/', async (request, response) => {
     imageURL: request.body.imageURL,
   })
   const savedNews = await news.save()
-
   response.status(201).json(savedNews)
 })
 

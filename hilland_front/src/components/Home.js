@@ -20,10 +20,7 @@ const SongRequest = () => (
   <OverlayTrigger trigger="click" placement="top" overlay={popover}>
     <Button variant="danger">Song request</Button>
   </OverlayTrigger>
-);
-
-
-
+)
 
 const Home= () => (
     

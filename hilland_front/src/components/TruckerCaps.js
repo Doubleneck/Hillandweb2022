@@ -3,10 +3,10 @@ const TruckerCaps = () => (
     <div > 
         <p></p>
         <p></p>
-        <h1 className="text-center" >Legendary Hilland Trucker Caps: </h1>
+        <h1 className='text-center' >Legendary Hilland Trucker Caps: </h1>
         <p></p>
         <p></p>
-        <img src="https://hillandwebimgs.s3.eu-central-1.amazonaws.com/LIPPIKSET.jpg"
+        <img src='https://hillandwebimgs.s3.eu-central-1.amazonaws.com/LIPPIKSET.jpg' alt='Hilland trucker caps'
         className='img-fluid shadow-4'/>
         <p></p>
         <h3 className="text-center text-primary" >Available now at Hattu Helsinki Online Store!</h3>
@@ -16,7 +16,7 @@ const TruckerCaps = () => (
         </a>
         </div>
         <p></p>
-        <img src="https://hillandwebimgs.s3.eu-central-1.amazonaws.com/hattuhelsinki.jpg"
+        <img src='https://hillandwebimgs.s3.eu-central-1.amazonaws.com/hattuhelsinki.jpg' alt='Hattu Helsinki shop'
         className='img-fluid shadow-4'/>
         <p></p>
         
