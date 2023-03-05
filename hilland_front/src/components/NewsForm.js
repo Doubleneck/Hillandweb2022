@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux'
 import s3Service from '../services/s3'
 import newsService from '../services/news'
 import Button from 'react-bootstrap/Button'
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"
 
 const NewsForm = () => {
 
@@ -73,10 +73,10 @@ const NewsForm = () => {
       appendNewsobject(returnedNews)
       dispatch(
         setNotification(
-          `A news: ${newsObject.title}  added, please refresh !!!`, 5, 'update'
+          `A news: ${newsObject.title}  added !!!`, 5, 'update'
         )
       )
-      navigate('/')
+      navigate('/update')
     } catch (error) {
       console.log(error.response.data.error)
       dispatch(

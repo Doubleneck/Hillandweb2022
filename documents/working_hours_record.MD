@@ -64,5 +64,6 @@
 |3.3.2023|1| Add Google Maps & FB Link to Home Page front|
 |4.3.2023|5| Add Insta Link, upgrade buttons & forms:news, refactor routing, fix news refresh bug|
 |4.3.2023|1| Add song request functionality e2e|
-|Total Hours|149|
+|5.3.2023|3| Fix App to use Update-route to avoid Safari rendering problems|
+|Total Hours|152|
 refactor routing, fix news refresh bug

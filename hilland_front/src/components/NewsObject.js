@@ -60,7 +60,6 @@ const NewsObject = ({ newsObject }) => {
         </>
       ) : (
         <div>
-          <Notification />
             <Button variant="danger" value={newsObject} onClick={handleDelete}>
               delete
             </Button>
