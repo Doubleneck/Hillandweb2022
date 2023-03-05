@@ -5,8 +5,10 @@ import { useDispatch } from 'react-redux'
 import s3Service from '../services/s3'
 import newsService from '../services/news'
 import Button from 'react-bootstrap/Button'
+import { useNavigate } from "react-router-dom";
 
 const NewsForm = () => {
+
   const dispatch = useDispatch()
   const current = new Date()
   const date = `${current.getDate()}/${
@@ -16,7 +18,7 @@ const NewsForm = () => {
   const [newContent, setNewContent] = useState('')
   const [newURL, setNewURL] = useState('')
   const [imageFile, setImageFile] = useState('')
-
+  const navigate = useNavigate()
   const handleTitleChange = (event) => {
     setNewTitle(event.target.value)
   }
@@ -74,6 +76,7 @@ const NewsForm = () => {
           `A news: ${newsObject.title}  added, please refresh !!!`, 5, 'update'
         )
       )
+      navigate('/')
     } catch (error) {
       console.log(error.response.data.error)
       dispatch(

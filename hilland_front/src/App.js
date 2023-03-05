@@ -4,7 +4,7 @@ import jwt_decode from 'jwt-decode'
 import { useEffect } from 'react'
 import {
     BrowserRouter as Router,
-    Routes, Route, Link, NavLink
+    Routes, Route, NavLink
   } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { setNotification } from './reducers/notificationReducer'
@@ -38,7 +38,7 @@ const App = () => {
         newsService.setToken(user.token)
         s3Service.setToken(user.token)
       } else {
-        dispatch(setUser(''))
+        dispatch(setUser(null))
         newsService.setToken(null)
         s3Service.setToken(null)
         dispatch(
@@ -48,7 +48,7 @@ const App = () => {
         )
       }
     }
-  }, [dispatch,user.token])
+  }, [])
 
 return (
   <Router>  
