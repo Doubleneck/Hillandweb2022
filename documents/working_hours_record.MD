@@ -65,5 +65,5 @@
 |4.3.2023|5| Add Insta Link, upgrade buttons & forms:news, refactor routing, fix news refresh bug|
 |4.3.2023|1| Add song request functionality e2e|
 |5.3.2023|3| Fix App to use Update-route to avoid Safari rendering problems|
-|Total Hours|152|
-refactor routing, fix news refresh bug
+|6.3.2023|1| fix news useEffects to render news correctly without extra routes in Safari also|
+|Total Hours|153|
