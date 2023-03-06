@@ -1,16 +1,30 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import newsService from '../services/news'
-import NewsForm from '../components/NewsForm'
-import NewsObject from '../components/NewsObject'
-import Togglable from '../components/Togglable'
-import Notification from '../components/Notification'
+import NewsForm from './NewsForm'
+import NewsObject from './NewsObject'
+import Togglable from './Togglable'
+import Notification from './Notification'
 import { setNews } from '../reducers/newsReducer'
 
 const News =  () => {
-  const news = useSelector((state) => state.news)
+  const news= useSelector((state) => state.news)
   const user = useSelector((state) => state.loginForm.user)
   const dispatch = useDispatch()
+
+  
+  useEffect(() => {
+    if(news){
+        //dispatch(setNews(news.sort((a, b) => b.date.localeCompare(a.date))))
+        console.log('MUUTTUU')
+        dispatch(setNews(news))
+      /*   newsService
+          .getAll()
+          .then((news) =>
+            dispatch(setNews(news))
+          ) */
+        }
+    }, [news])
 
   useEffect(() => {
     newsService
@@ -30,7 +44,7 @@ const News =  () => {
         <div>
           <Notification />
           <Togglable className="text-center" buttonLabel='Add News'>
-            <NewsForm/>
+            <NewsForm />
           </Togglable>
         </div>
       )}

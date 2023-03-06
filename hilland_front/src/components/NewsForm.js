@@ -1,12 +1,11 @@
 import { useState } from 'react'
-import { appendNewsobject } from '../reducers/newsReducer'
+//import { appendNewsobject } from '../reducers/newsReducer'
 import { setNotification } from '../reducers/notificationReducer'
 import { useDispatch } from 'react-redux'
 import s3Service from '../services/s3'
 import newsService from '../services/news'
 import Button from 'react-bootstrap/Button'
-import { useNavigate } from "react-router-dom"
-
+import { setNews } from '../reducers/newsReducer'
 const NewsForm = () => {
 
   const dispatch = useDispatch()
@@ -18,7 +17,7 @@ const NewsForm = () => {
   const [newContent, setNewContent] = useState('')
   const [newURL, setNewURL] = useState('')
   const [imageFile, setImageFile] = useState('')
-  const navigate = useNavigate()
+
   const handleTitleChange = (event) => {
     setNewTitle(event.target.value)
   }
@@ -69,14 +68,17 @@ const NewsForm = () => {
         date: newsObject.date,
         imageURL: imageUrl,
       }
-      const returnedNews = await newsService.create(newsDataObject)
-      appendNewsobject(returnedNews)
+      await newsService.create(newsDataObject)
+      newsService
+      .getAll()
+      .then((news) =>
+       dispatch(setNews(news.sort((a, b) => b.date.localeCompare(a.date))))
+      ) 
       dispatch(
         setNotification(
           `A news: ${newsObject.title}  added !!!`, 5, 'update'
         )
       )
-      navigate('/update')
     } catch (error) {
       console.log(error.response.data.error)
       dispatch(

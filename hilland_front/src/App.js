@@ -19,7 +19,6 @@ import Videos from './components/Videos'
 import LoginForm from './components/LoginForm'
 import TruckerCaps from './components/TruckerCaps'
 import Button from 'react-bootstrap/Button'
-import Update from './components/Update'
 
 const App = () => {
   const user = useSelector((state) => state.loginForm.user)
@@ -93,7 +92,6 @@ return (
     )}
     </>
   <Routes>
-      <Route path="/update" element={<Update/>} />
       <Route path="/news" element={<News/>} />
       <Route path="/" element={<Home />} />
       <Route path="/videos" element={<Videos  />} />

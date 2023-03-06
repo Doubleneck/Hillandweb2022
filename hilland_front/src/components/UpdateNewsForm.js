@@ -3,13 +3,13 @@ import { setNotification } from '../reducers/notificationReducer'
 import { useDispatch } from 'react-redux'
 import newsService from '../services/news'
 import Button from 'react-bootstrap/esm/Button'
-import { useNavigate } from "react-router-dom"
+import { setNews } from '../reducers/newsReducer'
 const UpdateNewsForm = ({  newsObjectToBeUpdated }) => {
   const dispatch = useDispatch()
   const [newTitle, setNewTitle] = useState(newsObjectToBeUpdated.title)
   const [newContent, setNewContent] = useState(newsObjectToBeUpdated.content)
   const [newURL, setNewURL] = useState(newsObjectToBeUpdated.url)
-  const navigate = useNavigate()
+  
   const handleTitleChange = (event) => {
     setNewTitle(event.target.value)
   }
@@ -39,12 +39,16 @@ const UpdateNewsForm = ({  newsObjectToBeUpdated }) => {
   const updateThisNews = async (newsObject) => {
     try {
       await newsService.update(newsObject.id, newsObject)
+      newsService
+      .getAll()
+      .then((news) =>
+       dispatch(setNews(news.sort((a, b) => b.date.localeCompare(a.date))))
+      ) 
       dispatch(
         setNotification(
           `Updated ${newsObject.title}`, 5, 'update'
         )
       )
-      navigate('/update')
     } catch (exception) {
       dispatch(
         setNotification(
