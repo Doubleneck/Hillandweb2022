@@ -66,4 +66,5 @@
 |4.3.2023|1| Add song request functionality e2e|
 |5.3.2023|3| Fix App to use Update-route to avoid Safari rendering problems|
 |6.3.2023|1| fix news useEffects to render news correctly without extra routes in Safari also|
-|Total Hours|153|
+|7.3.2023|1| refactor updateNews & createNews to use state updates instead of fech|
+|Total Hours|154|
