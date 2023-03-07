@@ -1,11 +1,10 @@
 import { useState } from 'react'
-//import { appendNewsobject } from '../reducers/newsReducer'
 import { setNotification } from '../reducers/notificationReducer'
 import { useDispatch } from 'react-redux'
 import s3Service from '../services/s3'
 import newsService from '../services/news'
 import Button from 'react-bootstrap/Button'
-import { setNews } from '../reducers/newsReducer'
+import { appendNewsobject } from '../reducers/newsReducer'
 const NewsForm = () => {
 
   const dispatch = useDispatch()
@@ -68,12 +67,8 @@ const NewsForm = () => {
         date: newsObject.date,
         imageURL: imageUrl,
       }
-      await newsService.create(newsDataObject)
-      newsService
-      .getAll()
-      .then((news) =>
-       dispatch(setNews(news.sort((a, b) => b.date.localeCompare(a.date))))
-      ) 
+      const newNewsObject = await newsService.create(newsDataObject)
+      dispatch(appendNewsobject(newNewsObject))
       dispatch(
         setNotification(
           `A news: ${newsObject.title}  added !!!`, 5, 'update'

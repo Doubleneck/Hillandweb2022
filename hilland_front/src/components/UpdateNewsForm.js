@@ -3,7 +3,7 @@ import { setNotification } from '../reducers/notificationReducer'
 import { useDispatch } from 'react-redux'
 import newsService from '../services/news'
 import Button from 'react-bootstrap/esm/Button'
-import { setNews } from '../reducers/newsReducer'
+import { updateNewsobject } from '../reducers/newsReducer'
 const UpdateNewsForm = ({  newsObjectToBeUpdated }) => {
   const dispatch = useDispatch()
   const [newTitle, setNewTitle] = useState(newsObjectToBeUpdated.title)
@@ -38,12 +38,9 @@ const UpdateNewsForm = ({  newsObjectToBeUpdated }) => {
 
   const updateThisNews = async (newsObject) => {
     try {
-      await newsService.update(newsObject.id, newsObject)
-      newsService
-      .getAll()
-      .then((news) =>
-       dispatch(setNews(news.sort((a, b) => b.date.localeCompare(a.date))))
-      ) 
+      const updatedNews = await newsService.update(newsObject.id, newsObject)
+      console.log(updatedNews)
+      dispatch(updateNewsobject(updatedNews))
       dispatch(
         setNotification(
           `Updated ${newsObject.title}`, 5, 'update'

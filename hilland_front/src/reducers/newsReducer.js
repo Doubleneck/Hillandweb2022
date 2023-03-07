@@ -11,6 +11,12 @@ const newsSlice = createSlice({
     },
     appendNewsobject(state, action) {
       state.push(action.payload)
+      return state.sort((a, b) => b.date.localeCompare(a.date))
+    },
+    updateNewsobject(state, action) {
+      const id = action.payload.id
+      const updatedNews = action.payload
+      return state.map((news) => (news.id !== id ? news : updatedNews))
     },
     setNews(state, action) {
       return action.payload
@@ -18,7 +24,7 @@ const newsSlice = createSlice({
   },
 })
 
-export const { removeNewsobject, appendNewsobject, setNews } =
+export const { removeNewsobject, appendNewsobject, updateNewsobject, setNews } =
   newsSlice.actions
 
 export default newsSlice.reducer

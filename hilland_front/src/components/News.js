@@ -15,15 +15,8 @@ const News =  () => {
   
   useEffect(() => {
     if(news){
-        //dispatch(setNews(news.sort((a, b) => b.date.localeCompare(a.date))))
-        console.log('MUUTTUU')
-        dispatch(setNews(news))
-      /*   newsService
-          .getAll()
-          .then((news) =>
-            dispatch(setNews(news))
-          ) */
-        }
+      dispatch(setNews(news))
+      }
     }, [news])
 
   useEffect(() => {
