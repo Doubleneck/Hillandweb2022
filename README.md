@@ -7,7 +7,7 @@ Another development idea is to maintain a database for Hilland Mondays musicians
 
 These two tasks will joint to each other, since the everyday users can make song requests, vote favourite songs, see latest songlist, etc.
 
-- [link to the demo app] (https://hillandweb.fly.dev)
+- [link to the demo app](https://hillandweb.fly.dev)
 
 ## Documentation
 
