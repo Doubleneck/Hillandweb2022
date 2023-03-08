@@ -26,6 +26,7 @@ const App = () => {
   const padding = {
       padding: 5
   } 
+  
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedUser')
     if (loggedUserJSON) {
@@ -35,17 +36,17 @@ const App = () => {
       if (expiresAtMillis > Date.now()) {
         console.log('NOT EXPIRED')
         dispatch(setUser(parsedUser))
-        newsService.setToken(user.token)
-        s3Service.setToken(user.token)
+        newsService.setToken(parsedUser.token)
+        s3Service.setToken(parsedUser.token)
       } else {
         dispatch(setUser(null))
         newsService.setToken(null)
         s3Service.setToken(null)
-        dispatch(
+/*         dispatch(
           setNotification(
             'KIRJATTU ULOS', 5, 'error'
           )
-        )
+        ) */
       }
     }
   }, [])
