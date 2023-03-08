@@ -43,7 +43,7 @@ These two tasks will joint to each other, since the everyday users can make song
 
 - [x] user can see news, releases, etc. i.e. all open content
 - [ ] user can see requested songs list
-- [ ] user can see filter requested songs list
+- [ ] user can filter requested songs list
 
 (optional):
 
