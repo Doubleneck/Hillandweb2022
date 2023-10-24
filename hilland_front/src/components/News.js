@@ -1,3 +1,4 @@
+import React from 'react'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import newsService from '../services/news'
@@ -12,26 +13,26 @@ const News =  () => {
   const user = useSelector((state) => state.loginForm.user)
   const dispatch = useDispatch()
 
-  
+
   useEffect(() => {
     if(news){
       dispatch(setNews(news))
-      }
-    }, [news])
+    }
+  }, [news])
 
   useEffect(() => {
     newsService
       .getAll()
       .then((news) =>
-       dispatch(setNews(news.sort((a, b) => b.date.localeCompare(a.date))))
+        dispatch(setNews(news.sort((a, b) => b.date.localeCompare(a.date))))
       )
   }, [dispatch])
 
   return (
-   
+
     <div>
       {user === '' ? (
-        <> 
+        <>
         </>
       ) : (
         <div>
@@ -44,9 +45,9 @@ const News =  () => {
       <p></p>
       <h1 className="text-center" >News:</h1>
       <p></p>
-      <ul className="gallerynogrid" >
+      <ul className="gallerynogrid mx-auto" >
         {news.map((newsObject) => (
-          <li key={newsObject.id}>        
+          <li key={newsObject.id} className="mx-auto">
             <NewsObject newsObject={newsObject }/>
           </li>
         ))}

@@ -1,9 +1,10 @@
 const s3urlRouter = require('express').Router()
-const generateUploadURL = require('../s3.js').generateUploadURL
+require('../s3.js').generateUploadURL
 const s3 = require('../s3.js')
 const jwt = require('jsonwebtoken')
 
 s3urlRouter.get('/', async (req, res) => {
+
   const token = req.token
   const decodedToken = jwt.verify(token, process.env.SECRET)
   if (!token || !decodedToken.id) {
@@ -20,7 +21,7 @@ s3urlRouter.get('/', async (req, res) => {
 })
 
 s3urlRouter.post('/', async (req, res) => {
-  console.log('kukkuu')
+
   const token = await req.token
   const decodedToken = jwt.verify(token, process.env.SECRET)
   if (!token || !decodedToken.id) {

@@ -1,13 +1,14 @@
+import React from 'react'
 import './App.css'
 import myLogo from './hlogo.png'
 import jwt_decode from 'jwt-decode'
 import { useEffect } from 'react'
 import {
-    BrowserRouter as Router,
-    Routes, Route, NavLink
-  } from 'react-router-dom'
+  BrowserRouter as Router,
+  Routes, Route, NavLink
+} from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { setNotification } from './reducers/notificationReducer'
+//import { setNotification } from './reducers/notificationReducer'
 import { setUser } from './reducers/loginFormReducer'
 import newsService from './services/news'
 import s3Service from './services/s3'
@@ -24,9 +25,9 @@ const App = () => {
   const user = useSelector((state) => state.loginForm.user)
   const dispatch = useDispatch()
   const padding = {
-      padding: 5
-  } 
-  
+    padding: 5
+  }
+
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedUser')
     if (loggedUserJSON) {
@@ -42,7 +43,7 @@ const App = () => {
         dispatch(setUser(null))
         newsService.setToken(null)
         s3Service.setToken(null)
-/*         dispatch(
+        /*         dispatch(
           setNotification(
             'KIRJATTU ULOS', 5, 'error'
           )
@@ -51,60 +52,60 @@ const App = () => {
     }
   }, [])
 
-return (
-  <Router>  
-    <Navbar collapseOnSelect expand="lg" className="justify-content-center color-nav" >
-      <Navbar.Toggle aria-controls="responsive-navbar-nav"> <img style={{ width: 170, height: 85 }} src={myLogo} alt="Hilland logo"/> </Navbar.Toggle>
-      <Navbar.Collapse id="responsive-navbar-nav"> 
-      <Nav className="justify-content-center">
-        <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/">HOME</NavLink>
-        <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/news">NEWS</NavLink>
-        <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/videos">VIDEOS</NavLink>
-        <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/releases">RELEASES</NavLink>
-        <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/truckercaps">TRUCKER CAPS</NavLink>
-        <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/archive">ARCHIVE</NavLink>
-         {user ? (
-          <></>
-         ) : (
-          <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/login">LOGIN (muualle tää?)</NavLink>
-        )} 
-      </Nav>       
-      </Navbar.Collapse>
-    </Navbar>
-    <>
-    {user ? (
+  return (
+    <Router>
+      <Navbar collapseOnSelect expand="lg" className="justify-content-center color-nav" >
+        <Navbar.Toggle aria-controls="responsive-navbar-nav"> <img style={{ width: 170, height: 85 }} src={myLogo} alt="Hilland logo"/> </Navbar.Toggle>
+        <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav className="justify-content-center">
+            <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/">HOME</NavLink>
+            <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/news">NEWS</NavLink>
+            <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/videos">VIDEOS</NavLink>
+            <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/releases">RELEASES</NavLink>
+            <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/truckercaps">TRUCKER CAPS</NavLink>
+            <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/archive">ARCHIVE</NavLink>
+            {user ? (
+              <></>
+            ) : (
+              <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/login">LOGIN (muualle tää?)</NavLink>
+            )}
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
       <>
-      
-      <h1 className='text-center' >{user.username} logged in <Button variant="dark"
-          onClick={() => {
-            dispatch(setUser(''))
-            window.localStorage.clear()
-            newsService.setToken(null)
-            s3Service.setToken(null)
-          }}
-        >
+        {user ? (
+          <>
+
+            <h1 className='text-center' >{user.username} logged in <Button variant="dark"
+              onClick={() => {
+                dispatch(setUser(''))
+                window.localStorage.clear()
+                newsService.setToken(null)
+                s3Service.setToken(null)
+              }}
+            >
           Logout
-      </Button>
-      </h1>
-      <p></p>
+            </Button>
+            </h1>
+            <p></p>
+          </>
+        ) : (
+          <></>
+        )}
       </>
-    ) : (
-      <></>
-    )}
-    </>
-  <Routes>
-      <Route path="/news" element={<News/>} />
-      <Route path="/" element={<Home />} />
-      <Route path="/videos" element={<Videos  />} />
-      <Route path="/truckercaps" element={<TruckerCaps  />} />
-      <Route path="/login" element={<LoginForm  />} />
-  </Routes>
+      <Routes>
+        <Route path="/news" element={<News/>} />
+        <Route path="/" element={<Home />} />
+        <Route path="/videos" element={<Videos  />} />
+        <Route path="/truckercaps" element={<TruckerCaps  />} />
+        <Route path="/login" element={<LoginForm  />} />
+      </Routes>
 
-  <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.05)' }}>
-    © 2023 Copyright: Andy's Web Factory
-  </div> 
-</Router>      
-    )
-  }
+      <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.05)' }}>
+    © 2023 Copyright: AndyLand Web Factory
+      </div>
+    </Router>
+  )
+}
 
-  export default App
+export default App

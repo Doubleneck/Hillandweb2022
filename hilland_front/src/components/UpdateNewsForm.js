@@ -1,3 +1,5 @@
+import React from 'react'
+import PropTypes from 'prop-types'
 import { useState } from 'react'
 import { setNotification } from '../reducers/notificationReducer'
 import { useDispatch } from 'react-redux'
@@ -9,7 +11,7 @@ const UpdateNewsForm = ({  newsObjectToBeUpdated }) => {
   const [newTitle, setNewTitle] = useState(newsObjectToBeUpdated.title)
   const [newContent, setNewContent] = useState(newsObjectToBeUpdated.content)
   const [newURL, setNewURL] = useState(newsObjectToBeUpdated.url)
-  
+
   const handleTitleChange = (event) => {
     setNewTitle(event.target.value)
   }
@@ -31,10 +33,10 @@ const UpdateNewsForm = ({  newsObjectToBeUpdated }) => {
     id: newsObjectToBeUpdated.id,
   }
 
-   const updateNews = (event) => {
+  const updateNews = (event) => {
     event.preventDefault()
     updateThisNews(updatedNewsObject)
-  } 
+  }
 
   const updateThisNews = async (newsObject) => {
     try {
@@ -53,7 +55,7 @@ const UpdateNewsForm = ({  newsObjectToBeUpdated }) => {
         )
       )
     }
-  } 
+  }
   return (
     <div className='text-center'>
       <h2>Update this news: </h2>
@@ -75,5 +77,14 @@ const UpdateNewsForm = ({  newsObjectToBeUpdated }) => {
     </div>
   )
 }
-
+UpdateNewsForm.propTypes = {
+  newsObjectToBeUpdated: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired,
+    date: PropTypes.string.isRequired,
+    imageUrl: PropTypes.string.isRequired, // Add this line
+    id: PropTypes.string.isRequired,
+  }).isRequired,
+}
 export default UpdateNewsForm

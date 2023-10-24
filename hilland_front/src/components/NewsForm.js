@@ -1,3 +1,4 @@
+import React from 'react'
 import { useState } from 'react'
 import { setNotification } from '../reducers/notificationReducer'
 import { useDispatch } from 'react-redux'
@@ -56,10 +57,10 @@ const NewsForm = () => {
   }
   const createNews = async (newsObject) => {
     const file = newsObject.imageFile
-    
+
     try {
       const imageUrl = await s3Service.sendToS3(file)
-  
+
       const newsDataObject = {
         title: newsObject.title,
         content: newsObject.content,
@@ -75,24 +76,24 @@ const NewsForm = () => {
         )
       )
     } catch (error) {
-      console.log(error.response.data.error)
+
       dispatch(
         setNotification(
           error.response.data.error, 5, 'error'
         )
       )
     }
-  } 
+  }
   return (
 
     <div className='text-center'>
       <h2>Add news: </h2>
-      
+
       <form onSubmit={addNews}>
         <div>
           title: <input size="50" value={newTitle} onChange={handleTitleChange} />
         </div>
-        <div>    
+        <div>
         content: <input size='50' rows='2' value={newContent} onChange={handleContentChange} />
         </div>
         <div>
