@@ -9,7 +9,10 @@ import newsService from '../services/news'
 import songrequestService from '../services/songrequests'
 import loginService from '../services/login'
 import s3Service from '../services/s3'
-import Button from 'react-bootstrap/esm/Button'
+import Button from 'react-bootstrap/Button'
+import Container from 'react-bootstrap/Container'
+import Form from 'react-bootstrap/Form'
+import Col from 'react-bootstrap/Col'
 
 const LoginForm = () => {
   const [username, setUsername] = useState('')
@@ -20,6 +23,7 @@ const LoginForm = () => {
   const handleUsernameChange = (event) => {
     setUsername(event.target.value)
   }
+
   const handlePasswordChange = (event) => {
     setPassword(event.target.value)
   }
@@ -45,30 +49,43 @@ const LoginForm = () => {
       dispatch(setNotification('Wrong credentials', 3, 'error'))
     }
   }
+
   return (
-    <div>
+    <Container className="text-center">
       <h2>Login</h2>
-      <Notification/>
-      <form onSubmit={handleSubmit}>
-        <div>
-           username
-          <input
-            value={username}
-            onChange={handleUsernameChange}
-          />
-        </div>
-        <div>
-           password
-          <input
-            type="password"
-            value={password}
-            onChange={handlePasswordChange}
-          />
-        </div>
-        <Button variant="primary" type="submit">login</Button>
-      </form>
-    </div>
+      <Notification />
+      <Form onSubmit={handleSubmit}>
+        <Col xs={12} md={6} lg={4} className="mx-auto">
+          <Form.Group controlId="formBasicUsername">
+            <Form.Label>Username</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter username"
+              value={username}
+              onChange={handleUsernameChange}
+            />
+          </Form.Group>
+          <Form.Group controlId="formBasicPassword">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={handlePasswordChange}
+            />
+          </Form.Group>
+          <Button variant="primary" type="submit" block>
+            Login
+          </Button>
+        </Col>
+      </Form>
+    </Container>
   )
 }
 
 export default LoginForm
+
+
+
+
+

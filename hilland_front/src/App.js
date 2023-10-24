@@ -1,6 +1,6 @@
 import React from 'react'
 import './App.css'
-import myLogo from './hlogo.png'
+import myLogo from './assets/hlogo.png'
 import jwt_decode from 'jwt-decode'
 import { useEffect } from 'react'
 import {
@@ -55,7 +55,7 @@ const App = () => {
   return (
     <Router>
       <Navbar collapseOnSelect expand="lg" className="justify-content-center color-nav" >
-        <Navbar.Toggle aria-controls="responsive-navbar-nav"> <img style={{ width: 170, height: 85 }} src={myLogo} alt="Hilland logo"/> </Navbar.Toggle>
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" className="mx-auto"> <img style={{ width: 170, height: 85 }} src={myLogo} alt="Hilland logo"/> </Navbar.Toggle>
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="justify-content-center">
             <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/">HOME</NavLink>

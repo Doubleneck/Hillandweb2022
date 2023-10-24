@@ -11,7 +11,7 @@ const sendToS3 = async (file) => {
   const config = {
     headers: { Authorization: token },
   }
-  const { url } = await fetch(baseUrl, config).then((res) => res.json()) ///FIX THIS !!!
+  const { url } = await fetch(baseUrl, config).then((res) => res.json())
   await fetch(url, {
     method: 'put',
     headers: {
