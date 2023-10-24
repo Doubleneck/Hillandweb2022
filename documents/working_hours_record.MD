@@ -67,5 +67,6 @@
 |5.3.2023|3| Fix App to use Update-route to avoid Safari rendering problems|
 |6.3.2023|1| fix news useEffects to render news correctly without extra routes in Safari also|
 |7.3.2023|1| refactor updateNews & createNews to use state updates instead of fech|
-|24.10.2023|4| Fix broken code after break, update deps, clean code, fix Songr request form|
-|Total Hours|158|
+|24.10.2023|4| Fix broken code after break, update deps, clean code, fix Song request form|
+|25.10.2023|2| Maintain code, upgrade LoginForm, and Home & News components|
+|Total Hours|160|
