@@ -3,6 +3,17 @@ const Songrequest= require('../models/songrequest')
 const jwt = require('jsonwebtoken')
 
 songrequestRouter.get('/', async (req, res) => {
+  const token = req.token
+  const decodedToken = jwt.verify(token, process.env.SECRET)
+  if (!token || !decodedToken.id) {
+    return res.status(401).json({ error: 'token missing or invalid' })
+  }
+
+  if (decodedToken.role !== 'admin') {
+    return res
+      .status(401)
+      .json({ error: 'you don´t have rights for this operation' })
+  }
   const songrequest = await Songrequest.find({})
   res.json(songrequest)
 })

@@ -34,6 +34,9 @@
     background-color: rgb(122, 0, 0);
     
 }
+.songRequestLink {
+  background-color: #030001; /* Change the color to your desired color */
+}
 .linkText{ color: rgb(220, 188, 166) ; }
 
 .newsText{ color: rgb(150, 75, 31) ; }

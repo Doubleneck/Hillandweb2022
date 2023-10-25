@@ -8,7 +8,6 @@ import {
   Routes, Route, NavLink
 } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-//import { setNotification } from './reducers/notificationReducer'
 import { setUser } from './reducers/loginFormReducer'
 import newsService from './services/news'
 import s3Service from './services/s3'
@@ -19,6 +18,7 @@ import News from './components/News'
 import Videos from './components/Videos'
 import LoginForm from './components/LoginForm'
 import TruckerCaps from './components/TruckerCaps'
+import SongRequests from './components/SongRequests'
 import Button from 'react-bootstrap/Button'
 
 const App = () => {
@@ -65,7 +65,7 @@ const App = () => {
             <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/truckercaps">TRUCKER CAPS</NavLink>
             <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/archive">ARCHIVE</NavLink>
             {user ? (
-              <></>
+              <NavLink style={padding} className="linkText m-auto text-decoration-none songRequestLink" to="/songrequests">SONGREQUESTS</NavLink>
             ) : (
               <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/login">LOGIN (muualle tää?)</NavLink>
             )}
@@ -99,6 +99,11 @@ const App = () => {
         <Route path="/videos" element={<Videos  />} />
         <Route path="/truckercaps" element={<TruckerCaps  />} />
         <Route path="/login" element={<LoginForm  />} />
+        {user ? (
+          <Route path="/songrequests" element={<SongRequests />} />
+        ) : (
+          null
+        )}
       </Routes>
 
       <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.05)' }}>
