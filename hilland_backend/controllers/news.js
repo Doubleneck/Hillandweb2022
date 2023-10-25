@@ -90,7 +90,7 @@ newsRouter.delete('/:id', async (request, response) => {
   const toBeRemovedS3Id = await newsObject_to_be_removed.imageURL.split('/')[3] 
   await News.findByIdAndRemove(request.params.id)
   await s3.deleteImage(toBeRemovedS3Id)
-  response.status(204).end()
+  return response.status(204).end()
 })
 
 module.exports = newsRouter
