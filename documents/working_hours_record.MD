@@ -69,4 +69,5 @@
 |7.3.2023|1| refactor updateNews & createNews to use state updates instead of fech|
 |24.10.2023|4| Fix broken code after break, update deps, clean code, fix Song request form|
 |25.10.2023|2| Maintain code, upgrade LoginForm, and Home & News components|
-|Total Hours|160|
+|26.10.2023|4| Fix s3 delete functionality to use correct rest requests post -> delete, add SongRequest rendering component|
+|Total Hours|164|
