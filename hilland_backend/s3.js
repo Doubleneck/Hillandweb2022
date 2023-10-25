@@ -2,7 +2,7 @@ const aws_sdk = require('aws-sdk')
 const dotenv = require('dotenv')
 const crypto = require('crypto')
 const randomBytes = crypto.randomBytes
-const promisify = require('util').promisify
+require('util').promisify
 dotenv.config()
 
 const region = 'eu-central-1'

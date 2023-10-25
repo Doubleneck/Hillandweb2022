@@ -1,5 +1,3 @@
-import axios from 'axios'
-//const baseUrl = 'http://localhost:3001/api/s3url'
 const baseUrl = '/api/s3url'
 let token = null
 
@@ -23,11 +21,4 @@ const sendToS3 = async (file) => {
   return imageUrl
 }
 
-const deleteFromS3 = async (id) => {
-  const config = {
-    headers: { Authorization: token },
-  }
-  await axios.post(baseUrl, id, config)
-}
-
-export default { setToken, sendToS3, deleteFromS3 }
+export default { setToken, sendToS3,  }

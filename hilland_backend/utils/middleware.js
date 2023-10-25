@@ -46,20 +46,24 @@ const tokenExtractor = (request, response, next) => {
   }
   next()
 }
- 
 const userExtractor = (request, response, next) => {
-
-  if((request.method === 'POST')){
-    const tokenDecoded = jwt.verify(request.token, process.env.SECRET)
-    request.user = {
-      username : tokenDecoded.username,
-      role : tokenDecoded.role,
-      id : tokenDecoded.id
+  if (request.method === 'POST' || request.method === 'DELETE') {
+    try {
+      const tokenDecoded = jwt.verify(request.token, process.env.SECRET)
+      request.user = {
+        username: tokenDecoded.username,
+        role: tokenDecoded.role,
+        id: tokenDecoded.id,
+      }
+    } catch (error) {
+      // Handle token verification error, e.g., token is invalid or expired
+      return response.status(401).json({ error: 'Authentication failed' })
     }
   }
- 
+
   next()
 }
+
 module.exports = {
   requestLogger,
   unknownEndpoint,

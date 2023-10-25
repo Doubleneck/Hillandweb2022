@@ -8,7 +8,6 @@ import PropTypes from 'prop-types'
 import Togglable from '../components/Togglable'
 import UpdateNewsForm from '../components/UpdateNewsForm'
 import newsService from '../services/news'
-import s3Service from '../services/s3'
 import Button from 'react-bootstrap/esm/Button'
 
 const NewsObject = ({ newsObject }) => {
@@ -19,7 +18,6 @@ const NewsObject = ({ newsObject }) => {
   }
 
   const removeNewsObject = async (newsObject) => {
-    const toBeRemovedS3Id = await { id: newsObject.imageURL.split('/')[3] }
 
     if (window.confirm(`Delete ${newsObject.title}?`)) {
       try {
@@ -30,7 +28,6 @@ const NewsObject = ({ newsObject }) => {
             `Removed ${newsObject.title} from News `, 5, 'update'
           )
         )
-        await s3Service.deleteFromS3(toBeRemovedS3Id)
       } catch (exception) {
         dispatch(
           setNotification(

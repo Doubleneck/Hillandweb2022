@@ -1,7 +1,7 @@
 const newsRouter = require('express').Router()
 const News = require('../models/news')
 const jwt = require('jsonwebtoken')
-
+const s3 = require('../s3.js')
 newsRouter.get('/', async (req, res) => {
   const news = await News.find({})
   res.json(news)
@@ -73,7 +73,7 @@ newsRouter.post('/', async (request, response) => {
   const savedNews = await news.save()
   response.status(201).json(savedNews)
 })
-
+//This is the route for deleting news, it´s also handling the deletion of the image from S3
 newsRouter.delete('/:id', async (request, response) => {
   const token = request.token
   const decodedToken = jwt.verify(token, process.env.SECRET)
@@ -86,8 +86,10 @@ newsRouter.delete('/:id', async (request, response) => {
       .status(401)
       .json({ error: 'you don´t have rights for this operation' })
   }
-
+  const newsObject_to_be_removed = await News.findById(request.params.id)
+  const toBeRemovedS3Id = await newsObject_to_be_removed.imageURL.split('/')[3] 
   await News.findByIdAndRemove(request.params.id)
+  await s3.deleteImage(toBeRemovedS3Id)
   response.status(204).end()
 })
 

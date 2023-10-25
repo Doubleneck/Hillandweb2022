@@ -7,20 +7,17 @@ const notificationSlice = createSlice({
   initialState,
   reducers: {
     createNotification(state, action) {
-      console.log('action.payload.content:', action.payload.content)
       state.content = action.payload.content
       state.type = action.payload.type
       return state
     },
     clearNotification() {
-      console.log('clear')
       return initialState
     },
   },
 })
 
 export const setNotification = (content, time, type) => {
-  console.log('setNotification ', content, time)
   const ms = time * 1000
   return async (dispatch) => {
     const notification = {
