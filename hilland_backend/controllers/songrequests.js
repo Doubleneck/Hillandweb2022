@@ -9,22 +9,8 @@ songrequestRouter.get('/', async (req, res) => {
     return res.status(401).json({ error: 'token missing or invalid' })
   }
 
-  if (decodedToken.role !== 'admin') {
-    return res
-      .status(401)
-      .json({ error: 'you don´t have rights for this operation' })
-  }
   const songrequest = await Songrequest.find({})
   res.json(songrequest)
-})
-
-songrequestRouter.get('/:id', async (request, response) => {
-  const news = await Songrequest.findById(request.params.id)
-  if (news) {
-    response.json(news)
-  } else {
-    response.status(404).end()
-  }
 })
 
 songrequestRouter.put('/:id', (request, response, next) => {
