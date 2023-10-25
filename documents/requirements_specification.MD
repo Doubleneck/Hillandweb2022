@@ -42,8 +42,8 @@ These two tasks will joint to each other, since the everyday users can make song
 ### Logged users:
 
 - [x] user can see news, releases, etc. i.e. all open content
-- [ ] user can see requested songs list
-- [ ] user can filter requested songs list
+- [x] user can see requested songs list
+- [x] user can filter requested songs list
 
 (optional):
 
@@ -59,5 +59,5 @@ These two tasks will joint to each other, since the everyday users can make song
 - [ ] user can add, remove and update releases
 - [ ] user can add, remove and update archive
 - [ ] user can add new users
-- [ ] user can remove items from requested songs list 
+- [x] user can remove items from requested songs list 
 
