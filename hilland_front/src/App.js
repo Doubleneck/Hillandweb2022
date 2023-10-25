@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setUser } from './reducers/loginFormReducer'
 import newsService from './services/news'
 import s3Service from './services/s3'
+import songrequestService from './services/songrequests'
 import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
 import Home from './components/Home'
@@ -20,6 +21,7 @@ import LoginForm from './components/LoginForm'
 import TruckerCaps from './components/TruckerCaps'
 import SongRequests from './components/SongRequests'
 import Button from 'react-bootstrap/Button'
+
 
 const App = () => {
   const user = useSelector((state) => state.loginForm.user)
@@ -35,19 +37,15 @@ const App = () => {
       const decodedToken = jwt_decode(parsedUser.token)
       const expiresAtMillis = decodedToken.exp * 1000
       if (expiresAtMillis > Date.now()) {
-        console.log('NOT EXPIRED')
         dispatch(setUser(parsedUser))
         newsService.setToken(parsedUser.token)
         s3Service.setToken(parsedUser.token)
+        songrequestService.setToken(parsedUser.token)
       } else {
         dispatch(setUser(null))
         newsService.setToken(null)
         s3Service.setToken(null)
-        /*         dispatch(
-          setNotification(
-            'KIRJATTU ULOS', 5, 'error'
-          )
-        ) */
+        songrequestService.setToken(null)
       }
     }
   }, [])
