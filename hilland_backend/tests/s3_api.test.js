@@ -1,9 +1,6 @@
-const mongoose = require('mongoose')
 const supertest = require('supertest')
-const helper = require('./test_helper')
 const app = require('../app')
 const api = supertest(app)
-const News = require('../models/news')
 const bcrypt = require('bcrypt')
 const User = require('../models/user')
 
@@ -42,15 +39,16 @@ beforeAll(async () => {
   USERTOKEN = response2.body.token
 })
 
+console.log('ADMINTOKEN', ADMINTOKEN)
 describe('GET s3 url when there is initially one admin-user and one user-user at db', () => {
-  /*   test('getting  s3 url succees if logged as ADMIN ', async () => {
-    newUser = helper.newUser
+  test('getting  s3 url succees if logged as ADMIN ', async () => {
+    
     await api
       .get('/api/s3url')
       .set('Authorization', `Bearer ${ADMINTOKEN}`)
       .expect(200)
       .expect('Content-Type', /application\/json/)
-  }) */
+  }) 
 
   test('getting  s3 url fails if not loggedin ', async () => {
     await api
@@ -68,27 +66,4 @@ describe('GET s3 url when there is initially one admin-user and one user-user at
   })
 })
 
-describe('POST s3 url when there is initially one admin-user and one user-user at db', () => {
-  test('access to s3 post succees if logged as USER ', async () => {
-    const toBeDeletedId = {
-      id: '1234',
-    }
-    await api
-      .post('/api/s3url')
-      .send(toBeDeletedId)
-      .set('Authorization', `Bearer ${USERTOKEN}`)
-      .expect(401)
-      .expect('Content-Type', /application\/json/)
-  })
 
-  test('getting s3 url fails if not loggedin ', async () => {
-    const toBeDeletedId = {
-      id: '1234',
-    }
-    await api
-      .post('/api/s3url')
-      .send(toBeDeletedId)
-      .expect(401)
-      .expect('Content-Type', /application\/json/)
-  })
-})

@@ -1,6 +1,6 @@
 const News = require('../models/news')
 const User = require('../models/user')
-
+const Songrequests = require('../models/songrequest')
 const initialNews = [
   {
     title: 'Test news #1',
@@ -18,6 +18,19 @@ const initialNews = [
   },
 ]
 
+const initialSongRequest = [
+  {
+    song: 'Test song #1',
+    artist: 'Test artist #1',
+    date: new Date(),
+  },
+  {
+    song: 'Test song #2',
+    artist: 'Test artist #2',
+    date: new Date(),
+  },
+]
+
 const nonExistingId = async () => {
   const news = new News({
     title: 'Test news to be removed',
@@ -31,7 +44,10 @@ const nonExistingId = async () => {
 
   return news._id.toString()
 }
-
+const songRequestsInDb = async () => {
+  const songrequests = await Songrequests.find({})
+  return songrequests.map((s) => s.toJSON())
+}
 const newsInDb = async () => {
   const news = await News.find({})
   return news.map((n) => n.toJSON())
@@ -48,7 +64,11 @@ const newNews = {
   url: 'www.testnews3.com',
   imageURL: 'www.s3.com/something',
 }
-
+const newSong = {
+  song: 'new song',
+  artist: 'some artist',
+  date: new Date(),
+}
 const newUser = {
   username: 'someuser',
   name: 'Some User',
@@ -58,9 +78,12 @@ const newUser = {
 
 module.exports = {
   initialNews,
+  initialSongRequest,
   nonExistingId,
   newsInDb,
   usersInDb,
+  songRequestsInDb,
   newUser,
   newNews,
+  newSong
 }

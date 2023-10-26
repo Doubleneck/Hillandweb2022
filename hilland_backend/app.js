@@ -36,7 +36,6 @@ app.use('/api/songrequests', songrequestsRouter)
 app.get('/*', function(req, res) {
   const token = req.token
   console.log(token)
-  //jwt.verify(token, process.env.SECRET)
   res.sendFile(path.join(__dirname, '/build/index.html'), function(err) {
     
     if (err) {

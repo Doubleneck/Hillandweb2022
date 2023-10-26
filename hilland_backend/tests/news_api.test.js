@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+//const mongoose = require('mongoose')
 const supertest = require('supertest')
 const helper = require('./test_helper')
 const app = require('../app')
@@ -11,6 +11,7 @@ let ADMINTOKEN = ''
 let USERTOKEN = ''
 
 beforeAll(async () => {
+  await User.deleteMany({})
   await User.deleteMany({})
   const passwordHash = await bcrypt.hash('sekret', 10)
   const user = new User({
@@ -27,16 +28,17 @@ beforeAll(async () => {
   const response = await supertest(app).post('/api/login').send(userdata)
   ADMINTOKEN = response.body.token
 
-  const passwordHash2 = await bcrypt.hash('sekret2', 10)
+  
   const user2 = new User({
-    username: 'useruser',
+    username: 'someuser',
     role: 'user',
-    passwordHash2,
+    passwordHash,
   })
   await user2.save()
+
   const userdata2 = {
-    username: 'useruser',
-    password: 'sekret2',
+    username: 'someuser',
+    password: 'sekret',
   }
   const response2 = await supertest(app).post('/api/login').send(userdata2)
   USERTOKEN = response2.body.token
@@ -90,12 +92,12 @@ describe('viewing a specific news', () => {
     expect(resultNews.body).toEqual(processedNewsToView)
   })
 
-  test('fails with statuscode 404 if news does not exist without login', async () => {
+  test('fails with statuscode 404 if news does not exist (without login)', async () => {
     const validNonexistingId = await helper.nonExistingId()
     await api.get(`/api/news/${validNonexistingId}`).expect(404)
   })
 
-  test('fails with statuscode 400 if id is invalid without login', async () => {
+  test('fails with statuscode 400 if id is invalid (without login)', async () => {
     const invalidId = '5a3d5da59070081a82a3445'
     await api.get(`/api/news/${invalidId}`).expect(400)
   })
@@ -103,7 +105,6 @@ describe('viewing a specific news', () => {
 
 describe('addition of a new news', () => {
   beforeEach(async () => {
-    await User.deleteMany({})
     await News.deleteMany({})
     await News.insertMany(helper.initialNews)
   })
@@ -134,7 +135,6 @@ describe('addition of a new news', () => {
       .expect('Content-Type', /application\/json/)
 
     const response = await api.get('/api/news')
-    //const contents = response.body.map((r) => r.content)
 
     expect(response.body).toHaveLength(helper.initialNews.length)
   })
@@ -243,6 +243,6 @@ describe('deleting and updating of a news', () => {
   })
 })
 
-afterAll(() => {
-  mongoose.connection.close()
-})
+// afterAll(() => {
+//   mongoose.connection.close()
+// })
