@@ -70,4 +70,5 @@
 |24.10.2023|4| Fix broken code after break, update deps, clean code, fix Song request form|
 |25.10.2023|2| Maintain code, upgrade LoginForm, and Home & News components|
 |26.10.2023|4| Fix s3 delete functionality to use correct rest requests post -> delete, add SongRequest rendering component|
-|Total Hours|164|
+|27.10.2023|6| migrate AWS-SDK v2=>v3 + fix S3 issues, routes and functionality e2e for songrequests + backend tests|
+|Total Hours|170|
