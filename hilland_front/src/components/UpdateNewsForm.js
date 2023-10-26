@@ -7,6 +7,7 @@ import newsService from '../services/news'
 import Button from 'react-bootstrap/esm/Button'
 import { updateNewsobject } from '../reducers/newsReducer'
 const UpdateNewsForm = ({  newsObjectToBeUpdated }) => {
+
   const dispatch = useDispatch()
   const [newTitle, setNewTitle] = useState(newsObjectToBeUpdated.title)
   const [newContent, setNewContent] = useState(newsObjectToBeUpdated.content)
@@ -83,7 +84,7 @@ UpdateNewsForm.propTypes = {
     content: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
     date: PropTypes.string.isRequired,
-    imageUrl: PropTypes.string.isRequired, // Add this line
+    imageUrl: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
   }).isRequired,
 }
