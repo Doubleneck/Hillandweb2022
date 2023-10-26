@@ -5,6 +5,7 @@ import { setNotification } from '../reducers/notificationReducer'
 import Button from 'react-bootstrap/Button'
 import Notification from './Notification'
 import songrequestService from '../services/songrequests'
+//import Header from 'react-bootstrap/Header'
 //import Button from 'react-bootstrap/Button'
 //import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Popover from 'react-bootstrap/Popover'
@@ -80,29 +81,38 @@ const SongRequestForm = () => {
 
       {!hideRequest && (
 
-        <Popover id="popover-basic">
-          <Popover.Header as="h3" className="text-center text-danger" >Song Request</Popover.Header>
-          <Popover.Body>
-            <div>
-              <form onSubmit={handleSubmit}>
-                <div>
-                  <h3 className="text-center text-danger">Artist:</h3>
-                  <input value={artist} onChange={handleArtistChange} />
-                  <p className="text-center text-danger">(You can leave this blank)</p>
-                  <Notification />
-                  <h3 className="text-center text-danger"> Song: </h3>
-                  <input type="song" value={song} onChange={handleSongChange} />
-                  <p></p>
-                  <p className="text-center">
-                    <Button type="submit" variant="danger">
+        <>
+
+          <div >
+            <h4 className='mb-3 text-danger'>New  feature!! </h4>
+          </div>
+          <p></p>
+          <Popover id="popover-basic">
+            <Popover.Header as="h3" className="text-center text-danger" >Song request</Popover.Header>
+            <Popover.Body>
+              <div>
+                <form onSubmit={handleSubmit}>
+                  <div>
+                    <h3 className="text-center text-danger">Artist:</h3>
+                    <input value={artist} onChange={handleArtistChange} />
+                    <p className="text-center text-danger">(You can leave this blank)</p>
+                    <Notification />
+                    <h3 className="text-center text-danger"> Song: </h3>
+                    <input type="song" value={song} onChange={handleSongChange} />
+                    <p></p>
+                    <p className="text-center">
+                      <Button type="submit" variant="danger">
     Send !!
-                    </Button>
-                  </p>
-                </div>
-              </form>
-            </div>
-          </Popover.Body>
-        </Popover>
+                      </Button>
+                    </p>
+                  </div>
+                </form>
+                <p></p>
+
+              </div>
+            </Popover.Body>
+          </Popover>
+        </>
       )}
     </div>
   )
