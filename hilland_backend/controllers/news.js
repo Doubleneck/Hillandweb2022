@@ -1,7 +1,7 @@
 const newsRouter = require('express').Router()
 const News = require('../models/news')
-const jwt = require('jsonwebtoken')
 const s3 = require('../s3.js')
+const { adminCredentialsValidator, userLoggedInValidator } = require('../utils/middleware')  
 newsRouter.get('/', async (req, res) => {
   const news = await News.find({})
   res.json(news)
@@ -16,18 +16,7 @@ newsRouter.get('/:id', async (request, response) => {
   }
 })
 
-newsRouter.put('/:id', (request, response, next) => {
-  const token = request.token
-  const decodedToken = jwt.verify(token, process.env.SECRET)
-  if (!token || !decodedToken.id) {
-    return response.status(401).json({ error: 'token missing or invalid' })
-  }
-
-  if (decodedToken.role !== 'admin') {
-    return response
-      .status(401)
-      .json({ error: 'you don´t have rights for this operation' })
-  }
+newsRouter.put('/:id', userLoggedInValidator, adminCredentialsValidator, (request, response, next) => {
 
   const news = {
     title: request.body.title,
@@ -43,18 +32,7 @@ newsRouter.put('/:id', (request, response, next) => {
     .catch((error) => next(error))
 })
 
-newsRouter.post('/', async (request, response) => {
-  const token = request.token
-  const decodedToken = jwt.verify(token, process.env.SECRET)
-  if (!token || !decodedToken.id) {
-    return response.status(401).json({ error: 'token missing or invalid' })
-  }
-
-  if (request.user.role !== 'admin') {
-    return response
-      .status(401)
-      .json({ error: 'you don´t have rights for this operation' })
-  }
+newsRouter.post('/', userLoggedInValidator, adminCredentialsValidator, async (request, response) => {
 
   if (request.body.title === '' || request.body.content === '') {
     console.log(response)
@@ -73,19 +51,10 @@ newsRouter.post('/', async (request, response) => {
   const savedNews = await news.save()
   response.status(201).json(savedNews)
 })
+
 //This is the route for deleting news, it´s also handling the deletion of the image from S3
-newsRouter.delete('/:id', async (request, response) => {
-  const token = request.token
-  const decodedToken = jwt.verify(token, process.env.SECRET)
-  if (!token || !decodedToken.id) {
-    return response.status(401).json({ error: 'token missing or invalid' })
-  }
-  const user = decodedToken
-  if (user.role !== 'admin') {
-    return response
-      .status(401)
-      .json({ error: 'you don´t have rights for this operation' })
-  }
+newsRouter.delete('/:id', userLoggedInValidator, adminCredentialsValidator, async (request, response) => {
+
   const newsObject_to_be_removed = await News.findById(request.params.id)
   const toBeRemovedS3Id = await newsObject_to_be_removed.imageURL.split('/')[3] 
   await News.findByIdAndRemove(request.params.id)

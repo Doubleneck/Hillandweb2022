@@ -76,29 +76,32 @@ const SongRequestForm = () => {
   }, [formSubmitted])
 
   return (
-    <div className="text-center">
+    <div >
 
 
       {!hideRequest && (
 
         <>
 
+
+          <p></p>
+          <Notification />
           <div >
             <h4 className='mb-3 text-danger'>New  feature!! </h4>
+            <h4 className='mb-3 text-danger'>Send us a song request...maybe we&rsquo;ll play it next Monday! </h4>
           </div>
-          <p></p>
-          <Popover id="popover-basic">
+          <Popover className="mx-auto" id="popover-basic">
             <Popover.Header as="h3" className="text-center text-danger" >Song request</Popover.Header>
             <Popover.Body>
               <div>
                 <form onSubmit={handleSubmit}>
                   <div>
                     <h3 className="text-center text-danger">Artist:</h3>
-                    <input value={artist} onChange={handleArtistChange} />
+                    <input className="form-control text-center" value={artist} onChange={handleArtistChange} />
                     <p className="text-center text-danger">(You can leave this blank)</p>
-                    <Notification />
+
                     <h3 className="text-center text-danger"> Song: </h3>
-                    <input type="song" value={song} onChange={handleSongChange} />
+                    <input className="form-control text-center" value={song} onChange={handleSongChange} />
                     <p></p>
                     <p className="text-center">
                       <Button type="submit" variant="danger">
@@ -112,6 +115,7 @@ const SongRequestForm = () => {
               </div>
             </Popover.Body>
           </Popover>
+
         </>
       )}
     </div>

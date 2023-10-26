@@ -46,6 +46,28 @@ const tokenExtractor = (request, response, next) => {
   }
   next()
 }
+
+const adminCredentialsValidator = (request, response, next) => {
+  const token = request.token
+  const user = jwt.verify(token, process.env.SECRET)
+  if (user.role !== 'admin') {
+    return response
+      .status(401)
+      .json({ error: 'you don´t have rights for this operation' })
+  }
+  next()
+}
+
+const userLoggedInValidator = (request, response, next) => {
+  const token = request.token
+  const user = jwt.verify(token, process.env.SECRET)
+  if (!token || !user.id) {
+    return response.status(401).json({ error: 'token missing or invalid' })
+  }
+  
+  next()
+}
+
 const userExtractor = (request, response, next) => {
   if (request.method === 'POST' || request.method === 'DELETE') {
     try {
@@ -69,6 +91,8 @@ module.exports = {
   unknownEndpoint,
   errorHandler,
   tokenExtractor,
+  adminCredentialsValidator,
+  userLoggedInValidator,
   userExtractor
 
 }

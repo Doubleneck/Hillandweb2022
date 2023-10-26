@@ -21,10 +21,10 @@ const accessKeyId = process.env.AWS_ACCESS_KEY_ID
 const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY
 
 const currentDate = new Date()
-console.log(currentDate)
+
 // Add 60 minutes (60 minutes * 60 seconds * 1000 milliseconds) to the current date
 const futureDate = new Date(currentDate.getTime() + 60 * 60 * 1000)
-console.log(futureDate)
+
 const s3 = new S3({
   region,
   accessKeyId,
@@ -43,7 +43,6 @@ async function generateUploadURL() {
   }
 
   const uploadURL = await getSignedUrl(s3, new PutObjectCommand(params))
-  console.log('uploadUrl', uploadURL)
   return uploadURL
 }
 

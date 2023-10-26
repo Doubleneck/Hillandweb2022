@@ -4,9 +4,11 @@ import songrequestService from '../services/songrequests'
 import { setNotification } from '../reducers/notificationReducer'
 import { useDispatch } from 'react-redux'
 import Notification from './Notification'
+import { useSelector } from 'react-redux'
 
 function Songrequests() {
   const dispatch = useDispatch()
+  const user = useSelector((state) => state.loginForm.user)
   const [songrequests, setSongrequests] = useState([])
   const [sortType, setSortType] = useState('dateNewerFirst') // Default sorting by date (newer first)
   const [sortedSongrequests, setSortedSongrequests] = useState([])
@@ -95,12 +97,15 @@ function Songrequests() {
               <strong>{songrequest.song}</strong> requested{' '}
               {formatDate(songrequest.date)} (song from artist:{' '}
               {songrequest.artist})
-              <button
-                onClick={() => handleDelete(songrequest.id)}
-                className="delete-button"
-              >
+              {user.role === 'admin' && (
+                <button
+                  onClick={() => handleDelete(songrequest.id)}
+                  className="delete-button"
+                >
                 Delete
-              </button>
+                </button>
+              )}
+
             </p>
           </li>
         ))}
