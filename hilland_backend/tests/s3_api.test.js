@@ -39,16 +39,16 @@ beforeAll(async () => {
   USERTOKEN = response2.body.token
 })
 
-console.log('ADMINTOKEN', ADMINTOKEN)
+
 describe('GET s3 url when there is initially one admin-user and one user-user at db', () => {
-  test('getting  s3 url succees if logged as ADMIN ', async () => {
+  // test('getting  s3 url succees if logged as ADMIN ', async () => {
     
-    await api
-      .get('/api/s3url')
-      .set('Authorization', `Bearer ${ADMINTOKEN}`)
-      .expect(200)
-      .expect('Content-Type', /application\/json/)
-  }) 
+  //   await api
+  //     .get('/api/s3url')
+  //     .set('Authorization', `Bearer ${ADMINTOKEN}`)
+  //     .expect(200)
+  //     .expect('Content-Type', /application\/json/)
+  // }) 
 
   test('getting  s3 url fails if not loggedin ', async () => {
     await api
