@@ -37,7 +37,6 @@ if (process.env.NODE_ENV === 'test') {
   app.use('/api/testing', testingRouter)
 }
 app.get('/*', function(req, res) {
-  const token = req.token
   res.sendFile(path.join(__dirname, '/build/index.html'), function(err) {
     if (err) {
       res.status(500).send(err)

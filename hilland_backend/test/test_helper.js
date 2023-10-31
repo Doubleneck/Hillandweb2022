@@ -59,13 +59,13 @@ const usersInDb = async () => {
   return users.map((u) => u.toJSON())
 }
 
-const newNews = () => ({
+const newNews = {
   title: 'Test news added_valid_news',
   content: 'Added this news',
   date: new Date(),
   url: 'www.testnews3.com',
   imageURL: 'www.s3.com/something',
-})
+}
 
 const newSong = () => ({
   song: 'new song',

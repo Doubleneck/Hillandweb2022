@@ -1,42 +1,29 @@
 const supertest = require('supertest')
 const app = require('../app')
 const api = supertest(app)
-const bcrypt = require('bcrypt')
-const User = require('../models/user')
-
+// eslint-disable-next-line no-unused-vars
 let ADMINTOKEN = ''
 let USERTOKEN = ''
 
 beforeAll(async () => {
-  await User.deleteMany({})
-  const passwordHash = await bcrypt.hash('sekret', 10)
-  const user = new User({
-    username: 'root',
-    role: 'admin',
-    passwordHash,
-  })
-  await user.save()
+  await supertest(app)
+    .post('/api/testing/reset')
+    .expect(201)
 
   const userdata = {
-    username: 'root',
-    password: 'sekret',
+    username: 'admin@admin.com',
+    password: 'Admin@admin1',
   }
   const response = await supertest(app).post('/api/login').send(userdata)
   ADMINTOKEN = response.body.token
 
-  const passwordHash2 = await bcrypt.hash('sekret2', 10)
-  const user2 = new User({
-    username: 'useruser',
-    role: 'user',
-    passwordHash2,
-  })
-  await user2.save()
   const userdata2 = {
-    username: 'useruser',
-    password: 'sekret2',
+    username: 'user@user.com',
+    password: 'User@user1',
   }
   const response2 = await supertest(app).post('/api/login').send(userdata2)
   USERTOKEN = response2.body.token
+
 })
 
 

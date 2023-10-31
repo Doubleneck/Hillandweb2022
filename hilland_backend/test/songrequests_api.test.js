@@ -1,42 +1,27 @@
-//const mongoose = require('mongoose')
 const supertest = require('supertest')
 const helper = require('./test_helper')
 const app = require('../app')
 const api = supertest(app)
 const SongRequest = require('../models/songrequest')
-const bcrypt = require('bcrypt')
-const User = require('../models/user')
 
 let ADMINTOKEN = ''
 let USERTOKEN = ''
 
 beforeAll(async () => {
-  await User.deleteMany({})
-  const passwordHash = await bcrypt.hash('sekret', 10)
-  const user = new User({
-    username: 'root',
-    role: 'admin',
-    passwordHash,
-  })
-  await user.save()
+  await supertest(app)
+    .post('/api/testing/reset')
+    .expect(201)
 
   const userdata = {
-    username: 'root',
-    password: 'sekret',
+    username: 'admin@admin.com',
+    password: 'Admin@admin1',
   }
   const response = await supertest(app).post('/api/login').send(userdata)
   ADMINTOKEN = response.body.token
 
-  const user2 = new User({
-    username: 'someuser',
-    role: 'user',
-    passwordHash,
-  })
-  await user2.save()
-
   const userdata2 = {
-    username: 'someuser',
-    password: 'sekret',
+    username: 'user@user.com',
+    password: 'User@user1',
   }
   const response2 = await supertest(app).post('/api/login').send(userdata2)
   USERTOKEN = response2.body.token
@@ -51,7 +36,7 @@ describe('addition of a new songrequest', () => {
   })
 
   test('succeeds with valid data (no LOGIN)', async () => {
-    const newSongrequest = helper.newSong
+    const newSongrequest = helper.newSong()
     await api
       .post('/api/songrequests')
       .send(newSongrequest)
@@ -60,7 +45,7 @@ describe('addition of a new songrequest', () => {
   })
 
   test('succeeds with valid data without artist (no LOGIN)', async () => {
-    let newSong= helper.newSong
+    let newSong= helper.newSong()
     newSong.artist = ''
         
     await api

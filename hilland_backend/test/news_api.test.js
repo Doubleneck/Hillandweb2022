@@ -1,48 +1,33 @@
-//const mongoose = require('mongoose')
 const supertest = require('supertest')
 const helper = require('./test_helper')
 const app = require('../app')
 const api = supertest(app)
 const News = require('../models/news')
-const bcrypt = require('bcrypt')
-const User = require('../models/user')
 
 let ADMINTOKEN = ''
 let USERTOKEN = ''
 
 beforeAll(async () => {
-  await User.deleteMany({})
-  await User.deleteMany({})
-  const passwordHash = await bcrypt.hash('sekret', 10)
-  const user = new User({
-    username: 'root',
-    role: 'admin',
-    passwordHash,
-  })
-  await user.save()
+  await supertest(app)
+    .post('/api/testing/reset')
+    .expect(201)
 
   const userdata = {
-    username: 'root',
-    password: 'sekret',
+    username: 'admin@admin.com',
+    password: 'Admin@admin1',
   }
   const response = await supertest(app).post('/api/login').send(userdata)
   ADMINTOKEN = response.body.token
 
-  
-  const user2 = new User({
-    username: 'someuser',
-    role: 'user',
-    passwordHash,
-  })
-  await user2.save()
-
   const userdata2 = {
-    username: 'someuser',
-    password: 'sekret',
+    username: 'user@user.com',
+    password: 'User@user1',
   }
   const response2 = await supertest(app).post('/api/login').send(userdata2)
   USERTOKEN = response2.body.token
+
 })
+
 
 describe('when there is initially some news saved', () => {
   beforeEach(async () => {
@@ -160,25 +145,12 @@ describe('addition of a new news', () => {
 describe('deleting and updating of a news', () => {
   beforeEach(async () => {
     await News.deleteMany({})
-    let newsObject = new News(helper.initialNews[0])
-    await newsObject.save()
-    newsObject = new News(helper.initialNews[1])
-    await newsObject.save()
+
+    for (const initialNewsItem of helper.initialNews) {
+      const newsObject = new News(initialNewsItem)
+      await newsObject.save()
+    }
   })
-
-  // test('deleting a news succees if ADMIN', async () => {
-  //   const newsAtStart = await helper.newsInDb()
-  //   const newsToDelete = newsAtStart[0]
-  //   await api
-  //     .delete(`/api/news/${newsToDelete.id}`)
-  //     .set('Authorization', `Bearer ${ADMINTOKEN}`)
-  //     .expect(204)
-
-  //   const newsAtEnd = await helper.newsInDb()
-  //   expect(newsAtEnd).toHaveLength(helper.initialNews.length - 1)
-  //   const contents = newsAtEnd.map((r) => r.content)
-  //   expect(contents).not.toContain(newsToDelete.content)
-  // })
 
   test('deleting a news fails if USER', async () => {
     const newsAtStart = await helper.newsInDb()
@@ -243,6 +215,3 @@ describe('deleting and updating of a news', () => {
   })
 })
 
-// afterAll(() => {
-//   mongoose.connection.close()
-// })

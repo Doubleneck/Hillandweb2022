@@ -23,7 +23,7 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: example
       MONGO_INITDB_DATABASE: the_test_database
     volumes: 
-      - ./mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
+      - ./mongo/mongotest-init.js:/docker-entrypoint-initdb.d/mongotest-init.js
     container_name: hillandback-dev-test-mongo   
 
   # backend_dev:

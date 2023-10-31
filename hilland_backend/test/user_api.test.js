@@ -35,38 +35,6 @@ const initialize = async () => {
   ADMINTOKEN = await loginUser(helper.adminUser())
 }
 
-// beforeAll(async () => {
-//   await User.deleteMany({})
-//   const passwordHash = await bcrypt.hash('sekret', 10)
-//   const user = new User({
-//     username: 'root',
-//     role: 'admin',
-//     passwordHash,
-//   })
-//   await user.save()
-
-//   const userdata = {
-//     username: 'root',
-//     password: 'sekret',
-//   }
-//   const response = await supertest(app).post('/api/login').send(userdata)
-//   ADMINTOKEN = response.body.token
-
-//   const passwordHash2 = await bcrypt.hash('sekret2', 10)
-//   const user2 = new User({
-//     username: 'useruser',
-//     role: 'user',
-//     passwordHash2,
-//   })
-//   await user2.save()
-//   const userdata2 = {
-//     username: 'useruser',
-//     password: 'sekret2',
-//   }
-//   const response2 = await supertest(app).post('/api/login').send(userdata2)
-//   USERTOKEN = response2.body.token
-// })
-
 beforeAll(async () => {
   await initialize()
 })
