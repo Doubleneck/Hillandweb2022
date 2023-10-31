@@ -1,18 +1,18 @@
-import React from 'react'
-import { useState } from 'react'
-import { setNotification } from '../reducers/notificationReducer'
+import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { setNotification } from '../reducers/notificationReducer'
+import { appendNewsobject } from '../reducers/newsReducer'
 import s3Service from '../services/s3'
 import newsService from '../services/news'
 import Button from 'react-bootstrap/Button'
-import { appendNewsobject } from '../reducers/newsReducer'
-const NewsForm = () => {
+import Card from 'react-bootstrap/Card'
 
+const NewsForm = () => {
   const dispatch = useDispatch()
+
   const current = new Date()
-  const date = `${current.getDate()}/${
-    current.getMonth() + 1
-  }/${current.getFullYear()}`
+  const date = `${current.getDate()}/${current.getMonth() + 1}/${current.getFullYear()}`
+
   const [newTitle, setNewTitle] = useState('')
   const [newContent, setNewContent] = useState('')
   const [newURL, setNewURL] = useState('')
@@ -40,6 +40,7 @@ const NewsForm = () => {
       alert('Kuvan maksimikoko on 1M')
     }
   }
+
   const newsObject = {
     title: newTitle,
     content: newContent,
@@ -47,6 +48,7 @@ const NewsForm = () => {
     date: date,
     imageFile: imageFile,
   }
+
   const addNews = (event) => {
     event.preventDefault()
     createNews(newsObject)
@@ -55,6 +57,7 @@ const NewsForm = () => {
     setNewURL('')
     setImageFile('')
   }
+
   const createNews = async (newsObject) => {
     const file = newsObject.imageFile
 
@@ -68,46 +71,75 @@ const NewsForm = () => {
         date: newsObject.date,
         imageURL: imageUrl,
       }
+
       const newNewsObject = await newsService.create(newsDataObject)
+
       dispatch(appendNewsobject(newNewsObject))
       dispatch(
-        setNotification(
-          `A news: ${newsObject.title}  added !!!`, 5, 'update'
-        )
+        setNotification(`A news: ${newsObject.title} added!`, 5, 'update')
       )
     } catch (error) {
-
       dispatch(
-        setNotification(
-          error.response.data.error, 5, 'error'
-        )
+        setNotification(error.response.data.error, 5, 'error')
       )
     }
   }
+
   return (
+    <div className='container'>
+      <Card>
+        <Card.Body>
+          <h2 className='my-4 text-center'>Add News</h2>
+          <form onSubmit={addNews}>
+            <div className='form-group'>
+              <label>Title:</label>
+              <input
+                className='form-control'
+                value={newTitle}
+                onChange={handleTitleChange}
+              />
+            </div>
+            <div className='form-group'>
+              <label>Content:</label>
+              <textarea
+                className='form-control'
+                rows='2'
+                value={newContent}
+                onChange={handleContentChange}
+              />
+            </div>
+            <div className='form-group'>
+              <label>URL:</label>
+              <input
+                className='form-control'
+                value={newURL}
+                onChange={handleURLChange}
+              />
+            </div>
+            <div className='form-group'>
+              <label>File:</label>
+              <input
+                className='form-control'
+                type='file'
+                accept='image/*'
+                onChange={handlePhotoSelect}
+              />
+            </div>
+            <Button
+              variant='success'
+              type='submit'
+              className='my-2'
+            >
+          Create News
+            </Button>
+          </form>
+        </Card.Body>
+      </Card>
 
-    <div className='text-center'>
-      <h2>Add news: </h2>
-
-      <form onSubmit={addNews}>
-        <div>
-          title: <input size="50" value={newTitle} onChange={handleTitleChange} />
-        </div>
-        <div>
-        content: <input size='50' rows='2' value={newContent} onChange={handleContentChange} />
-        </div>
-        <div>
-          url: <input size='50' value={newURL} onChange={handleURLChange} />
-        </div>
-        <br />
-        <div>
-          file:
-          <input type='file' accept='image/*' onChange={handlePhotoSelect} />
-        </div>
-        <Button variant='success' type='submit'>Create news</Button>
-      </form>
     </div>
   )
 }
 
 export default NewsForm
+
+

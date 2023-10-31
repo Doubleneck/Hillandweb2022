@@ -1,14 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { useState } from 'react'
-import { setNotification } from '../reducers/notificationReducer'
 import { useDispatch } from 'react-redux'
-import newsService from '../services/news'
-import Button from 'react-bootstrap/esm/Button'
+import { setNotification } from '../reducers/notificationReducer'
 import { updateNewsobject } from '../reducers/newsReducer'
-const UpdateNewsForm = ({  newsObjectToBeUpdated }) => {
+import newsService from '../services/news'
+import Button from 'react-bootstrap/Button'
+import Card from 'react-bootstrap/Card'
 
+const UpdateNewsForm = ({ newsObjectToBeUpdated }) => {
   const dispatch = useDispatch()
+
   const [newTitle, setNewTitle] = useState(newsObjectToBeUpdated.title)
   const [newContent, setNewContent] = useState(newsObjectToBeUpdated.content)
   const [newURL, setNewURL] = useState(newsObjectToBeUpdated.url)
@@ -42,42 +43,69 @@ const UpdateNewsForm = ({  newsObjectToBeUpdated }) => {
   const updateThisNews = async (newsObject) => {
     try {
       const updatedNews = await newsService.update(newsObject.id, newsObject)
-      console.log(updatedNews)
       dispatch(updateNewsobject(updatedNews))
       dispatch(
         setNotification(
-          `Updated ${newsObject.title}`, 5, 'update'
+          `Updated ${newsObject.title}`,
+          5,
+          'update'
         )
       )
     } catch (exception) {
       dispatch(
         setNotification(
-          'something went wrong while trying to update news', 5, 'error'
+          'Something went wrong while trying to update news',
+          5,
+          'error'
         )
       )
     }
   }
+
   return (
-    <div className='text-center'>
-      <h2>Update this news: </h2>
-      <form onSubmit={updateNews}>
-        <div>
-          title:{' '}
-          <input value={newTitle} size='50' onChange={handleTitleChange} />
-        </div>
-        <div>
-          content:{' '}
-          <input value={newContent} size='50' onChange={handleContentChange} />
-        </div>
-        <div>
-          url: <input value={newURL} size='50' onChange={handleURLChange} />
-        </div>
-        <br />
-        <Button variant='success' type='submit'>Update</Button>
-      </form>
+    <div className='container my-4'>
+      <Card>
+        <Card.Body>
+          <h2 className='text-center'>Update this news</h2>
+          <form onSubmit={updateNews}>
+            <div className='form-group'>
+              <label>Title:</label>
+              <input
+                className='form-control'
+                value={newTitle}
+                onChange={handleTitleChange}
+              />
+            </div>
+            <div className='form-group'>
+              <label>Content:</label>
+              <input
+                className='form-control'
+                value={newContent}
+                onChange={handleContentChange}
+              />
+            </div>
+            <div className='form-group'>
+              <label>URL:</label>
+              <input
+                className='form-control'
+                value={newURL}
+                onChange={handleURLChange}
+              />
+            </div>
+            <Button
+              variant='success'
+              type='submit'
+              className='my-2'
+            >
+              Update
+            </Button>
+          </form>
+        </Card.Body>
+      </Card>
     </div>
   )
 }
+
 UpdateNewsForm.propTypes = {
   newsObjectToBeUpdated: PropTypes.shape({
     title: PropTypes.string.isRequired,
@@ -88,4 +116,5 @@ UpdateNewsForm.propTypes = {
     id: PropTypes.string.isRequired,
   }).isRequired,
 }
+
 export default UpdateNewsForm
