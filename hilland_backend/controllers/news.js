@@ -1,6 +1,7 @@
 const newsRouter = require('express').Router()
 const News = require('../models/news')
 const s3 = require('../s3.js')
+
 const { adminCredentialsValidator, userLoggedInValidator } = require('../utils/middleware')  
 newsRouter.get('/', async (req, res) => {
   const news = await News.find({})
@@ -8,6 +9,7 @@ newsRouter.get('/', async (req, res) => {
 })
 
 newsRouter.get('/:id', async (request, response) => {
+  
   const news = await News.findById(request.params.id)
   if (news) {
     response.json(news)

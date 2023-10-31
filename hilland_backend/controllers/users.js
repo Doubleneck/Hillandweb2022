@@ -1,30 +1,15 @@
 const bcrypt = require('bcrypt')
 const usersRouter = require('express').Router()
-const jwt = require('jsonwebtoken')
 const User = require('../models/user')
+const { adminCredentialsValidator, userLoggedInValidator } = require('../utils/middleware')  
 
-usersRouter.get('/', async (request, response) => {
+usersRouter.get('/', userLoggedInValidator, adminCredentialsValidator, async (request, response) => {
   const users = await User.find({})
   response.json(users)
 })
-usersRouter.post('/', async (request, response) => {
-  const { username, name, role, password } = await request.body
-  const token = await request.token
-  const decodedToken = await jwt.verify(token, process.env.SECRET)
-  if (!token || !decodedToken.id) {
-    return response.status(401).json({ error: 'token missing or invalid' })
-  }
 
-  if (decodedToken.role !== 'admin') {
-    return response
-      .status(401)
-      .json({ error: 'you don´t have rights for this operation' })
-  }
-  if (!(username && password)) {
-    return response.status(400).json({
-      error: 'username and password must be given',
-    })
-  }
+usersRouter.post('/', userLoggedInValidator, adminCredentialsValidator, async (request, response) => {
+  const { username, name, role, password } = await request.body
 
   if (username.length < 3 || password.length < 3) {
     return response.status(400).json({

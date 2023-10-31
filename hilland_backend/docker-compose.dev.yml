@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  mongo_db:
+    image: mongo
+    ports:
+      - 3456:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_DATABASE: the_database
+    volumes: 
+      - ./mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
+      - ./mongo_data:/data/db
+    container_name: hillandback-dev-mongo  
+
+  # backend_dev:
+  #   build:
+  #     context: . # This will simply tell which folder to read
+  #     dockerfile: dev.Dockerfile # This will simply tell which dockerfile to read
+  #   volumes:
+  #     - ./:/usr/src/app # The path can be relative, so ./ is enough to say "the same location as the docker-compose.yml"
+  #   ports:
+  #     - 3001:3001
+  #   environment:   
+  #     - MONGODB_URI=mongodb://the_username:the_password@mongo_db:27017/the_database 
+  #   depends_on:
+  #     - mongo_db
+  #   container_name: hilland-back-dev # This will name the container back-dev
+
+volumes:
+  mongo_data:
