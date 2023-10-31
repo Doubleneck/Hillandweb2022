@@ -45,7 +45,9 @@ beforeAll(async () => {
 describe('when there is initially one admin-user and one user-user at db', () => {
   test('There are two users at start', async () => {
     const usersAtStart = await helper.usersInDb()
-    const response = await api.get('/api/users')
+    const response = await api
+      .get('/api/users')
+      .set('Authorization', `Bearer ${ADMINTOKEN}`)
     expect(response.body).toHaveLength(usersAtStart.length)
   })
 })
@@ -63,7 +65,7 @@ describe('creating new users when there is initially one admin-user and one user
 
   test('creation fails if not logged', async () => {
     const usersAtStart = await helper.usersInDb()
-    newUser = helper.newUser
+    const newUser = helper.newUser
     await api
       .post('/api/users')
       .send(newUser)
@@ -76,6 +78,7 @@ describe('creating new users when there is initially one admin-user and one user
 
   test('creation succees with proper statuscode if ADMIN', async () => {
     const usersAtStart = await helper.usersInDb()
+    const newUser = helper.newUser
     await api
       .post('/api/users')
       .set('Authorization', `Bearer ${ADMINTOKEN}`)

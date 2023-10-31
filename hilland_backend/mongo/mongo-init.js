@@ -1,5 +1,5 @@
 
-
+/* eslint-disable no-undef */
 db.createUser({
   user: 'the_username',
   pwd: 'the_password',
@@ -16,8 +16,7 @@ db.createUser({
 db.createCollection('users')
 db.createCollection('songrequests')
 db.createCollection('news')
-
-
+/* eslint-disable no-undef */
 
 
 

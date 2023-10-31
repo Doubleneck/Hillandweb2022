@@ -14,6 +14,18 @@ services:
       - ./mongo_data:/data/db
     container_name: hillandback-dev-mongo  
 
+  mongo_db_test:
+    image: mongo
+    ports:
+      - 3457:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_DATABASE: the_test_database
+    volumes: 
+      - ./mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
+    container_name: hillandback-dev-test-mongo   
+
   # backend_dev:
   #   build:
   #     context: . # This will simply tell which folder to read
