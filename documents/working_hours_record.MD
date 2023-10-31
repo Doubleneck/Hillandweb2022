@@ -3,7 +3,7 @@
 |date | hours |  |
 |:--:|:--|:----|
 |20.11.2022|2| Init Hilland web project & documentation|
-|26.12.2022|7| Creating MVP for adding news, testing pict upload|
+|26.12.2022|7| Creating MVP for adding news, testing image upload|
 |27.12.2022|7| Attempts to convert input to base64|
 |27.12.2022|2| base64 working, refactoring, init validation for uploads|
 |28.12.2022|6| node express installation, node express backend for news|
@@ -11,7 +11,7 @@
 |29.12.2022|2| express backend to use mongo / neww: create, remove, all, refactoring|
 |29.12.2022|1| Add new parameter "url" to news e2e"|
 |29.12.2022|1| Add eslint, clean code, remove obsolete sqlite3|
-|30.12.2022|2 (st 33)| fully refactor backend, add Jest test-configuration|
+|30.12.2022|2| fully refactor backend, add Jest test-configuration|
 |1.1.2023|4| add supertests for news, change news routes to async|
 |2.1.2023|2| refactor tests, refactor async funcs news routes|  
 |2.1.2023|1| add basic user functionality: model, controller, init tests|
@@ -24,7 +24,7 @@
 |4.1.2023|1| first tests with Github actions: problems, skip for a while|
 |5.1.2023|2| add front local storage token, add sorting for news, clean code|
 |5.1.2023|3| fix bug in create news|
-|5.1.2023|2 (st60)| learning to load static content from node back to react front|
+|5.1.2023|2| learning to load static content from node back to react front|
 |6.1.2023|3| Github Actions for hilland_backend, mongo inst (path for tests fails)| 
 |6.1.2023|1| Github Actions: CI working for backend|
 |8.1.2023|3| Refactor front end to Components: LoginForm, NewsForm, Togglable |
@@ -44,7 +44,7 @@
 |12.1.2023|4| add update news functionality|
 |13.1.2023|1| add s3 file delete functionality to app|
 |13.1.2023|1| add logout functionality, fix user creation permissions|
-|15.1.2023|2 st 100| refactor tests, new class user_api.tests, add tests for wrong auth|
+|15.1.2023|2| refactor tests, new class user_api.tests, add tests for wrong auth|
 |15.1.2023|1| add tests to check unauth access to s3 routes |
 |16.1.2023|2| refactor front new service s3.js, fix s3url path auth failure|
 |17.1.2023|3| fix and change delete img from S3 functionality|
@@ -67,8 +67,12 @@
 |5.3.2023|3| Fix App to use Update-route to avoid Safari rendering problems|
 |6.3.2023|1| fix news useEffects to render news correctly without extra routes in Safari also|
 |7.3.2023|1| refactor updateNews & createNews to use state updates instead of fech|
+BREAK IN THIS PROJECT
 |24.10.2023|4| Fix broken code after break, update deps, clean code, fix Song request form|
-|25.10.2023|2| Maintain code, upgrade LoginForm, and Home & News components|
-|26.10.2023|4| Fix s3 delete functionality to use correct rest requests post -> delete, add SongRequest rendering component|
+|25.10.2023|2| Maintain code, upgrade LoginForm and Home & News components|
+|26.10.2023|4| Fix S3 delete functionality to use correct rest requests post -> delete, add SongRequest rendering component|
 |27.10.2023|6| migrate AWS-SDK v2=>v3 + fix S3 issues, routes and functionality e2e for songrequests + backend tests|
-|Total Hours|170|
+|29.10.2023|4| add mongo to docker-compose for dev|
+|30.10.2023|2| upgrade tests, fix docker-compose-mongo|
+|31.10.2023|2| upgrade all backend tests to use testing route , add test-db to docker-compose-mongo|
+|Total Hours|178|
