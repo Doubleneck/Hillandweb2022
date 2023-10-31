@@ -1,6 +1,8 @@
 const News = require('../models/news')
 const User = require('../models/user')
 const Songrequests = require('../models/songrequest')
+const bcrypt = require('bcrypt')
+const passwordHash = bcrypt.hash('Someuser@someuser1', 10)  
 const initialNews = [
   {
     title: 'Test news #1',
@@ -57,24 +59,39 @@ const usersInDb = async () => {
   return users.map((u) => u.toJSON())
 }
 
-const newNews = {
+const newNews = () => ({
   title: 'Test news added_valid_news',
   content: 'Added this news',
   date: new Date(),
   url: 'www.testnews3.com',
   imageURL: 'www.s3.com/something',
-}
-const newSong = {
+})
+
+const newSong = () => ({
   song: 'new song',
   artist: 'some artist',
   date: new Date(),
-}
-const newUser = {
-  username: 'someuser',
-  name: 'Some User',
+})
+
+
+const newUser = () => ({
+  username: 'someuser@someuser.com',
   role: 'user',
-  password: 'somepasswordhash',
-}
+  passwordHash,
+})
+
+
+const userUser = () => ({
+  username: 'user@user.com',
+  password: 'User@user1',
+  role: 'user',
+})
+
+const adminUser = () => ({
+  username: 'admin@admin.com',
+  password: 'Admin@admin1',
+  role: 'admin',
+})
 
 module.exports = {
   initialNews,
@@ -83,6 +100,8 @@ module.exports = {
   newsInDb,
   usersInDb,
   songRequestsInDb,
+  userUser,
+  adminUser,
   newUser,
   newNews,
   newSong

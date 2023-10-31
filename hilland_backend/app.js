@@ -32,12 +32,13 @@ app.use('/api/login', loginRouter)
 app.use('/api/news', middleware.userExtractor, newsRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/songrequests', songrequestsRouter)
-
+if (process.env.NODE_ENV === 'test') {
+  const testingRouter = require('./controllers/testing')
+  app.use('/api/testing', testingRouter)
+}
 app.get('/*', function(req, res) {
   const token = req.token
-  console.log(token)
   res.sendFile(path.join(__dirname, '/build/index.html'), function(err) {
-    
     if (err) {
       res.status(500).send(err)
     }
