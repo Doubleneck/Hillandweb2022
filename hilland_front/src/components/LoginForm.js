@@ -8,7 +8,7 @@ import Notification from './Notification'
 import newsService from '../services/news'
 import songrequestService from '../services/songrequests'
 import loginService from '../services/login'
-import s3Service from '../services/s3'
+//import s3Service from '../services/s3'
 import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
 import Form from 'react-bootstrap/Form'
@@ -40,7 +40,7 @@ const LoginForm = () => {
       window.localStorage.setItem('loggedUser', JSON.stringify(user))
       songrequestService.setToken(user.token)
       newsService.setToken(user.token)
-      s3Service.setToken(user.token)
+      // s3Service.setToken(user.token)
       dispatch(setUser(user))
       setUsername('')
       setPassword('')

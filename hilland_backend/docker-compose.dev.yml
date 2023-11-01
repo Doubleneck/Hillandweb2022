@@ -4,7 +4,7 @@ services:
   mongo_db:
     image: mongo
     ports:
-      - 3456:27017
+      - "0.0.0.0:3456:27017"
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
@@ -17,7 +17,7 @@ services:
   mongo_db_test:
     image: mongo
     ports:
-      - 3457:27017
+      - "0.0.0.0:3457:27017"
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
@@ -26,19 +26,16 @@ services:
       - ./mongo/mongotest-init.js:/docker-entrypoint-initdb.d/mongotest-init.js
     container_name: hillandback-dev-test-mongo   
 
-  # backend_dev:
-  #   build:
-  #     context: . # This will simply tell which folder to read
-  #     dockerfile: dev.Dockerfile # This will simply tell which dockerfile to read
-  #   volumes:
-  #     - ./:/usr/src/app # The path can be relative, so ./ is enough to say "the same location as the docker-compose.yml"
-  #   ports:
-  #     - 3001:3001
-  #   environment:   
-  #     - MONGODB_URI=mongodb://the_username:the_password@mongo_db:27017/the_database 
-  #   depends_on:
-  #     - mongo_db
-  #   container_name: hilland-back-dev # This will name the container back-dev
-
 volumes:
   mongo_data:
+
+
+
+
+
+
+
+
+
+
+    

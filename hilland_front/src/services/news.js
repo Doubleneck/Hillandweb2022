@@ -10,11 +10,23 @@ const getAll = () => {
   return request.then((response) => response.data)
 }
 
-const create = async (newObject) => {
+const create = async (newsObject) => {
   const config = {
-    headers: { Authorization: token },
+    headers: {
+      'Authorization': token,
+      'Content-Type': 'multipart/form-data', },
   }
-  const response = await axios.post(baseUrl, newObject, config)
+  console.log(config)
+  const formData = new FormData()
+  formData.append('title', newsObject.title)
+  formData.append('content', newsObject.content)
+  formData.append('url', newsObject.url)
+  formData.append('date', newsObject.date)
+  formData.append('imageFile', newsObject.imageFile)
+
+
+  const response = await axios.post(baseUrl, formData, config)
+
   return response.data
 }
 

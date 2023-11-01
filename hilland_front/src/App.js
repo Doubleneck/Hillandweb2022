@@ -10,7 +10,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux'
 import { setUser } from './reducers/loginFormReducer'
 import newsService from './services/news'
-import s3Service from './services/s3'
+//import s3Service from './services/s3'
 import songrequestService from './services/songrequests'
 import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
@@ -39,12 +39,12 @@ const App = () => {
       if (expiresAtMillis > Date.now()) {
         dispatch(setUser(parsedUser))
         newsService.setToken(parsedUser.token)
-        s3Service.setToken(parsedUser.token)
+        // s3Service.setToken(parsedUser.token)
         songrequestService.setToken(parsedUser.token)
       } else {
         dispatch(setUser(null))
         newsService.setToken(null)
-        s3Service.setToken(null)
+        //s3Service.setToken(null)
         songrequestService.setToken(null)
       }
     }
@@ -79,7 +79,7 @@ const App = () => {
                 dispatch(setUser(''))
                 window.localStorage.clear()
                 newsService.setToken(null)
-                s3Service.setToken(null)
+                //s3Service.setToken(null)
               }}
             >
           Logout

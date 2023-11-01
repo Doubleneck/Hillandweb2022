@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { setNotification } from '../reducers/notificationReducer'
 import { appendNewsobject } from '../reducers/newsReducer'
-import s3Service from '../services/s3'
 import newsService from '../services/news'
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
@@ -59,21 +58,9 @@ const NewsForm = () => {
   }
 
   const createNews = async (newsObject) => {
-    const file = newsObject.imageFile
 
     try {
-      const imageUrl = await s3Service.sendToS3(file)
-
-      const newsDataObject = {
-        title: newsObject.title,
-        content: newsObject.content,
-        url: newsObject.url,
-        date: newsObject.date,
-        imageURL: imageUrl,
-      }
-
-      const newNewsObject = await newsService.create(newsDataObject)
-
+      const newNewsObject = await newsService.create(newsObject)
       dispatch(appendNewsobject(newNewsObject))
       dispatch(
         setNotification(`A news: ${newsObject.title} added!`, 5, 'update')

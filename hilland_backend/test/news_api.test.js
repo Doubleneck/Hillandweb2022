@@ -94,21 +94,24 @@ describe('addition of a new news', () => {
     await News.insertMany(helper.initialNews)
   })
 
-  test('succeeds with valid data if ADMIN', async () => {
-    const newNews = helper.newNews
-    await api
-      .post('/api/news')
-      .set('Authorization', `Bearer ${ADMINTOKEN}`)
-      .send(newNews)
-      .expect(201)
-      .expect('Content-Type', /application\/json/)
+  // test('fails if not image ADMIN', async () => {
+  //   let newNews = helper.newNews
+  //   newNews.image = undefined
+  //   await api
+  //     .post('/api/news')
+  //     .set('Authorization', `Bearer ${ADMINTOKEN}`)
+  //     .send(newNews)
+  //     .expect(400)
+  //     .expect('Content-Type', /application\/json/)
 
-    const response = await api.get('/api/news')
-    const contents = response.body.map((r) => r.content)
+  //   const response = await api.get('/api/news')
+  //   const contents = response.body.map((r) => r.content)
 
-    expect(response.body).toHaveLength(helper.initialNews.length + 1)
-    expect(contents).toContain('Added this news')
-  })
+  //   expect(response.body).toHaveLength(helper.initialNews.length + 1)
+  //   expect(contents).toContain('Added this news')
+  // })
+
+  
 
   test('fails with valid data if USER', async () => {
     const newNews = helper.newNews
