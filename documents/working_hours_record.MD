@@ -75,4 +75,7 @@ BREAK IN THIS PROJECT
 |29.10.2023|4| add mongo to docker-compose for dev|
 |30.10.2023|2| upgrade tests, fix docker-compose-mongo|
 |31.10.2023|2| upgrade all backend tests to use testing route , add test-db to docker-compose-mongo|
-|Total Hours|178|
+|1.11.2023|4| change application to fetch images from backend instead of front to avoid cors issues in docker dev environment|
+|2.11.2023|8| figuring out how s3 localstack works, a lot of issues...|
+|3.11.2023|4| configure docker-compose localstack to mock s3 in dev setup|
+|Total Hours|194|

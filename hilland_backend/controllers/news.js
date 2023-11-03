@@ -1,6 +1,12 @@
 const newsRouter = require('express').Router()
 const News = require('../models/news')
-const s3 = require('../s3.js')
+let s3
+if (process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'dev') {
+  s3 = require('../s3_mock.js')
+} else {
+  s3 = require('../s3.js')  
+}
+ 
 const multer = require('multer')
 const { adminCredentialsValidator, userLoggedInValidator } = require('../utils/middleware')  
 const storage = multer.memoryStorage() // Store files in memory
@@ -51,7 +57,7 @@ newsRouter.post('/', userLoggedInValidator, adminCredentialsValidator, upload.si
     })
   }
   const imageFileBuffer =  request.file.buffer
-  
+ 
   try {
   // Upload the image to Amazon S3
     const s3Url = await s3.uploadImageToS3(imageFileBuffer)
@@ -76,7 +82,7 @@ newsRouter.delete('/:id', userLoggedInValidator, adminCredentialsValidator, asyn
   const newsObject_to_be_removed = await News.findById(request.params.id)
   const toBeRemovedS3Id = await newsObject_to_be_removed.imageURL.split('/')[3] 
   await News.findByIdAndRemove(request.params.id)
-  await s3.deleteImage(toBeRemovedS3Id)
+  await s3.deleteImageFromS3(toBeRemovedS3Id)
   return response.status(204).end()
 })
 

@@ -24,7 +24,23 @@ services:
       MONGO_INITDB_DATABASE: the_test_database
     volumes: 
       - ./mongo/mongotest-init.js:/docker-entrypoint-initdb.d/mongotest-init.js
+
     container_name: hillandback-dev-test-mongo   
+
+  localstack:
+    image: localstack/localstack
+    ports:
+      - "0.0.0.0:4566:4566"  
+    environment:
+      - SERVICES=s3 
+      - BUCKET_NAME=hillandwebimgs
+      - AWS_ACCESS_KEY_ID='test'
+      - AWS_SECRET_ACCESS_KEY='test'
+      - AWS_DEFAULT_REGION=eu-central-1
+    volumes:
+      - ./localstack-setup.sh:/etc/localstack/init/ready.d/script.sh  
+    container_name: localstack
+  
 
 volumes:
   mongo_data:

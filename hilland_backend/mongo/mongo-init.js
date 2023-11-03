@@ -16,6 +16,7 @@ db.createUser({
 db.createCollection('users')
 db.createCollection('songrequests')
 db.createCollection('news')
+
 /* eslint-disable no-undef */
 
 
