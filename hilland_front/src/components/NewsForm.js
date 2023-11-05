@@ -15,7 +15,7 @@ const NewsForm = () => {
   const [newTitle, setNewTitle] = useState('')
   const [newContent, setNewContent] = useState('')
   const [newURL, setNewURL] = useState('')
-  const [imageFile, setImageFile] = useState('')
+  const [imageFile, setImageFile] = useState(null)
 
   const handleTitleChange = (event) => {
     setNewTitle(event.target.value)

@@ -16,14 +16,12 @@ const create = async (newsObject) => {
       'Authorization': token,
       'Content-Type': 'multipart/form-data', },
   }
-  console.log(config)
   const formData = new FormData()
   formData.append('title', newsObject.title)
   formData.append('content', newsObject.content)
   formData.append('url', newsObject.url)
   formData.append('date', newsObject.date)
   formData.append('imageFile', newsObject.imageFile)
-
 
   const response = await axios.post(baseUrl, formData, config)
 

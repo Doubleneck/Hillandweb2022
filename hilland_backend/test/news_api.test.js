@@ -3,7 +3,6 @@ const helper = require('./test_helper')
 const app = require('../app')
 const api = supertest(app)
 const News = require('../models/news')
-const news = require('../models/news')
 const newsObject = helper.newsObject
 async function postInitialNews(app, ADMINTOKEN, newsObject) {
   return await supertest(app)
@@ -181,23 +180,28 @@ describe('addition of a new news', () => {
     expect(newsAtEnd).toHaveLength(newsAtStart.length)
   })
 
-  test('fails with status code 400 if not image if ADMIN', async () => { //FIX THIS
+  test('fails with status code 400 if image is missing if ADMIN', async () => {
     const newsAtStart = await helper.newsInDb()
     const newsObject = helper.newsObject
-    const imageFile = ''
+  
     const response = await api
       .post('/api/news')
       .set('Authorization', `Bearer ${ADMINTOKEN}`)
-      .field('', newsObject.title)
-      .field('content', '')
+      .field('title', newsObject.title)
+      .field('content', newsObject.content)
       .field('url', newsObject.url)
       .field('date', newsObject.date)
-      .attach('imageFile',imageFile,'sample-image.jpg') // Attach the image file
   
     expect(response.status).toBe(400)
+  
     const newsAtEnd = await helper.newsInDb()
     expect(newsAtEnd).toHaveLength(newsAtStart.length)
   })
+  
+  
+  
+  
+  
 })
 
 describe('deleting and updating of a news', () => {
