@@ -8,6 +8,7 @@ env:
   TEST_MONGODB_URI: mongodb://localhost:27017/testing
   TEST_S3_MOCK_ENDPOINT: http://localhost:4567
   AWS_REGION: eu-central-1
+  AWS_S3_BUCKET: hillandwebimgs
   SECRET: actions
 jobs:
   build:
