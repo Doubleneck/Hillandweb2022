@@ -6,6 +6,7 @@ on:
 env:
   NODE_ENV: test
   TEST_MONGODB_URI: mongodb://localhost:27017/testing
+  TEST_S3_MOCK_ENDPOINT: http://localhost:4567
   SECRET: actions
 jobs:
   build:
@@ -31,7 +32,19 @@ jobs:
     - name: Start MongoDB
       uses: supercharge/mongodb-github-action@1.8.0
       with:
-        mongodb-version: ${{ matrix.mongodb-version }}     
+        mongodb-version: ${{ matrix.mongodb-version }}   
+    - name: Start LocalStack
+      uses: LocalStack/setup-localstack@v0.1.2
+      with:
+        image-tag: 'latest'
+        configuration: DEBUG=1
+        install-awslocal: 'true'
+        use-pro: false
+    - name: Run Tests against LocalStack
+      run: |
+          awslocal s3 mb s3://test
+          awslocal s3 ls
+          echo "Test Execution complete!"     
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
