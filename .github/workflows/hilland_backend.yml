@@ -1,44 +1,48 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
-
 name: hilland_backend CI
 
 on:
   push:
     branches: [ "main" ]
+
 env:
   NODE_ENV: test
   TEST_MONGODB_URI: mongodb://localhost:27017/testing
+  TEST_S3_MOCK_ENDPOINT: http://localhost:4567
   SECRET: actions
+
 jobs:
   build:
 
     runs-on: ubuntu-latest
-    defaults:
-      run: 
-        working-directory: hilland_backend
+
     strategy:
-    
       matrix:
         node-version: [18.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
         mongodb-version: ['4.2', '4.4', '5.0', '6.0']
+
+    services:
+      # Set up a LocalStack container
+      localstack:
+        image: localstack/localstack
+        ports:
+          - "4567:4566"  # Expose LocalStack services on port 4567
+        options: --name localstack-container
+
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-        cache-dependency-path: './hilland_backend/package-lock.json'
-    - name: Start MongoDB
-      uses: supercharge/mongodb-github-action@1.8.0
-      with:
-        mongodb-version: ${{ matrix.mongodb-version }}     
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
-   
-      
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+          cache-dependency-path: './hilland_backend/package-lock.json'
+      - name: Start MongoDB
+        uses: supercharge/mongodb-github-action@1.8.0
+        with:
+          mongodb-version: ${{ matrix.mongodb-version }}
+      - run: npm install
+      - run: npm run build --if-present
+      - run: npm test
+
   
     
