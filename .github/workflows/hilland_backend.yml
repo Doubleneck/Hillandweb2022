@@ -10,6 +10,8 @@ env:
   AWS_REGION: eu-central-1
   AWS_S3_BUCKET: hillandwebimgs
   SECRET: actions
+  AWS_ACCESS_KEY_ID: test
+  AWS_SECRET_ACCESS_KEY: test
 jobs:
   build:
 
@@ -42,9 +44,6 @@ jobs:
         configuration: DEBUG=1
         install-awslocal: 'true'
         use-pro: false
-      env:
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}  
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}  
     - name: Run Tests against LocalStack
       run: |
           awslocal s3 mb s3://test
