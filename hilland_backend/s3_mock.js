@@ -5,7 +5,7 @@ const crypto = require('crypto')
 const randomBytes = crypto.randomBytes
 const s3Bucket = process.env.AWS_S3_BUCKET
 const s3Region = process.env.AWS_REGION
-
+const s3Endpoint = process.env.S3_MOCK_ENDPOINT
 
 const {
   S3Client,
@@ -14,7 +14,7 @@ const {
 } = require('@aws-sdk/client-s3')
 
 
-const s3Endpoint = 'http://localhost:4566' // Use the LocalStack endpoint with port 4566
+//const s3Endpoint = 'http://localhost:4566' // Use the LocalStack endpoint with port 4566
 const s3Client = new S3Client({ region: s3Region, endpoint: s3Endpoint, forcePathStyle: true }) // Configure the S3 client
 
 async function uploadImageToS3(imageFileBuffer) {

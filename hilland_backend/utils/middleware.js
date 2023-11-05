@@ -47,6 +47,8 @@ const tokenExtractor = (request, response, next) => {
   next()
 }
 
+
+
 const adminCredentialsValidator = (request, response, next) => {
   const token = request.token
   const user = jwt.verify(token, process.env.SECRET)

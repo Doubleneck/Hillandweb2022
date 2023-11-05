@@ -3,11 +3,24 @@ const helper = require('./test_helper')
 const app = require('../app')
 const api = supertest(app)
 const News = require('../models/news')
+const news = require('../models/news')
+const newsObject = helper.newsObject
+async function postInitialNews(app, ADMINTOKEN, newsObject) {
+  return await supertest(app)
+    .post('/api/news')
+    .set('Authorization', `Bearer ${ADMINTOKEN}`)
+    .field('title', newsObject.title)
+    .field('content', newsObject.content)
+    .field('url', newsObject.url)
+    .field('date', newsObject.date)
+    .attach('imageFile', newsObject.imageFile, 'sample-image.jpg')
+}
 
 let ADMINTOKEN = ''
 let USERTOKEN = ''
 
 beforeAll(async () => {
+  await News.deleteMany({})
   await supertest(app)
     .post('/api/testing/reset')
     .expect(201)
@@ -27,12 +40,11 @@ beforeAll(async () => {
   USERTOKEN = response2.body.token
 
 })
-
-
+    
 describe('when there is initially some news saved', () => {
   beforeEach(async () => {
     await News.deleteMany({})
-    await News.insertMany(helper.initialNews)
+    await postInitialNews(app, ADMINTOKEN, newsObject)
   })
 
   test('news are returned as json', async () => {
@@ -42,29 +54,29 @@ describe('when there is initially some news saved', () => {
       .expect('Content-Type', /application\/json/)
   })
 
-  test('there are two news', async () => {
+  test('there is one news', async () => {
     const response = await api.get('/api/news')
-    expect(response.body).toHaveLength(2)
+    expect(response.body).toHaveLength(1)
   })
 
   test('the first news is about HTTP methods', async () => {
     const response = await api.get('/api/news')
-    expect(response.body[0].content).toBe('HTML is easy')
-  })
-
-  test('all news are returned', async () => {
-    const response = await api.get('/api/news')
-    expect(response.body).toHaveLength(helper.initialNews.length)
+    expect(response.body[0].content).toBe('This is a test news article.')
   })
 
   test('a specific news is within the returned news', async () => {
     const response = await api.get('/api/news')
     const contents = response.body.map((r) => r.content)
-    expect(contents).toContain('NOTHING is easy')
+    expect(contents).toContain('This is a test news article.')
   })
 })
 
 describe('viewing a specific news', () => {
+  beforeEach(async () => {
+    await News.deleteMany({})
+    await postInitialNews(app, ADMINTOKEN, newsObject)
+  })
+
   test('success with valid id without login', async () => {
     const newsAtStart = await helper.newsInDb()
     const newsToView = newsAtStart[0]
@@ -90,89 +102,148 @@ describe('viewing a specific news', () => {
 
 describe('addition of a new news', () => {
   beforeEach(async () => {
-    await News.deleteMany({})
-    await News.insertMany(helper.initialNews)
+    try {
+      await News.deleteMany({})
+    } catch (error) {
+      console.error('Error deleting news entries:', error)
+    }
   })
 
-  // test('fails if not image ADMIN', async () => {
-  //   let newNews = helper.newNews
-  //   newNews.image = undefined
-  //   await api
-  //     .post('/api/news')
-  //     .set('Authorization', `Bearer ${ADMINTOKEN}`)
-  //     .send(newNews)
-  //     .expect(400)
-  //     .expect('Content-Type', /application\/json/)
-
-  //   const response = await api.get('/api/news')
-  //   const contents = response.body.map((r) => r.content)
-
-  //   expect(response.body).toHaveLength(helper.initialNews.length + 1)
-  //   expect(contents).toContain('Added this news')
-  // })
-
+  test('succees with proper data if ADMIN', async () => {
+    const newsAtStart = await helper.newsInDb()
+    console.log(newsAtStart.length)
+    const newsObject = await helper.newsObject
+    const response = await api
+      .post('/api/news')
+      .set('Authorization', `Bearer ${ADMINTOKEN}`)
+      .field('title', 'ANew Title')
+      .field('content', 'Added this news')
+      .field('url', newsObject.url)
+      .field('date', newsObject.date)
+      .attach('imageFile', newsObject.imageFile,'sample-image.jpg') // Attach the image file
+  
+    expect(response.status).toBe(201)
+    const newsAtEnd = await helper.newsInDb()
+    expect(newsAtEnd ).toHaveLength(newsAtStart.length + 1)
+    expect(response.body.content).toEqual('Added this news')
+  })
   
 
   test('fails with valid data if USER', async () => {
-    const newNews = helper.newNews
-    await api
+    const newsAtStart = await helper.newsInDb()
+    const newsObject = helper.newsObject
+    const response = await api
       .post('/api/news')
       .set('Authorization', `Bearer ${USERTOKEN}`)
-      .send(newNews)
-      .expect(401)
-      .expect('Content-Type', /application\/json/)
-
-    const response = await api.get('/api/news')
-
-    expect(response.body).toHaveLength(helper.initialNews.length)
+      .field('title', newsObject.title)
+      .field('content', 'Added this news')
+      .field('url', newsObject.url)
+      .field('date', newsObject.date)
+      .attach('imageFile', newsObject.imageFile,'sample-image.jpg') // Attach the image file
+  
+    expect(response.status).toBe(401)
+    const newsAtEnd = await helper.newsInDb()
+    expect(newsAtEnd).toHaveLength(newsAtStart.length)
+  
   })
 
   test('fails with status code 400 if not content if ADMIN', async () => {
-    const emptyContentNews = {
-      title: 'Test news content missing',
-      date: new Date(),
-      url: 'www.testnews3.com',
-      image: '',
-    }
-    await api
+    const newsAtStart = await helper.newsInDb()
+    const newsObject = helper.newsObject
+    const response = await api
       .post('/api/news')
       .set('Authorization', `Bearer ${ADMINTOKEN}`)
-      .send(emptyContentNews)
-      .expect(400)
+      .field('title', newsObject.title)
+      .field('content', '')
+      .field('url', newsObject.url)
+      .field('date', newsObject.date)
+      .attach('imageFile', newsObject.imageFile,'sample-image.jpg') // Attach the image file
+  
+    expect(response.status).toBe(400)
+    const newsAtEnd = await helper.newsInDb()
+    expect(newsAtEnd).toHaveLength(newsAtStart.length)
+  })
 
-    const response = await api.get('/api/news')
-    expect(response.body).toHaveLength(helper.initialNews.length)
+  test('fails with status code 400 if not title if ADMIN', async () => {
+    const newsAtStart = await helper.newsInDb()
+    const newsObject = helper.newsObject
+    const response = await api
+      .post('/api/news')
+      .set('Authorization', `Bearer ${ADMINTOKEN}`)
+      .field('title', '')
+      .field('content', newsObject.content)
+      .field('url', newsObject.url)
+      .field('date', newsObject.date)
+      .attach('imageFile', newsObject.imageFile,'sample-image.jpg') // Attach the image file
+  
+    expect(response.status).toBe(400)
+    const newsAtEnd = await helper.newsInDb()
+    expect(newsAtEnd).toHaveLength(newsAtStart.length)
+  })
+
+  test('fails with status code 400 if not image if ADMIN', async () => { //FIX THIS
+    const newsAtStart = await helper.newsInDb()
+    const newsObject = helper.newsObject
+    const imageFile = ''
+    const response = await api
+      .post('/api/news')
+      .set('Authorization', `Bearer ${ADMINTOKEN}`)
+      .field('', newsObject.title)
+      .field('content', '')
+      .field('url', newsObject.url)
+      .field('date', newsObject.date)
+      .attach('imageFile',imageFile,'sample-image.jpg') // Attach the image file
+  
+    expect(response.status).toBe(400)
+    const newsAtEnd = await helper.newsInDb()
+    expect(newsAtEnd).toHaveLength(newsAtStart.length)
   })
 })
 
 describe('deleting and updating of a news', () => {
   beforeEach(async () => {
     await News.deleteMany({})
+    await postInitialNews(app, ADMINTOKEN, newsObject)
+  })
 
-    for (const initialNewsItem of helper.initialNews) {
-      const newsObject = new News(initialNewsItem)
-      await newsObject.save()
-    }
+  test('deleting a news succees if ADMIN', async () => {
+    const newsAtStart = await helper.newsInDb()
+    const newsToDelete = newsAtStart[0]
+  
+    await api
+      .delete(`/api/news/${newsToDelete.id}`)
+      .set('Authorization', `Bearer ${ADMINTOKEN}`)
+      .expect(204)
+
+    const newsAtEnd = await helper.newsInDb()
+    expect(newsAtEnd).toHaveLength(newsAtStart.length-1)
   })
 
   test('deleting a news fails if USER', async () => {
     const newsAtStart = await helper.newsInDb()
     const newsToDelete = newsAtStart[0]
+  
     await api
       .delete(`/api/news/${newsToDelete.id}`)
       .set('Authorization', `Bearer ${USERTOKEN}`)
       .expect(401)
 
     const newsAtEnd = await helper.newsInDb()
-    expect(newsAtEnd).toHaveLength(helper.initialNews.length)
+    expect(newsAtEnd).toHaveLength(newsAtStart.length)
   })
 
   test('deleting a news fails if not login', async () => {
+   
     const newsAtStart = await helper.newsInDb()
     const newsToDelete = newsAtStart[0]
-    await api.delete(`/api/news/${newsToDelete.id}`).expect(401)
+    
+    await api
+      .delete(`/api/news/${newsToDelete.id}`)
+      .expect(401)
+  
     const newsAtEnd = await helper.newsInDb()
-    expect(newsAtEnd).toHaveLength(helper.initialNews.length)
+    expect(newsAtEnd).toHaveLength(newsAtStart.length)
+   
   })
 
   test('updating a news succees if ADMIN', async () => {
@@ -188,7 +259,7 @@ describe('deleting and updating of a news', () => {
     const newsAtEnd = await helper.newsInDb()
 
     expect(newsAtEnd[0].content).toEqual('Updated content')
-    expect(newsAtEnd).toHaveLength(helper.initialNews.length)
+    expect(newsAtEnd).toHaveLength(newsAtStart.length)
   })
 
   test('updating a news fails if USER', async () => {
@@ -202,19 +273,24 @@ describe('deleting and updating of a news', () => {
       .expect(401)
 
     const newsAtEnd = await helper.newsInDb()
+
     expect(newsAtEnd[0].content).not.toEqual('Updated content')
-    expect(newsAtEnd).toHaveLength(helper.initialNews.length)
+    expect(newsAtEnd).toHaveLength(newsAtStart.length)
   })
 
   test('updating a news fails if not login', async () => {
     const newsAtStart = await helper.newsInDb()
     const newsToUpdate = newsAtStart[0]
     newsToUpdate.content = 'Updated content'
-    await api.put(`/api/news/${newsToUpdate.id}`).send(newsToUpdate).expect(401)
+    await api
+      .put(`/api/news/${newsToUpdate.id}`)
+      .send(newsToUpdate)
+      .expect(401)
 
     const newsAtEnd = await helper.newsInDb()
+
     expect(newsAtEnd[0].content).not.toEqual('Updated content')
-    expect(newsAtEnd).toHaveLength(helper.initialNews.length)
+    expect(newsAtEnd).toHaveLength(newsAtStart.length)
   })
 })
 

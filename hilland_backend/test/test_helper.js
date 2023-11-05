@@ -2,23 +2,19 @@ const News = require('../models/news')
 const User = require('../models/user')
 const Songrequests = require('../models/songrequest')
 const bcrypt = require('bcrypt')
-const passwordHash = bcrypt.hash('Someuser@someuser1', 10)  
-const initialNews = [
-  {
-    title: 'Test news #1',
-    content: 'HTML is easy',
-    date: new Date(),
-    url: 'www.testnews.com',
-    image: '',
-  },
-  {
-    title: 'Test news #2',
-    content: 'NOTHING is easy',
-    date: new Date(),
-    url: 'www.testnews2.com',
-    image: '',
-  },
-]
+const passwordHash = bcrypt.hash('Someuser@someuser1', 10)
+const path = require('path')
+const fs = require('fs')
+const imagePath = path.resolve(__dirname, '../assets/test_image.jpeg')
+const mockImageData = fs.readFileSync(imagePath)
+const newsObject = {
+  title: 'Test News',
+  content: 'This is a test news article.',
+  url: 'https://example.com',
+  date: '2023-11-03',
+  imageFile: mockImageData, 
+}
+
 
 const initialSongRequest = [
   {
@@ -59,13 +55,6 @@ const usersInDb = async () => {
   return users.map((u) => u.toJSON())
 }
 
-const newNews = {
-  title: 'Test news added_valid_news',
-  content: 'Added this news',
-  date: new Date(),
-  url: 'www.testnews3.com',
-  imageURL: 'www.s3.com/something',
-}
 
 const newSong = () => ({
   song: 'new song',
@@ -94,7 +83,6 @@ const adminUser = () => ({
 })
 
 module.exports = {
-  initialNews,
   initialSongRequest,
   nonExistingId,
   newsInDb,
@@ -103,6 +91,6 @@ module.exports = {
   userUser,
   adminUser,
   newUser,
-  newNews,
+  newsObject,
   newSong
 }

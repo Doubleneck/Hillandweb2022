@@ -44,7 +44,7 @@ newsRouter.put('/:id', userLoggedInValidator, adminCredentialsValidator, (reques
 })
 
 newsRouter.post('/', userLoggedInValidator, adminCredentialsValidator, upload.single('imageFile'),async (request, response) => {
-
+  
   if (!request.body.content || !request.body.title) {
     return response.status(400).json({
       error: 'content or title missing',
@@ -79,6 +79,11 @@ newsRouter.post('/', userLoggedInValidator, adminCredentialsValidator, upload.si
 //This is the route for deleting news, it´s also handling the deletion of the image from S3
 newsRouter.delete('/:id', userLoggedInValidator, adminCredentialsValidator, async (request, response) => {
 
+  if (!request.params.id) {
+    return response.status(400).json({
+      error: 'id missing',
+    })
+  }
   const newsObject_to_be_removed = await News.findById(request.params.id)
   const toBeRemovedS3Id = await newsObject_to_be_removed.imageURL.split('/')[3] 
   await News.findByIdAndRemove(request.params.id)

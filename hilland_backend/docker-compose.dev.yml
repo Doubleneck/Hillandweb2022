@@ -38,10 +38,22 @@ services:
       - AWS_SECRET_ACCESS_KEY='test'
       - AWS_DEFAULT_REGION=eu-central-1
     volumes:
-      - ./localstack-setup.sh:/etc/localstack/init/ready.d/script.sh  
-    container_name: localstack
+      - ./localstack-setup.sh:/etc/localstack/init/ready.d/s3-init.sh  
+    container_name: hillandback-dev-localstack
   
-
+  localstack_test:
+    image: localstack/localstack
+    ports:
+      - "0.0.0.0:4567:4566"  
+    environment:
+      - SERVICES=s3 
+      - BUCKET_NAME=hillandwebimgs
+      - AWS_ACCESS_KEY_ID='test'
+      - AWS_SECRET_ACCESS_KEY='test'
+      - AWS_DEFAULT_REGION=eu-central-1
+    volumes:
+      - ./localstack-setup.sh:/etc/localstack/init/ready.d/s3-init.sh  
+    container_name: hillandback-dev-test-localstack
 volumes:
   mongo_data:
 

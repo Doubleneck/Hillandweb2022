@@ -78,4 +78,5 @@ BREAK IN THIS PROJECT
 |1.11.2023|4| change application to fetch images from backend instead of front to avoid cors issues in docker dev environment|
 |2.11.2023|8| figuring out how s3 localstack works, a lot of issues...|
 |3.11.2023|4| configure docker-compose localstack to mock s3 in dev setup|
-|Total Hours|194|
+|5.11.2023|6| configure docker-compose localstack to mock s3 in test setup, refactor news tests|
+|Total Hours|200|
