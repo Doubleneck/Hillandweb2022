@@ -3,46 +3,58 @@ name: hilland_backend CI
 on:
   push:
     branches: [ "main" ]
-
 env:
   NODE_ENV: test
   TEST_MONGODB_URI: mongodb://localhost:27017/testing
-  TEST_S3_MOCK_ENDPOINT: http://localhost:4567
+  TEST_S3_MOCK_ENDPOINT: http://localhost:4566
+  AWS_REGION: eu-central-1
+  AWS_S3_BUCKET: hillandwebimgs
   SECRET: actions
-
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}  
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }} 
 jobs:
   build:
 
     runs-on: ubuntu-latest
-
+    defaults:
+      run: 
+        working-directory: hilland_backend
     strategy:
+    
       matrix:
         node-version: [18.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
         mongodb-version: ['4.2', '4.4', '5.0', '6.0']
-
-    services:
-      # Set up a LocalStack container
-      localstack:
-        image: localstack/localstack
-        ports:
-          - "4567:4566"  # Expose LocalStack services on port 4567
-        options: --name localstack-container
-
     steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
-          cache-dependency-path: './hilland_backend/package-lock.json'
-      - name: Start MongoDB
-        uses: supercharge/mongodb-github-action@1.8.0
-        with:
-          mongodb-version: ${{ matrix.mongodb-version }}
-      - run: npm install
-      - run: npm run build --if-present
-      - run: npm test
-
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+        cache-dependency-path: './hilland_backend/package-lock.json'
+    - name: Start MongoDB
+      uses: supercharge/mongodb-github-action@1.8.0
+      with:
+        mongodb-version: ${{ matrix.mongodb-version }}   
+    - name: Start LocalStack
+      uses: LocalStack/setup-localstack@v0.1.2
+      with:
+        image-tag: 'latest'
+        configuration: DEBUG=1
+        install-awslocal: 'true'
+        use-pro: false
+      env:
+          # Set the AWS credentials for LocalStack
+        AWS_SECRET_ACCESS_KEY: test
+        AWS_ACCESS_KEY_ID: test
+    - name: Run Tests against LocalStack
+      run: |
+          awslocal s3 mb s3://test
+          awslocal s3 ls
+          echo "Test Execution complete!"     
+    - run: npm ci
+    - run: npm run build --if-present
+    - run: npm test
   
     
