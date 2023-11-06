@@ -84,63 +84,28 @@ newsRouter.delete('/:id', userLoggedInValidator, adminCredentialsValidator, asyn
       error: 'id missing',
     })
   }
-  try{
+  try {
     const newsObject_to_be_removed = await News.findById(request.params.id)
-    const toBeRemovedS3Id = await newsObject_to_be_removed.imageURL.split('/')[3] 
+    const toBeRemovedS3Id = await newsObject_to_be_removed.imageURL.split('/').pop()
+    //     const parts = url.split('/');
+    // const lastPart = parts[parts.length - 1];
     if (!newsObject_to_be_removed) {
       return response.status(404).json({
         error: 'News not found',
       })
     }
-   
-    newsRouter.delete('/:id', userLoggedInValidator, adminCredentialsValidator, async (request, response) => {
-      if (!request.params.id) {
-        return response.status(400).json({
-          error: 'ID missing',
-        })
-      }
-      const kukkuu = await News.findById(request.params.id)
-      
-      try {
-        const newsObject_to_be_removed = await News.findById(request.params.id)
-    
-        if (!newsObject_to_be_removed) {
-          return response.status(404).json({
-            error: 'News not found',
-          })
-        }
-        
-        //const toBeRemovedS3Id = newsObject_to_be_removed.imageURL.split('/')[3]
-        const toBeRemovedS3Id = newsObject_to_be_removed.imageURL
-        if (!toBeRemovedS3Id ) {
-          return response.status(404).json({
-            error: 's3 News item not found',
-          })
-        }
-       
-        await News.findByIdAndRemove(request.params.id)
-        await s3.deleteImageFromS3(toBeRemovedS3Id)
-        return response.status(204).end()
-      } catch (error) {
-        console.error('Error:', error)
-        return response.status(400).json({
-          error: 'Something went wrong when deleting the news',
-        })
-      }
-    })
-    
-    
-    
-    
-    await News.findByIdAndRemove(request.params.id)
+    console.log(toBeRemovedS3Id)
     await s3.deleteImageFromS3(toBeRemovedS3Id)
+    await News.findByIdAndRemove(request.params.id)
+      
     return response.status(204).end()
-  } catch {
-    
+  }  catch (error) {
+    console.error('Error:', error)
     return response.status(400).json({
-      error: 'something went wrong when deleting the news',
+      error: 'Something went wrong when deleting the news',
     })
   }
+
 })
 
 module.exports = newsRouter
