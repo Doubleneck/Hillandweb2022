@@ -79,4 +79,5 @@ BREAK IN THIS PROJECT
 |2.11.2023|8| figuring out how s3 localstack works, a lot of issues...|
 |3.11.2023|4| configure docker-compose localstack to mock s3 in dev setup|
 |5.11.2023|6| configure docker-compose localstack to mock s3 in test setup, refactor news tests|
-|Total Hours|200|
+|6.11.2023|3| configure Github Actions with localstack mock s3 in test setup|
+|Total Hours|203|
