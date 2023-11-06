@@ -87,14 +87,12 @@ newsRouter.delete('/:id', userLoggedInValidator, adminCredentialsValidator, asyn
   try {
     const newsObject_to_be_removed = await News.findById(request.params.id)
     const toBeRemovedS3Id = await newsObject_to_be_removed.imageURL.split('/').pop()
-    //     const parts = url.split('/');
-    // const lastPart = parts[parts.length - 1];
+
     if (!newsObject_to_be_removed) {
       return response.status(404).json({
         error: 'News not found',
       })
     }
-    console.log(toBeRemovedS3Id)
     await s3.deleteImageFromS3(toBeRemovedS3Id)
     await News.findByIdAndRemove(request.params.id)
       
