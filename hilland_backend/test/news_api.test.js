@@ -212,7 +212,6 @@ describe('deleting and updating of a news', () => {
   test('deleting a news succees if ADMIN', async () => {
     const newsAtStart = await helper.newsInDb()
     const newsToDelete = newsAtStart[0]
-    console.log('newsToDelete', newsToDelete)
     await api
       .delete(`/api/news/${newsToDelete.id}`)
       .set('Authorization', `Bearer ${ADMINTOKEN}`)

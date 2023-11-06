@@ -99,7 +99,8 @@ newsRouter.delete('/:id', userLoggedInValidator, adminCredentialsValidator, asyn
           error: 'ID missing',
         })
       }
-    
+      const kukkuu = await News.findById(request.params.id)
+      
       try {
         const newsObject_to_be_removed = await News.findById(request.params.id)
     
@@ -108,8 +109,9 @@ newsRouter.delete('/:id', userLoggedInValidator, adminCredentialsValidator, asyn
             error: 'News not found',
           })
         }
-    
-        const toBeRemovedS3Id = newsObject_to_be_removed.imageURL.split('/')[3]
+        
+        //const toBeRemovedS3Id = newsObject_to_be_removed.imageURL.split('/')[3]
+        const toBeRemovedS3Id = newsObject_to_be_removed.imageURL
         if (!toBeRemovedS3Id ) {
           return response.status(404).json({
             error: 's3 News item not found',
