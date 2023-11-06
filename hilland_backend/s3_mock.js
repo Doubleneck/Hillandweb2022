@@ -41,17 +41,18 @@ async function uploadImageToS3(imageFileBuffer) {
   }
 }
 
-async function deleteImageFromS3(s3ObjectKey) {
+
+async function deleteImageFromS3(s3ObjectKeyForDelete) {
   const params = {
     Bucket: s3Bucket,
-    Key: s3ObjectKey,
+    Key: s3ObjectKeyForDelete,
   }
   
   try {
     await s3Client.send(new DeleteObjectCommand(params))
-    console.log(`Image ${s3ObjectKey} deleted from S3 successfully.`)
+    console.log(`Image ${s3ObjectKeyForDelete} deleted from S3 successfully.`)
   } catch (error) {
-    console.error(`Error deleting image ${s3ObjectKey} from S3:`, error)
+    console.error(`Error deleting image ${s3ObjectKeyForDelete} from S3:`, error)
     throw error
   }
 }

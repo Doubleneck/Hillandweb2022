@@ -210,18 +210,18 @@ describe('deleting and updating of a news', () => {
     await postInitialNews(app, ADMINTOKEN, newsObject)
   })
 
-  // test('deleting a news succees if ADMIN', async () => {
-  //   const newsAtStart = await helper.newsInDb()
-  //   const newsToDelete = newsAtStart[0]
+  test('deleting a news succees if ADMIN', async () => {
+    const newsAtStart = await helper.newsInDb()
+    const newsToDelete = newsAtStart[0]
   
-  //   await api
-  //     .delete(`/api/news/${newsToDelete.id}`)
-  //     .set('Authorization', `Bearer ${ADMINTOKEN}`)
-  //     .expect(204)
+    await api
+      .delete(`/api/news/${newsToDelete.id}`)
+      .set('Authorization', `Bearer ${ADMINTOKEN}`)
+      .expect(204)
 
-  //   const newsAtEnd = await helper.newsInDb()
-  //   expect(newsAtEnd).toHaveLength(newsAtStart.length-1)
-  // })
+    const newsAtEnd = await helper.newsInDb()
+    expect(newsAtEnd).toHaveLength(newsAtStart.length-1)
+  })
 
   test('deleting a news fails if USER', async () => {
     const newsAtStart = await helper.newsInDb()
