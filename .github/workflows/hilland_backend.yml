@@ -33,6 +33,8 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
         cache-dependency-path: './hilland_backend/package-lock.json'
+    - name: Clear npm Cache
+      run: npm cache clean --force    
     - name: Start MongoDB
       uses: supercharge/mongodb-github-action@1.8.0
       with:
