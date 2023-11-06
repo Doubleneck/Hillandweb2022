@@ -1,7 +1,7 @@
 import React from 'react'
 import './App.css'
 import myLogo from './assets/hlogo.png'
-import jwt_decode from 'jwt-decode'
+//import jwt_decode from 'jwt-decode'
 import { useEffect } from 'react'
 import {
   BrowserRouter as Router,
@@ -34,21 +34,22 @@ const App = () => {
     const loggedUserJSON = window.localStorage.getItem('loggedUser')
     if (loggedUserJSON) {
       const parsedUser = JSON.parse(loggedUserJSON)
-      const decodedToken = jwt_decode(parsedUser.token)
-      const expiresAtMillis = decodedToken.exp * 1000
-      if (expiresAtMillis > Date.now()) {
-        dispatch(setUser(parsedUser))
-        newsService.setToken(parsedUser.token)
-        // s3Service.setToken(parsedUser.token)
-        songrequestService.setToken(parsedUser.token)
-      } else {
-        dispatch(setUser(null))
-        newsService.setToken(null)
-        //s3Service.setToken(null)
-        songrequestService.setToken(null)
-      }
+      //const decodedToken = jwt_decode(parsedUser.token)
+      //const expiresAtMillis = decodedToken.exp * 1000
+      dispatch(setUser(parsedUser))
+      newsService.setToken(parsedUser.token)
+      // s3Service.setToken(parsedUser.token)
+      songrequestService.setToken(parsedUser.token)
+    } else {
+      dispatch(setUser(null))
+      newsService.setToken(null)
+      //s3Service.setToken(null)
+      songrequestService.setToken(null)
     }
+
   }, [])
+
+
 
   return (
     <Router>

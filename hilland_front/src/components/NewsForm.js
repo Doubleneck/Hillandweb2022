@@ -8,14 +8,14 @@ import Card from 'react-bootstrap/Card'
 
 const NewsForm = () => {
   const dispatch = useDispatch()
-
-  const current = new Date()
-  const date = `${current.getDate()}/${current.getMonth() + 1}/${current.getFullYear()}`
-
+  const [isFormVisible, setFormVisibility] = useState(false)
   const [newTitle, setNewTitle] = useState('')
   const [newContent, setNewContent] = useState('')
   const [newURL, setNewURL] = useState('')
-  const [imageFile, setImageFile] = useState(null)
+  const [imageFile, setImageFile] = useState('')
+
+  const current = new Date()
+  const date = `${current.getDate()}/${current.getMonth() + 1}/${current.getFullYear()}`
 
   const handleTitleChange = (event) => {
     setNewTitle(event.target.value)
@@ -40,6 +40,10 @@ const NewsForm = () => {
     }
   }
 
+  const toggleFormVisibility = () => {
+    setFormVisibility(!isFormVisible)
+  }
+
   const newsObject = {
     title: newTitle,
     content: newContent,
@@ -55,6 +59,7 @@ const NewsForm = () => {
     setNewContent('')
     setNewURL('')
     setImageFile('')
+    toggleFormVisibility()
   }
 
   const createNews = async (newsObject) => {
@@ -73,57 +78,62 @@ const NewsForm = () => {
   }
 
   return (
-    <div className='container'>
-      <Card>
-        <Card.Body>
-          <h2 className='my-4 text-center'>Add News</h2>
-          <form onSubmit={addNews}>
-            <div className='form-group'>
-              <label>Title:</label>
-              <input
-                className='form-control'
-                value={newTitle}
-                onChange={handleTitleChange}
-              />
-            </div>
-            <div className='form-group'>
-              <label>Content:</label>
-              <textarea
-                className='form-control'
-                rows='2'
-                value={newContent}
-                onChange={handleContentChange}
-              />
-            </div>
-            <div className='form-group'>
-              <label>URL:</label>
-              <input
-                className='form-control'
-                value={newURL}
-                onChange={handleURLChange}
-              />
-            </div>
-            <div className='form-group'>
-              <label>File:</label>
-              <input
-                className='form-control'
-                type='file'
-                accept='image/*'
-                onChange={handlePhotoSelect}
-              />
-            </div>
-            <Button
-              variant='success'
-              type='submit'
-              className='my-2'
-            >
-          Create News
-            </Button>
-          </form>
-        </Card.Body>
-      </Card>
-
+    <div className="container">
+      {isFormVisible ? (
+        <Card>
+          <Card.Body>
+            <h2 className="my-4 text-center">Add News</h2>
+            <form onSubmit={addNews}>
+              <div className="form-group">
+                <label>Title:</label>
+                <input
+                  className="form-control"
+                  value={newTitle}
+                  onChange={handleTitleChange}
+                />
+              </div>
+              <div className="form-group">
+                <label>Content:</label>
+                <textarea
+                  className="form-control"
+                  rows="2"
+                  value={newContent}
+                  onChange={handleContentChange}
+                />
+              </div>
+              <div className="form-group">
+                <label>URL:</label>
+                <input
+                  className="form-control"
+                  value={newURL}
+                  onChange={handleURLChange}
+                />
+              </div>
+              <div className="form-group">
+                <label>File:</label>
+                <input
+                  className="form-control"
+                  type="file"
+                  accept="image/*"
+                  onChange={handlePhotoSelect}
+                />
+              </div>
+              <Button variant="success" type="submit" className="my-2">
+                Create News
+              </Button>
+              <Button variant="primary" onClick={toggleFormVisibility}>
+          Close form
+              </Button>
+            </form>
+          </Card.Body>
+        </Card>
+      ) : (
+        <Button variant="primary" onClick={toggleFormVisibility}>
+          Add News
+        </Button>
+      )}
     </div>
+
   )
 }
 

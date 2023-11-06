@@ -5,7 +5,6 @@ import { removeNewsobject } from '../reducers/newsReducer'
 import { useDispatch, useSelector } from 'react-redux'
 import '../App.css'
 import PropTypes from 'prop-types'
-import Togglable from '../components/Togglable'
 import UpdateNewsForm from '../components/UpdateNewsForm'
 import newsService from '../services/news'
 import Button from 'react-bootstrap/esm/Button'
@@ -37,6 +36,7 @@ const NewsObject = ({ newsObject }) => {
       }
     }
   }
+
   return (
     <div >
       <ul className='gallery ' >
@@ -61,12 +61,9 @@ const NewsObject = ({ newsObject }) => {
             <Button variant="danger" value={newsObject} onClick={handleDelete}>
               delete
             </Button>
-            <Togglable buttonLabel='Update'>
-              <UpdateNewsForm
-                newsObjectToBeUpdated={newsObject}
-              />
-            </Togglable>
-
+            <UpdateNewsForm
+              newsObjectToBeUpdated={newsObject}
+            />
           </div>
         )}
       </ul>

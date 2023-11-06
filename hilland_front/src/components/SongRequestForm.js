@@ -5,27 +5,9 @@ import { setNotification } from '../reducers/notificationReducer'
 import Button from 'react-bootstrap/Button'
 import Notification from './Notification'
 import songrequestService from '../services/songrequests'
-//import Header from 'react-bootstrap/Header'
-//import Button from 'react-bootstrap/Button'
-//import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Popover from 'react-bootstrap/Popover'
 const SongRequestForm = () => {
-  // const popover = (
-  //   <Popover id="popover-basic">
-  //     <Popover.Header as="h3" className="text-center text-danger" >Song Request</Popover.Header>
-  //     <Popover.Body>
-  //     <div>
-  //         <SongRequestForm />
-  //     </div>
-  //     </Popover.Body>
-  //   </Popover>
-  // );
 
-  // const SongRequest = () => (
-  //   <OverlayTrigger trigger="click" placement="top" overlay={popover}>
-  //     <Button variant="danger">Song request</Button>
-  //   </OverlayTrigger>
-  // )
   const dispatch = useDispatch()
   const [artist, setArtist] = useState('')
   const [song, setSong] = useState('')
@@ -48,7 +30,6 @@ const SongRequestForm = () => {
         artist,
         song,
       }
-      console.log(songRequest)
       await songrequestService.create(songRequest)
       setArtist('')
       setSong('')
@@ -77,13 +58,8 @@ const SongRequestForm = () => {
 
   return (
     <div >
-
-
       {!hideRequest && (
-
         <>
-
-
           <p></p>
           <Notification />
           <div >

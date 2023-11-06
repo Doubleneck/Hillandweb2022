@@ -80,4 +80,5 @@ BREAK IN THIS PROJECT
 |3.11.2023|4| configure docker-compose localstack to mock s3 in dev setup|
 |5.11.2023|6| configure docker-compose localstack to mock s3 in test setup, refactor news tests|
 |6.11.2023|3| configure Github Actions with localstack mock s3 in test setup|
-|Total Hours|203|
+|7.11.2023|1| Update newsform and updatenewsform components to change invisible after submit|
+|Total Hours|204|

@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import newsService from '../services/news'
 import NewsForm from './NewsForm'
 import NewsObject from './NewsObject'
-import Togglable from './Togglable'
 import Notification from './Notification'
 import { setNews } from '../reducers/newsReducer'
 
@@ -37,19 +36,16 @@ const News =  () => {
       ) : (
         <div>
           <Notification />
-          <Togglable className="text-center" buttonLabel='Add News'>
+          <div className="text-center">
             <NewsForm />
-          </Togglable>
+          </div>
         </div>
       )}
       <p></p>
       <h1 className="text-center" >News:</h1>
       <p></p>
-
-
       <div className="text-center">
         <ul className="gallerynogrid mx-auto">
-
           {news.map((newsObject) => (
             <li key={newsObject.id} className="mx-auto">
 
@@ -58,7 +54,6 @@ const News =  () => {
           ))}
         </ul>
       </div>
-
     </div>
   )
 }
