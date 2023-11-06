@@ -84,11 +84,55 @@ newsRouter.delete('/:id', userLoggedInValidator, adminCredentialsValidator, asyn
       error: 'id missing',
     })
   }
-  const newsObject_to_be_removed = await News.findById(request.params.id)
-  const toBeRemovedS3Id = await newsObject_to_be_removed.imageURL.split('/')[3] 
-  await News.findByIdAndRemove(request.params.id)
-  await s3.deleteImageFromS3(toBeRemovedS3Id)
-  return response.status(204).end()
+  try{
+    const newsObject_to_be_removed = await News.findById(request.params.id)
+    const toBeRemovedS3Id = await newsObject_to_be_removed.imageURL.split('/')[3] 
+    if (!newsObject_to_be_removed) {
+      return response.status(404).json({
+        error: 'News not found',
+      })
+    }
+   
+    newsRouter.delete('/:id', userLoggedInValidator, adminCredentialsValidator, async (request, response) => {
+      if (!request.params.id) {
+        return response.status(400).json({
+          error: 'ID missing',
+        })
+      }
+    
+      try {
+        const newsObject_to_be_removed = await News.findById(request.params.id)
+    
+        if (!newsObject_to_be_removed) {
+          return response.status(404).json({
+            error: 'News not found',
+          })
+        }
+    
+        const toBeRemovedS3Id = newsObject_to_be_removed.imageURL.split('/')[3]
+        await News.findByIdAndRemove(request.params.id)
+        await s3.deleteImageFromS3(toBeRemovedS3Id)
+        return response.status(204).end()
+      } catch (error) {
+        console.error('Error:', error)
+        return response.status(400).json({
+          error: 'Something went wrong when deleting the news',
+        })
+      }
+    })
+    
+    
+    
+    
+    await News.findByIdAndRemove(request.params.id)
+    await s3.deleteImageFromS3(toBeRemovedS3Id)
+    return response.status(204).end()
+  } catch {
+    
+    return response.status(400).json({
+      error: 'something went wrong when deleting the news',
+    })
+  }
 })
 
 module.exports = newsRouter
