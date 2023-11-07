@@ -1,16 +1,17 @@
 import React from 'react'
 import './App.css'
 import myLogo from './assets/hlogo.png'
-//import jwt_decode from 'jwt-decode'
+import jwt_decode from 'jwt-decode'
 import { useEffect } from 'react'
 import {
   BrowserRouter as Router,
-  Routes, Route, NavLink
+  Routes, Route, NavLink, Link
 } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { setUser } from './reducers/loginFormReducer'
+import { setNotification } from './reducers/notificationReducer'
+import Notification from './components/Notification'
 import newsService from './services/news'
-//import s3Service from './services/s3'
 import songrequestService from './services/songrequests'
 import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
@@ -34,22 +35,45 @@ const App = () => {
     const loggedUserJSON = window.localStorage.getItem('loggedUser')
     if (loggedUserJSON) {
       const parsedUser = JSON.parse(loggedUserJSON)
-      //const decodedToken = jwt_decode(parsedUser.token)
-      //const expiresAtMillis = decodedToken.exp * 1000
-      dispatch(setUser(parsedUser))
-      newsService.setToken(parsedUser.token)
-      // s3Service.setToken(parsedUser.token)
-      songrequestService.setToken(parsedUser.token)
-    } else {
-      dispatch(setUser(null))
-      newsService.setToken(null)
-      //s3Service.setToken(null)
-      songrequestService.setToken(null)
+      const decodedToken = jwt_decode(parsedUser.token)
+      const expiresAtMillis = decodedToken.exp * 1000
+      if (expiresAtMillis > Date.now()) {
+        dispatch(setUser(parsedUser))
+        newsService.setToken(parsedUser.token)
+        songrequestService.setToken(parsedUser.token)
+      } else {
+        logout()
+      }
     }
-
   }, [])
 
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      // Your code to run at the specified interval (every minute)
+      const loggedUserJSON = window.localStorage.getItem('loggedUser')
+      if (loggedUserJSON) {
+        const parsedUser = JSON.parse(loggedUserJSON)
+        const decodedToken = jwt_decode(parsedUser.token)
+        const expiresAtMillis = decodedToken.exp * 1000
+        if (expiresAtMillis < Date.now()) {
+          logout()
+          dispatch(setNotification('Your session has expired. Please log in again.', 15, 'error'))
+        }
+      }
+    }, 600000) // 60,000 milliseconds = 60 seconds
 
+    // Cleanup the interval when the component unmounts
+    return () => {
+      clearInterval(intervalId)
+    }
+  }, []) // Empty dependency array to run the effect only once on mount
+
+  function logout() {
+    dispatch(setUser(''))
+    window.localStorage.clear()
+    newsService.setToken(null)
+    songrequestService.setToken(null)
+  }
 
   return (
     <Router>
@@ -63,10 +87,8 @@ const App = () => {
             <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/releases">RELEASES</NavLink>
             <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/truckercaps">TRUCKER CAPS</NavLink>
             <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/archive">ARCHIVE</NavLink>
-            {user ? (
+            {user && (
               <NavLink style={padding} className="linkText m-auto text-decoration-none songRequestLink" to="/songrequests">SONGREQUESTS</NavLink>
-            ) : (
-              <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/login">LOGIN (muualle tää?)</NavLink>
             )}
           </Nav>
         </Navbar.Collapse>
@@ -74,22 +96,15 @@ const App = () => {
       <>
         {user ? (
           <>
-
-            <h1 className='text-center' >{user.username} logged in <Button variant="dark"
-              onClick={() => {
-                dispatch(setUser(''))
-                window.localStorage.clear()
-                newsService.setToken(null)
-                //s3Service.setToken(null)
-              }}
-            >
-          Logout
-            </Button>
+            <h1 className='text-center' >{user.username} logged in
+              <Button variant="dark" onClick={logout}>
+                Logout
+              </Button>
             </h1>
             <p></p>
           </>
         ) : (
-          <></>
+          <><Notification /></>
         )}
       </>
       <Routes>
@@ -98,15 +113,17 @@ const App = () => {
         <Route path="/videos" element={<Videos  />} />
         <Route path="/truckercaps" element={<TruckerCaps  />} />
         <Route path="/login" element={<LoginForm  />} />
-        {user ? (
+        {user && (
           <Route path="/songrequests" element={<SongRequests />} />
-        ) : (
-          null
         )}
       </Routes>
 
       <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.05)' }}>
     © 2023 Copyright: AndyLand Web Factory
+        <p></p>
+        {!user && (
+          <Link to="/login" className="linkText m-auto text-decoration-none" style={padding}>Stuff login </Link>
+        )}
       </div>
     </Router>
   )
