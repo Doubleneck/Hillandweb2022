@@ -13,15 +13,17 @@ import { setNotification } from './reducers/notificationReducer'
 import Notification from './components/Notification'
 import newsService from './services/news'
 import songrequestService from './services/songrequests'
+import userService from './services/users'
 import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
 import Home from './components/Home'
 import News from './components/News'
 import Videos from './components/Videos'
+import Users from './components/Users'
 import LoginForm from './components/LoginForm'
 import TruckerCaps from './components/TruckerCaps'
 import SongRequests from './components/SongRequests'
-import Button from 'react-bootstrap/Button'
+
 
 
 const App = () => {
@@ -41,6 +43,7 @@ const App = () => {
         dispatch(setUser(parsedUser))
         newsService.setToken(parsedUser.token)
         songrequestService.setToken(parsedUser.token)
+        userService.setToken(parsedUser.token)
       } else {
         logout()
       }
@@ -73,6 +76,7 @@ const App = () => {
     window.localStorage.clear()
     newsService.setToken(null)
     songrequestService.setToken(null)
+    userService.setToken(null)
   }
 
   return (
@@ -87,8 +91,14 @@ const App = () => {
             <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/releases">RELEASES</NavLink>
             <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/truckercaps">TRUCKER CAPS</NavLink>
             <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/archive">ARCHIVE</NavLink>
+            {user.role==='admin' && (
+              <NavLink style={padding} className="linkText m-auto text-decoration-none songRequestLink" to="/USERS">USERS</NavLink>
+            )}
             {user && (
-              <NavLink style={padding} className="linkText m-auto text-decoration-none songRequestLink" to="/songrequests">SONGREQUESTS</NavLink>
+              <>
+                <NavLink style={padding} className="linkText m-auto text-decoration-none songRequestLink" to="/songrequests">SONGREQUESTS</NavLink>
+                <NavLink style={padding} className="linkText m-auto text-decoration-none songRequestLink" onClick={logout}>LOGOUT</NavLink>
+              </>
             )}
           </Nav>
         </Navbar.Collapse>
@@ -96,11 +106,11 @@ const App = () => {
       <>
         {user ? (
           <>
-            <h1 className='text-center' >{user.username} logged in
-              <Button variant="dark" onClick={logout}>
-                Logout
-              </Button>
-            </h1>
+            <h4  >
+              <div className='d-flex justify-content-between align-items-center'>
+                {user.username} logged in
+              </div>
+            </h4>
             <p></p>
           </>
         ) : (
@@ -116,13 +126,16 @@ const App = () => {
         {user && (
           <Route path="/songrequests" element={<SongRequests />} />
         )}
+        {user.role==='admin' && (
+          <Route path="/users" element={<Users/>} />
+        )}
       </Routes>
 
       <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.05)' }}>
     © 2023 Copyright: AndyLand Web Factory
         <p></p>
         {!user && (
-          <Link to="/login" className="linkText m-auto text-decoration-none" style={padding}>Stuff login </Link>
+          <Link to="/login" className="linkText m-auto text-decoration-none" style={padding}>Staff login </Link>
         )}
       </div>
     </Router>

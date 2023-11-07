@@ -81,4 +81,6 @@ BREAK IN THIS PROJECT
 |5.11.2023|6| configure docker-compose localstack to mock s3 in test setup, refactor news tests|
 |6.11.2023|3| configure Github Actions with localstack mock s3 in test setup|
 |7.11.2023|1| Update newsform and updatenewsform components to change invisible after submit|
-|Total Hours|204|
+|7.11.2023|1| Make periodic check if login token is still valid, if not give notification and logout|
+|7.11.2023|3| Add user creation & listing & deletion functionality e2e, change navbars & login/logout|
+|Total Hours|208|

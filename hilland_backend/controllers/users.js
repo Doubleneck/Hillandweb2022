@@ -9,35 +9,8 @@ usersRouter.get('/', userLoggedInValidator, adminCredentialsValidator, async (re
   response.json(users)
 })
 
-// usersRouter.post('/', userLoggedInValidator, adminCredentialsValidator, async (request, response) => {
-//   const { username, name, role, password } = await request.body
-
-//   if (username.length < 3 || password.length < 3) {
-//     return response.status(400).json({
-//       error: 'username and password must be at least three characters long',
-//     })
-//   }
-//   const existingUser = await User.findOne({ username })
-//   if (existingUser) {
-//     return response.status(400).json({
-//       error: 'username must be unique',
-//     })
-//   }
-//   const saltRounds = 10
-//   const passwordHash = await bcrypt.hash(password, saltRounds)
-//   const user = new User({
-//     username,
-//     name,
-//     role,
-//     passwordHash,
-//   })
-
-//   const savedUser = await user.save()
-//   response.status(201).json(savedUser)
-// })
-
 // Admin only, POST new user to db only if user creation field requirements and validations are fullfilled
-usersRouter.post('/', adminCredentialsValidator, async (request, response) => {
+usersRouter.post('/', userLoggedInValidator, adminCredentialsValidator, async (request, response) => {
 
   const user = await request.body
 
@@ -73,4 +46,24 @@ usersRouter.post('/', adminCredentialsValidator, async (request, response) => {
   response.status(201).json(savedUser)
 })
 
+
+usersRouter.delete('/:id', userLoggedInValidator, adminCredentialsValidator, async (request, response) => {
+  try {
+    const id = request.params.id
+    if (!id || !validator.isMongoId(id)) {
+      return response.status(400).json({ error: 'Invalid user ID' })
+    }
+
+    const userToDelete = await User.findById(id)
+    if (!userToDelete) {
+      return response.status(404).json({ error: 'User not found' })
+    }
+
+    await User.findByIdAndRemove(id)
+    response.status(204).end() // No content returned
+  } catch (error) {
+    console.error(error)
+    response.status(500).json({ error: 'Internal Server Error' })
+  }
+})
 module.exports = usersRouter

@@ -103,7 +103,6 @@ newsRouter.delete('/:id', userLoggedInValidator, adminCredentialsValidator, asyn
       error: 'Something went wrong when deleting the news',
     })
   }
-
 })
 
 module.exports = newsRouter
