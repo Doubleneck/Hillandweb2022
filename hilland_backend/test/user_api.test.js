@@ -6,6 +6,7 @@ const api = supertest(app)
 let ADMINTOKEN = ''
 let USERTOKEN = ''
 let WRONGTOKEN = ''
+let USERID = ''
 
 /**
  * Logins helper type of user
@@ -27,12 +28,13 @@ const loginUser = async (user) => {
  */
 const initialize = async () => {
 
-  await supertest(app)
+  const savedUsers = await supertest(app)
     .post('/api/testing/reset')
     .expect(201)
 
   USERTOKEN = await loginUser(helper.userUser())
   ADMINTOKEN = await loginUser(helper.adminUser())
+  USERID = savedUsers.body[0].id
 }
 
 beforeAll(async () => {
@@ -227,5 +229,46 @@ describe('creating new users when there is initially one admin-user and one user
     const usersAtEnd = await helper.usersInDb()
     expect(usersAtEnd).toHaveLength(usersAtStart.length + 1)
     expect(response.body.username).toBe('newUserUsername@newUserUsername.com')
+  })
+})
+
+describe('When there is initially one admin - user and two user - users at db : users delete', () => {
+
+  test('ADMIN can delete USER', async () => {
+    const usersAtStart = await helper.usersInDb()
+    const response = await api
+      .delete(`/api/users/${USERID}`)
+      .set('Authorization', `Bearer ${ADMINTOKEN}`)
+      .expect(200)
+    const usersAtEnd = await helper.usersInDb()
+    expect(usersAtEnd).toHaveLength(usersAtStart.length - 1)
+    expect(response.body.message).toBe('user was deleted successfully')
+  })
+
+  test('USER deletion fails when no credentials', async () => {
+    const usersAtStart = await helper.usersInDb()
+    const response = await api
+      .delete(`/api/users/${USERID}`)
+      .set('Authorization', `Bearer ${USERTOKEN}`)
+      .expect(401)
+      .expect('Content-Type', /application\/json/)
+    const usersAtEnd = await helper.usersInDb()
+    expect(usersAtEnd).toHaveLength(usersAtStart.length)
+    expect(response.body.error).toBe('you don´t have rights for this operation')
+  })
+
+  test('USER deletion fails when no login', async () => {
+    const usersAtStart = await helper.usersInDb()
+    const response = await api
+      .delete(`/api/users/${USERID}`)
+      .expect(401)
+      .expect('Content-Type', /application\/json/)
+    const usersAtEnd = await helper.usersInDb()
+    expect(usersAtEnd).toHaveLength(usersAtStart.length)
+    expect(response.body.error).toBe('invalid token')
+  })
+
+  afterAll(async () => {
+    await initialize()
   })
 })

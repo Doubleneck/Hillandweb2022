@@ -37,13 +37,13 @@ songrequestRouter.post('/', async (request, response) => {
     date: new Date(),
   })
   const savedSongrequest = await songrequest.save()
-  response.status(201).json(savedSongrequest)
+  return response.status(201).json(savedSongrequest)
 })
 
 songrequestRouter.delete('/:id', userLoggedInValidator, adminCredentialsValidator,async (request, response) => {
   
   await Songrequest.findByIdAndRemove(request.params.id)
-  response.status(204).end()
+  return response.status(204).end()
 })
 
 module.exports = songrequestRouter

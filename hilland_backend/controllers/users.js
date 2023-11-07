@@ -43,7 +43,7 @@ usersRouter.post('/', userLoggedInValidator, adminCredentialsValidator, async (r
   delete user.password
   const userToSave = new User(user)
   const savedUser = await userToSave.save()
-  response.status(201).json(savedUser)
+  return response.status(201).json(savedUser)
 })
 
 
@@ -60,10 +60,11 @@ usersRouter.delete('/:id', userLoggedInValidator, adminCredentialsValidator, asy
     }
 
     await User.findByIdAndRemove(id)
-    response.status(204).end() // No content returned
+    return response.status(200).json({ message: 'user was deleted successfully' })
+    
   } catch (error) {
     console.error(error)
-    response.status(500).json({ error: 'Internal Server Error' })
+    return response.status(500).json({ error: 'Internal Server Error' })
   }
 })
 module.exports = usersRouter
