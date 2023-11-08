@@ -2,7 +2,6 @@
   "name": "hillandweb2022",
   "version": "0.1.0",
   "private": true,
-  "type": "module",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.2",
     "axios": "^1.2.1",
@@ -16,12 +15,19 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "//start": "Start and open frontend server. Restart on file change",
     "start": "react-scripts start",
+    "//build": "Create optimized production build of frontend for deployment",
     "build": "react-scripts build",
     "test": "jest",
     "eject": "react-scripts eject",
     "server": "json-server -p3001 --watch db.json",
-    "lint": "eslint ."
+    "//lint": "Run eslint on directory and subdirectories",
+    "lint": "eslint .",
+    "//cypress:open": "Open visual end to end testing tool for development \n    REMEMBER TO:\n    Start backend server in test environment and start frontend server",
+    "cypress:open": "cypress open",
+    "//test:e2e": "Run all end to end tests in terminal \n    REMEMBER TO:\n    Start backend server in test environment and start frontend server",
+    "test:e2e": "cypress run"
   },
   "proxy": "http://localhost:3001",
   "eslintConfig": {
@@ -48,6 +54,7 @@
     "@testing-library/jest-dom": "^6.1.4",
     "@testing-library/react": "^14.1.0",
     "@testing-library/user-event": "^14.5.1",
+    "cypress": "^13.4.0",
     "eslint": "^8.52.0",
     "eslint-plugin-react": "^7.33.2",
     "jest-environment-jsdom": "^29.7.0",
