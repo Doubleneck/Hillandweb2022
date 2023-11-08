@@ -1,0 +1,21 @@
+import React from 'react'
+import { render, screen } from '@testing-library/react'
+import '@testing-library/jest-dom'
+import SongRequestForm from './SongRequestForm.blaah'
+import userEvent from '@testing-library/user-event'
+
+test('<SongRequestForm/> updates parent state and calls onSubmit', async () => {
+
+  const createSongRequest = jest.fn()
+
+  render(<SongRequestForm createSongRequest={createSongRequest} />)
+
+  const input = screen.getByRole('textbox')
+  const sendButton = screen.getByText('Send !!')
+
+  await user.type(input, 'testing a form...')
+  await user.click(sendButton)
+
+  expect(createSongRequest.mock.calls).toHaveLength(1)
+  expect(createSongRequest.mock.calls[0][0].content).toBe('testing a form...')
+})

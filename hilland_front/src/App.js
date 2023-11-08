@@ -77,6 +77,7 @@ const App = () => {
     newsService.setToken(null)
     songrequestService.setToken(null)
     userService.setToken(null)
+
   }
 
   return (
@@ -97,7 +98,7 @@ const App = () => {
             {user && (
               <>
                 <NavLink style={padding} className="linkText m-auto text-decoration-none songRequestLink" to="/songrequests">SONGREQUESTS</NavLink>
-                <NavLink style={padding} className="linkText m-auto text-decoration-none songRequestLink" onClick={logout}>LOGOUT</NavLink>
+                <NavLink style={padding} data-cy="logout" className="linkText m-auto text-decoration-none songRequestLink" onClick={logout}>LOGOUT</NavLink>
               </>
             )}
           </Nav>
@@ -135,7 +136,7 @@ const App = () => {
     © 2023 Copyright: AndyLand Web Factory
         <p></p>
         {!user && (
-          <Link to="/login" className="linkText m-auto text-decoration-none" style={padding}>Staff login </Link>
+          <Link data-cy='staff-login' to="/login" className="linkText m-auto text-decoration-none" style={padding}>Staff login </Link>
         )}
       </div>
     </Router>

@@ -62,6 +62,7 @@ const LoginForm = () => {
               type="text"
               placeholder="Enter username"
               value={username}
+              data-cy='username'
               onChange={handleUsernameChange}
             />
           </Form.Group>
@@ -71,11 +72,12 @@ const LoginForm = () => {
               type="password"
               placeholder="Password"
               value={password}
+              data-cy='password'
               onChange={handlePasswordChange}
             />
           </Form.Group>
           <p></p>
-          <Button  variant="primary" type="submit" style={{ width: '100%' }}>
+          <Button  data-cy="login" variant="primary" type="submit" style={{ width: '100%' }}>
             Login
           </Button>
         </Col>
