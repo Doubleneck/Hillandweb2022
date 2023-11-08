@@ -57,6 +57,7 @@ jobs:
           echo "Test Execution complete!"     
     - run: npm ci
     - run: npm run build --if-present
+    - run: npm lint
     - run: npm test
   
     
