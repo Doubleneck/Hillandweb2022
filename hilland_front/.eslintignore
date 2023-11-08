@@ -3,3 +3,7 @@ build
 .eslintrc.js
 **/*.test.js
 cypress.config.js
+hilland_app.cy.js
+fileTransformer.js
+cypress/
+__mocks__/
