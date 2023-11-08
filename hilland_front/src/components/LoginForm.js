@@ -75,7 +75,7 @@ const LoginForm = () => {
             />
           </Form.Group>
           <p></p>
-          <Button variant="primary" type="submit" style={{ width: '100%' }}>
+          <Button  variant="primary" type="submit" style={{ width: '100%' }}>
             Login
           </Button>
         </Col>

@@ -22,7 +22,7 @@ const SongRequestForm = () => {
     setSong(event.target.value)
   }
 
-  const handleSubmit = async (event) => {
+  const createSongRequest = async (event) => {
     event.preventDefault()
 
     try {
@@ -70,7 +70,7 @@ const SongRequestForm = () => {
             <Popover.Header as="h3" className="text-center text-danger" >Song request</Popover.Header>
             <Popover.Body>
               <div>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={createSongRequest}>
                   <div>
                     <h3 className="text-center text-danger">Artist:</h3>
                     <input className="form-control text-center" value={artist} onChange={handleArtistChange} />

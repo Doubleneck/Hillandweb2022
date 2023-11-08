@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const initialState = { content: '' }
+const initialState = { content: '', type: null }
 
 const notificationSlice = createSlice({
   name: 'notification',
