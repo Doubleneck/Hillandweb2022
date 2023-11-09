@@ -14,7 +14,7 @@ These two tasks will joint to each other, since the everyday users can make song
 
 - I'm in CS bachelor program at Helsinki University.
 - Documentation is in English.
-- Application uses Node.js backend and React+Redux front with Mongo.db cloud database.
+- Application uses Node.js backend and React+Redux front with Mongo.db cloud database and AWS S3 & Localstack for images.
 
 
 ## Users
@@ -54,10 +54,9 @@ These two tasks will joint to each other, since the everyday users can make song
 
 ### Admin users:
 
-- [x] user can do everything a normal user can
-- [x] user can add, remove and update news
-- [ ] user can add, remove and update releases
-- [ ] user can add, remove and update archive
-- [ ] user can add new users
-- [x] user can remove items from requested songs list 
+- [x] admin can do everything a normal user can
+- [x] admin can add, remove and update news
+- [ ] admin can add, remove and update releases
+- [ ] admin can add, remove and update archive
+- [x] admin can remove items from requested songs list 
 
