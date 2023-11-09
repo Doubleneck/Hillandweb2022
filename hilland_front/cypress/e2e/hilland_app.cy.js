@@ -152,7 +152,7 @@ describe('when logged in as USER', function () {
 
   it('user can see songrequests page ', function () {
     cy.visit('/songrequests')
-    cy.contains('Song requestss')
+    cy.contains('Song requests')
 
   })
   it('user can see homepage', function () {
