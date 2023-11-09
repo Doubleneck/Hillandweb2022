@@ -26,7 +26,7 @@ const Home = () => (
     <p></p>
     <h2 className="text-center">Live Country Music in Helsinki Every Monday Since 2014</h2>
     <CenteredContent>
-      <div style={{ display: 'inline-block' }}>
+      <div data-cy= "songrequest-form" style={{ display: 'inline-block' }}>
         <SongRequestForm />
       </div>
     </CenteredContent>

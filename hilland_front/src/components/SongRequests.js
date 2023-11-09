@@ -5,6 +5,7 @@ import { setNotification } from '../reducers/notificationReducer'
 import { useDispatch } from 'react-redux'
 import Notification from './Notification'
 import { useSelector } from 'react-redux'
+import Button from 'react-bootstrap/Button'
 
 function Songrequests() {
   const dispatch = useDispatch()
@@ -98,12 +99,11 @@ function Songrequests() {
               {formatDate(songrequest.date)} (song from artist:{' '}
               {songrequest.artist})
               {user.role === 'admin' && (
-                <button
-                  onClick={() => handleDelete(songrequest.id)}
-                  className="delete-button"
-                >
-                Delete
-                </button>
+                <Button data-cy="delete-button" variant="danger" type="submit" className="my-2" onClick={() => handleDelete(songrequest.id)}>
+               Delete
+                </Button>
+
+
               )}
 
             </p>

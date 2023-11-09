@@ -75,23 +75,127 @@ describe('When login form is open', function () {
     cy.reload()
     cy.get('[data-cy="logout"]').should('exist')
   })
-  describe('when logged in as user', function () {
-    beforeEach(function () {
-      cy.login({ username: 'user@user.com', password: 'User@user1' })
-    })
+})
+describe('when not logged in', function () {
 
-    it('user can log out from newspage', function () {
-      cy.visit('/news')
-      cy.get('[data-cy="logout"]').click()
-      cy.contains('Staff login')
-      cy.get('[data-cy="logout"]').should('not.exist')
-    })
+  it('non logged user can see homepage', function () {
+    cy.visit('')
+    cy.contains('Hilland Mondays - American Heritage')
+  })
 
-    it('user can log out from songrequests page ', function () {
-      cy.visit('/songrequests')
-      cy.get('[data-cy="logout"]').click()
-      cy.get('[data-cy="logout"]').should('not.exist')
-    })
+
+  it('non logged user can see newspage', function () {
+    cy.visit('/news')
+    cy.contains('News')
+  })
+
+  it('non logged user can see videos page', function () {
+    cy.visit('/videos')
+    cy.contains('Hilland Playboys Videos: Live at Finnvox Studios (2018) :')
+  })
+
+  it('non logged user can see Trucker caps page', function () {
+    cy.visit('/truckercaps')
+    cy.contains('Legendary Hilland Trucker Caps:')
+  })
+
+
+  it('non logged user can not see songrequests page ', function () {
+    cy.visit('/songrequests')
+    cy.contains('Song requests').should('not.exist')
+  })
+
+  it('non logged user can not see users page ', function () {
+    cy.visit('/users')
+    cy.contains('Users').should('not.exist')
+  })
+
+  it('non logged user can send songrequest on homepage', function () {
+    cy.visit('')
+    cy.contains('Send us a song request...maybe we’ll play it next Monday!')
+    cy.get('[data-cy="songrequest-form"]').should('exist')
+    cy.get('[data-cy="artist"]').type('Willie Nelson')
+    cy.get('[data-cy="song"]').type('Crazy')
+    cy.get('[data-cy="send-songrequest"]').click()
+    cy.contains('Thank you!!')
+    cy.get('[data-cy="send-songrequest"]').should('not.exist')
+    cy.contains('Send us a song request...maybe we’ll play it next Monday!').should('not.exist')
+  })
+  it('non logged user songrequest send fails on homepage if song missing', function () {
+    cy.visit('')
+    cy.contains('Send us a song request...maybe we’ll play it next Monday!')
+    cy.get('[data-cy="songrequest-form"]').should('exist')
+    cy.get('[data-cy="artist"]').type('Willie Nelson')
+    cy.get('[data-cy="send-songrequest"]').click()
+    cy.contains('We couldn´t take your request, try again later..')
   })
 })
+
+describe('when logged in as USER', function () {
+  beforeEach(function () {
+    cy.login({ username: 'user@user.com', password: 'User@user1' })
+  })
+
+  it('user can log out from newspage', function () {
+    cy.visit('/news')
+    cy.get('[data-cy="logout"]').click()
+    cy.contains('Staff login')
+    cy.get('[data-cy="logout"]').should('not.exist')
+  })
+
+
+  it('user can log out from songrequests page ', function () {
+    cy.visit('/songrequests')
+    cy.get('[data-cy="logout"]').click()
+    cy.get('[data-cy="logout"]').should('not.exist')
+  })
+
+  it('user can see songrequests page ', function () {
+    cy.visit('/songrequests')
+    cy.contains('Song requests')
+
+  })
+  it('user can see homepage', function () {
+    cy.visit('')
+    cy.contains('Hilland Mondays - American Heritage')
+  })
+
+  it('user can see newspage', function () {
+    cy.visit('/news')
+    cy.contains('News')
+  })
+
+  it('user can see videos page', function () {
+    cy.visit('/videos')
+    cy.contains('Hilland Playboys Videos: Live at Finnvox Studios (2018) :')
+  })
+
+  it('user can see Trucker caps page', function () {
+    cy.visit('/truckercaps')
+    cy.contains('Legendary Hilland Trucker Caps:')
+  })
+
+  it('user can see songrequests page ', function () {
+    cy.visit('/songrequests')
+    cy.contains('Song requests')
+  })
+
+
+
+  it('user can not delete songrequests on songrequests page ', function () {
+    cy.visit('/songrequests')
+    cy.get('[data-cy="delete-button"]').should('not.exist')
+  })
+
+  it(' user can not see users page ', function () {
+    cy.visit('/users')
+    cy.contains('Users').should('not.exist')
+  })
+})
+
+
+
+
+
+
 

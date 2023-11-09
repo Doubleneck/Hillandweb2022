@@ -73,14 +73,14 @@ const SongRequestForm = () => {
                 <form onSubmit={createSongRequest}>
                   <div>
                     <h3 className="text-center text-danger">Artist:</h3>
-                    <input className="form-control text-center" value={artist} onChange={handleArtistChange} />
+                    <input className="form-control text-center" data-cy="artist" value={artist} onChange={handleArtistChange} />
                     <p className="text-center text-danger">(You can leave this blank)</p>
 
                     <h3 className="text-center text-danger"> Song: </h3>
-                    <input className="form-control text-center" value={song} onChange={handleSongChange} />
+                    <input className="form-control text-center" data-cy="song" value={song} onChange={handleSongChange} />
                     <p></p>
                     <p className="text-center">
-                      <Button type="submit" variant="danger">
+                      <Button type="submit" variant="danger" data-cy="send-songrequest">
     Send !!
                       </Button>
                     </p>
