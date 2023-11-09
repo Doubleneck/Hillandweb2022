@@ -131,6 +131,7 @@ describe('when not logged in', function () {
 
 describe('when logged in as USER', function () {
   beforeEach(function () {
+    cy.request('POST', 'http://localhost:3001/api/testing/reset')
     cy.login({ username: userUser().username, password: userUser().password })
   })
 
@@ -191,6 +192,7 @@ describe('when logged in as USER', function () {
 
 describe('when logged in as ADMIN', function () {
   beforeEach(function () {
+    cy.request('POST', 'http://localhost:3001/api/testing/reset')
     cy.login({ username: adminUser().username, password: adminUser().password })
   })
 
