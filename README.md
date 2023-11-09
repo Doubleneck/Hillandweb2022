@@ -1,5 +1,5 @@
 
-[![hilland_e2e CI](https://github.com/Doubleneck/Hillandweb2022/actions/workflows/hilland_e2e.yml/badge.svg)](https://github.com/Doubleneck/Hillandweb2022/actions/workflows/hilland_e2e.yml)
+[![hilland_e2e CI](https://github.com/Doubleneck/Hillandweb2022/actions/workflows/e2e.yml/badge.svg)](https://github.com/Doubleneck/Hillandweb2022/actions/workflows/e2e.yml)
 
 [![hilland_backend CI](https://github.com/Doubleneck/Hillandweb2022/actions/workflows/hilland_backend.yml/badge.svg)](https://github.com/Doubleneck/Hillandweb2022/actions/workflows/hilland_backend.yml)
 # Hillandweb2022 / Full Stack Open project for Helsinki University
