@@ -99,13 +99,10 @@ function Songrequests() {
               {formatDate(songrequest.date)} (song from artist:{' '}
               {songrequest.artist})
               {user.role === 'admin' && (
-                <Button data-cy="delete-button" variant="danger" type="submit" className="my-2" onClick={() => handleDelete(songrequest.id)}>
+                <Button data-cy="delete-songrequest-button" variant="danger" type="submit" className="my-2" onClick={() => handleDelete(songrequest.id)}>
                Delete
                 </Button>
-
-
               )}
-
             </p>
           </li>
         ))}

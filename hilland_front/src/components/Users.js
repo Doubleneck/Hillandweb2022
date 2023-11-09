@@ -5,7 +5,7 @@ import { setNotification } from '../reducers/notificationReducer'
 import { useDispatch } from 'react-redux'
 import Notification from './Notification'
 import { useSelector } from 'react-redux'
-import UserForm from './UserForm'
+import UserForm from './UserForm.js'
 import Button from 'react-bootstrap/Button'
 function Users() {
   const dispatch = useDispatch()

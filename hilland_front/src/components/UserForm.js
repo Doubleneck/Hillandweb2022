@@ -75,7 +75,7 @@ const UserForm = ({ onUserAdded }) => {
   }
 
   return (
-    <div className="text-center">
+    <div className="text-center" data-cy="add_user">
       {isFormVisible ? (
         <Container >
 
@@ -87,6 +87,7 @@ const UserForm = ({ onUserAdded }) => {
                   <Form.Group controlId="formBasicUsername">
                     <Form.Label>Username</Form.Label>
                     <Form.Control
+                      data-cy="username"
                       type="text"
                       placeholder="Enter username"
                       value={username}
@@ -130,6 +131,7 @@ const UserForm = ({ onUserAdded }) => {
                   <Form.Group controlId="formBasicPassword">
                     <Form.Label>Password</Form.Label>
                     <Form.Control
+                      data-cy="password"
                       type="password"
                       placeholder="Password"
                       value={password}

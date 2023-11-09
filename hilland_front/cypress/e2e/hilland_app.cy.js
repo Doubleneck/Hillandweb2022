@@ -1,5 +1,3 @@
-// eslint-disable-next-line no-unused-vars
-//import { userUser, adminUser } from '../../../hilland_backend/test/test_helper'
 
 const userUser = () => ({
   username: 'user@user.com',
@@ -133,7 +131,7 @@ describe('when not logged in', function () {
 
 describe('when logged in as USER', function () {
   beforeEach(function () {
-    cy.login({ username: 'user@user.com', password: 'User@user1' })
+    cy.login({ username: userUser().username, password: userUser().password })
   })
 
   it('user can log out from newspage', function () {
@@ -180,11 +178,9 @@ describe('when logged in as USER', function () {
     cy.contains('Song requests')
   })
 
-
-
   it('user can not delete songrequests on songrequests page ', function () {
     cy.visit('/songrequests')
-    cy.get('[data-cy="delete-button"]').should('not.exist')
+    cy.get('[data-cy="delete-songrequest-button"]').should('not.exist')
   })
 
   it(' user can not see users page ', function () {
@@ -193,9 +189,74 @@ describe('when logged in as USER', function () {
   })
 })
 
+describe('when logged in as ADMIN', function () {
+  beforeEach(function () {
+    cy.login({ username: adminUser().username, password: adminUser().password })
+  })
+
+  it('admin can log out from newspage', function () {
+    cy.visit('/news')
+    cy.get('[data-cy="logout"]').click()
+    cy.contains('Staff login')
+    cy.get('[data-cy="logout"]').should('not.exist')
+  })
+
+
+  it('admin can log out from songrequests page ', function () {
+    cy.visit('/songrequests')
+    cy.get('[data-cy="logout"]').click()
+    cy.get('[data-cy="logout"]').should('not.exist')
+  })
+
+  it('admin can see songrequests page ', function () {
+    cy.visit('/songrequests')
+    cy.contains('Song requests')
+
+  })
+  it('admin can see homepage', function () {
+    cy.visit('')
+    cy.contains('Hilland Mondays - American Heritage')
+  })
+
+  it('admin can see newspage', function () {
+    cy.visit('/news')
+    cy.contains('News')
+  })
+
+  it('admin can see videos page', function () {
+    cy.visit('/videos')
+    cy.contains('Hilland Playboys Videos: Live at Finnvox Studios (2018) :')
+  })
+
+  it('admin can see Trucker caps page', function () {
+    cy.visit('/truckercaps')
+    cy.contains('Legendary Hilland Trucker Caps:')
+  })
+
+  it('admin can see songrequests page ', function () {
+    cy.visit('/songrequests')
+    cy.contains('Song requests')
+  })
+
+  it('admin can see users page ', function () {
+    cy.visit('/users')
+    cy.contains('Users')
+  })
+
+  // it.only('admin can add users', function () {
+  //   cy.visit('/users')
+  //   cy.contains('Users')
+  //   cy.contains('Add User').click()
+  //   // cy.get('Add User').click().should('have.class', 'active')
+  //   cy.contains('Username').type('user@user2.com')
+  //   cy.contains('Name').type('someuser')
+  //   cy.contains('Password').type(`${userUser().password}`)
+  //   cy.contains('Confirm Password').type(`${userUser().password}`)
+  //   cy.contains('Register').click()
+  //   cy.contains('Thank you!!')
 
 
 
 
-
+})
 

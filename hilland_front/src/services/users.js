@@ -5,13 +5,13 @@ let token = null
 const setToken = (newToken) => {
   token = `bearer ${newToken}`
 }
-const getAll = () => {
+const getAll = async () => {
   const config = {
     headers: { Authorization: token },
   }
-  const request = axios.get(baseUrl, config)
+  const response = await axios.get(baseUrl, config)
 
-  return request.then((response) => response.data)
+  return response.data
 }
 
 const create = async (userObject) => {
