@@ -26,16 +26,21 @@ jobs:
     steps:
           - name: Checkout code
             uses: actions/checkout@v3
-          
+            
           - name: install frontend npm dependencies with caching
             uses: bahmutov/npm-install@v1
             with:
               working-directory: ./hilland_front
-              run: 
-                npm run lint
-
-          - name: Run tests
-            run: npm run test    
+              
+          - name: run lint 
+            working-directory: ./hilland_front
+            run: |
+              npm run lint
+              
+          - name: Run test front  
+            working-directory: ./hilland_front
+            run: 
+                npm run test
 
           - name: install backend npm dependencies with caching
             uses: bahmutov/npm-install@v1
