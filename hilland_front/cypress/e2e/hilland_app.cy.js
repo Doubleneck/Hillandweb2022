@@ -9,7 +9,7 @@ const adminUser = () => ({
   password: 'Admin@admin1',
 })
 
-describe('Anturi app', function () {
+describe('Hilland app', function () {
   beforeEach(function () {
     cy.visit('')
   })
@@ -17,6 +17,7 @@ describe('Anturi app', function () {
   it('front page contains staff-login', function () {
     cy.contains('Staff login')
     cy.get('[data-cy="staff-login"]').click()
+    cy.get('[data-cy="login"]').should('exist')
   })
 })
 
@@ -198,6 +199,17 @@ describe('when logged in as ADMIN', function () {
     cy.request('POST', 'http://localhost:3001/api/testing/reset')
     cy.login({ username: adminUser().username, password: adminUser().password })
     cy.postSongrequest({ artist: 'Johnny Cash', song: 'Folsom Prison Blues' })
+    cy.fixture('sample-image.jpg').then((imageContent) => {
+
+      cy.postNews({
+        title: 'Great News',
+        content: 'This is great news',
+        url: 'https://www.google.com',
+        imageFile: imageContent,
+      })
+
+    })
+
 
   })
   it('admin can add songrequest', function () {
@@ -307,6 +319,17 @@ describe('when logged in as ADMIN', function () {
     cy.get('[data-cy="imageFile"]').attachFile('sample-image.jpg')
     cy.get('[data-cy="create-button"]').click()
     cy.contains('Great news')
+  })
+
+  it('admin can delete news', () => {
+    cy.visit('/news')
+    cy.contains('News')
+
+    cy.contains('Great News')
+    cy.get('ul li:last-child [data-cy=delete-button]').click()
+    // cy.get('ul').children().should('have.length', 1)
+    cy.contains('Removed Great News from News').should('exist')
+    cy.get('ul').children().should('have.length', 0)
   })
 
 })

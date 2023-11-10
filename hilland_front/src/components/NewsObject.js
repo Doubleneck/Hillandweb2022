@@ -58,7 +58,7 @@ const NewsObject = ({ newsObject }) => {
           </>
         ) : (
           <div>
-            <Button variant="danger" value={newsObject} onClick={handleDelete}>
+            <Button data-cy="delete-button" variant="danger" value={newsObject} onClick={handleDelete}>
               delete
             </Button>
             <UpdateNewsForm
