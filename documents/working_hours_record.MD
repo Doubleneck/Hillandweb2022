@@ -84,5 +84,6 @@ BREAK IN THIS PROJECT
 |7.11.2023|1| Make periodic check if login token is still valid, if not give notification and logout|
 |7.11.2023|3| Add user creation & listing & deletion functionality e2e, change navbars & login/logout|
 |8.11.2023|8| Add Jest unittest & configure local cypress e2e & make tests for login/logout|
-|8.11.2023|7| Configure e2e Github actions CI and add front lint + test,  make more cypress tests for users|
-|Total Hours|223|
+|9.11.2023|7| Configure e2e Github actions CI and add front lint + test,  make more cypress tests for users|
+|10.11.2023|6| Cypress tests for posting, deletinmg updating news, more cypress tests for users, add try catches to routes|
+|Total Hours|229|
