@@ -6,3 +6,9 @@ Cypress.Commands.add('login', ({ username, password }) => {
     cy.visit('')
   })
 })
+
+Cypress.Commands.add('postSongrequest', ({ artist, song }) => {
+  cy.request('POST', 'http://localhost:3001/api/songrequests', {
+    artist, song
+  })
+})

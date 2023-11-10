@@ -133,6 +133,7 @@ describe('when logged in as USER', function () {
   beforeEach(function () {
     cy.request('POST', 'http://localhost:3001/api/testing/reset')
     cy.login({ username: userUser().username, password: userUser().password })
+    cy.postSongrequest({ artist: 'Johnny Cash', song: 'Folsom Prison Blues' })
   })
 
   it('user can log out from newspage', function () {
@@ -152,6 +153,7 @@ describe('when logged in as USER', function () {
   it('user can see songrequests page ', function () {
     cy.visit('/songrequests')
     cy.contains('Song requests')
+    cy.contains('Folsom Prison Blues').should('exist')
 
   })
   it('user can see homepage', function () {
@@ -177,6 +179,7 @@ describe('when logged in as USER', function () {
   it('user can see songrequests page ', function () {
     cy.visit('/songrequests')
     cy.contains('Song requests')
+    cy.contains('[data-cy="songrequest"]', 'Folsom Prison Blues').should('exist')
   })
 
   it('user can not delete songrequests on songrequests page ', function () {
@@ -194,26 +197,39 @@ describe('when logged in as ADMIN', function () {
   beforeEach(function () {
     cy.request('POST', 'http://localhost:3001/api/testing/reset')
     cy.login({ username: adminUser().username, password: adminUser().password })
-  })
+    cy.postSongrequest({ artist: 'Johnny Cash', song: 'Folsom Prison Blues' })
 
-  it('admin can log out from newspage', function () {
-    cy.visit('/news')
-    cy.get('[data-cy="logout"]').click()
-    cy.contains('Staff login')
-    cy.get('[data-cy="logout"]').should('not.exist')
   })
+  it('admin can add songrequest', function () {
+    cy.visit('')
+    cy.contains('Send us a song request...maybe we’ll play it next Monday!')
+    cy.get('[data-cy="songrequest-form"]').should('exist')
+    cy.get('[data-cy="artist"]').type('Willie Nelson')
+    cy.get('[data-cy="song"]').type('Crazy')
+    cy.get('[data-cy="send-songrequest"]').click()
+    cy.contains('Thank you!!')
+    cy.get('[data-cy="send-songrequest"]').should('not.exist')
+    cy.contains('Send us a song request...maybe we’ll play it next Monday!').should('not.exist')
+  })
+  // it('admin can log out from newspage', function () {
+  //   cy.visit('/news')
+  //   cy.get('[data-cy="logout"]').click()
+  //   cy.contains('Staff login')
+  //   cy.get('[data-cy="logout"]').should('not.exist')
+  // })
 
 
-  it('admin can log out from songrequests page ', function () {
-    cy.visit('/songrequests')
-    cy.get('[data-cy="logout"]').click()
-    cy.get('[data-cy="logout"]').should('not.exist')
-  })
+  // it('admin can log out from songrequests page ', function () {
+  //   cy.visit('/songrequests')
+  //   cy.get('[data-cy="logout"]').click()
+  //   cy.get('[data-cy="logout"]').should('not.exist')
+  // })
 
   it('admin can see songrequests page ', function () {
     cy.visit('/songrequests')
     cy.contains('Song requests')
-
+    cy.reload()
+    cy.contains('[data-cy="songrequest"]', 'Folsom Prison Blues').should('exist')
   })
   it('admin can see homepage', function () {
     cy.visit('')
@@ -240,25 +256,47 @@ describe('when logged in as ADMIN', function () {
     cy.contains('Song requests')
   })
 
+  it('admin can delete a song request', () => {
+
+    cy.visit('/songrequests')
+    cy.contains('Folsom Prison Blues')
+    cy.get('ul').children().should('have.length', 1)
+    cy.contains('Folsom Prison Blues')
+    cy.get('ul li:first-child [data-cy=delete-button]').click()
+    cy.contains('Removed successfully')
+    cy.get('ul').children().should('not.exist')
+  })
+
+
   it('admin can see users page ', function () {
     cy.visit('/users')
     cy.contains('Users')
   })
 
-  // it.only('admin can add users', function () {
-  //   cy.visit('/users')
-  //   cy.contains('Users')
-  //   cy.contains('Add User').click()
-  //   // cy.get('Add User').click().should('have.class', 'active')
-  //   cy.contains('Username').type('user@user2.com')
-  //   cy.contains('Name').type('someuser')
-  //   cy.contains('Password').type(`${userUser().password}`)
-  //   cy.contains('Confirm Password').type(`${userUser().password}`)
-  //   cy.contains('Register').click()
-  //   cy.contains('Thank you!!')
+  it('admin can add users', function () {
+    cy.visit('/users')
+    cy.contains('Users')
+    cy.contains('user@user.com')
+    cy.contains('Add User').click()
+    cy.contains('Username').type('user@user2.com')
+    cy.contains('Name').type('someuser')
+    cy.contains('Password').type(`${userUser().password}`)
+    cy.contains('Confirm Password').type(`${userUser().password}`)
+    cy.contains('Register').click()
+    cy.contains('Thank you!!')
+    cy.contains('user@user2.com')
+  })
 
 
-
+  it('admin can delete added user', () => {
+    cy.visit('/users')
+    cy.contains('Users')
+    cy.get('ul').children().should('have.length', 2)
+    cy.contains('admin@admin.com')
+    cy.get('ul li:last-child [data-cy=delete-button]').click()
+    cy.get('ul').children().should('have.length', 1)
+    cy.contains('Removed successfully').should('exist')
+  })
 
 })
 

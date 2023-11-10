@@ -7,24 +7,29 @@ const path = require('path')
 const fs = require('fs')
 const imagePath = path.resolve(__dirname, '../assets/test_image.jpeg')
 const mockImageData = fs.readFileSync(imagePath)
-const newsObject = {
+const initialNews = [{
   title: 'Test News',
   content: 'This is a test news article.',
   url: 'https://example.com',
   date: '2023-11-03',
   imageFile: mockImageData, 
-}
+}]
 
 
-const initialSongRequest = [
+const initialSongRequests = [
   {
-    song: 'Test song #1',
-    artist: 'Test artist #1',
+    song: 'Crazy',
+    artist: 'Willie Nelson',
     date: new Date(),
   },
   {
-    song: 'Test song #2',
-    artist: 'Test artist #2',
+    song: 'Crazy',
+    artist: 'Patsy Cline',
+    date: new Date(),
+  },
+  {
+    song: 'Weary blues from waiting',
+    artist: 'Hank Williams',
     date: new Date(),
   },
 ]
@@ -83,7 +88,7 @@ const adminUser = () => ({
 })
 
 module.exports = {
-  initialSongRequest,
+  initialSongRequests,
   nonExistingId,
   newsInDb,
   usersInDb,
@@ -91,6 +96,6 @@ module.exports = {
   userUser,
   adminUser,
   newUser,
-  newsObject,
+  initialNews,
   newSong
 }

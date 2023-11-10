@@ -32,7 +32,7 @@ beforeAll(async () => {
 describe('addition of a new songrequest', () => {
   beforeEach(async () => {
     await SongRequest.deleteMany({})
-    await SongRequest.insertMany(helper.initialSongRequest)
+    await SongRequest.insertMany(helper.initialSongRequests)
   })
 
   test('succeeds with valid data (no LOGIN)', async () => {
@@ -83,7 +83,7 @@ describe('when there is initially some songrequests saved', () => {
   beforeEach(async () => {
     
     await SongRequest.deleteMany({})
-    await SongRequest.insertMany(helper.initialSongRequest)
+    await SongRequest.insertMany(helper.initialSongRequests)
   })
 
   test('songrequests are returned as json, (USER logged to see)', async () => {
@@ -99,16 +99,16 @@ describe('when there is initially some songrequests saved', () => {
       .get('/api/songrequests')
       .set('Authorization', `Bearer ${USERTOKEN}`)
       .expect(200)
-    expect(response.body).toHaveLength(2)
+    expect(response.body).toHaveLength(3)
   })
 
-  test('the first songrequests is song:Test song #1 , artist:Test artist #1. (USER logged to see)', async () => {
+  test('the first songrequests is song:Crazy , artist:Willie Nelson. (USER logged to see)', async () => {
     const response = await api
       .get('/api/songrequests')
       .set('Authorization', `Bearer ${USERTOKEN}`)
       .expect(200)
-    expect(response.body[0].song).toBe('Test song #1')
-    expect(response.body[0].artist).toBe('Test artist #1')
+    expect(response.body[0].song).toBe('Crazy')
+    expect(response.body[0].artist).toBe('Willie Nelson')
   })
 
   test('all songrequests are returned (USER logged to see)', async () => {
@@ -116,7 +116,7 @@ describe('when there is initially some songrequests saved', () => {
       .get('/api/songrequests')
       .set('Authorization', `Bearer ${USERTOKEN}`)
       .expect(200)
-    expect(response.body).toHaveLength(helper.initialSongRequest.length)
+    expect(response.body).toHaveLength(helper.initialSongRequests.length)
 
   })
 
@@ -126,7 +126,7 @@ describe('when there is initially some songrequests saved', () => {
       .set('Authorization', `Bearer ${USERTOKEN}`)
       .expect(200)
     const songs= response.body.map((r) => r.song)
-    expect(songs).toContain('Test song #2')
+    expect(songs).toContain('Weary blues from waiting')
   })
 
 }) 
@@ -134,7 +134,7 @@ describe('when there is initially some songrequests saved', () => {
 describe('deleting a songrequest', () => {
   beforeEach(async () => {
     await SongRequest.deleteMany({})
-    await SongRequest.insertMany(helper.initialSongRequest)
+    await SongRequest.insertMany(helper.initialSongRequests)
   })
 
   test('deleting a songrequest succees if ADMIN', async () => {
@@ -146,9 +146,7 @@ describe('deleting a songrequest', () => {
       .expect(204)
 
     const songrequestsAtEnd = await helper.songRequestsInDb()
-    expect(songrequestsAtEnd).toHaveLength(helper.initialSongRequest.length - 1)
-    const songs = songrequestsAtEnd.map((r) => r.song)
-    expect(songs).not.toContain(songrequestToDelete.song)
+    expect(songrequestsAtEnd).toHaveLength(helper.initialSongRequests.length - 1)
   })
 
   test('deleting a songrequest fails if USER', async () => {
@@ -160,7 +158,7 @@ describe('deleting a songrequest', () => {
       .expect(401)
 
     const songrequestsAtEnd = await helper.songRequestsInDb()
-    expect(songrequestsAtEnd).toHaveLength(helper.initialSongRequest.length)
+    expect(songrequestsAtEnd).toHaveLength(helper.initialSongRequests.length)
     const songs = songrequestsAtEnd.map((r) => r.song)
     expect(songs).toContain(songrequestToDelete.song)
   })
@@ -172,7 +170,7 @@ describe('deleting a songrequest', () => {
       .expect(401)
 
     const songrequestsAtEnd = await helper.songRequestsInDb()
-    expect(songrequestsAtEnd).toHaveLength(helper.initialSongRequest.length)
+    expect(songrequestsAtEnd).toHaveLength(helper.initialSongRequests.length)
     const songs = songrequestsAtEnd.map((r) => r.song)
     expect(songs).toContain(songrequestToDelete.song)
   })

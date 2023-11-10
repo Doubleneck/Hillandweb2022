@@ -10,7 +10,6 @@ import Button from 'react-bootstrap/Button'
 function Songrequests() {
   const dispatch = useDispatch()
   const user = useSelector((state) => state.loginForm.user)
-  const [songrequests, setSongrequests] = useState([])
   const [sortType, setSortType] = useState('dateNewerFirst') // Default sorting by date (newer first)
   const [sortedSongrequests, setSortedSongrequests] = useState([])
 
@@ -21,10 +20,9 @@ function Songrequests() {
 
   useEffect(() => {
     songrequestService.getAll().then((sr) => {
-      setSongrequests(sr)
-      sortSongrequests(songrequests, sortType)
+      sortSongrequests(sr, sortType)
     })
-  }, [sortType, songrequests])
+  }, [sortType])
 
   const sortSongrequests = (requests, type) => {
     let sorted = [...requests]
@@ -43,7 +41,7 @@ function Songrequests() {
       .remove(id)
       .then(() => {
         // Filter out the deleted song request and update the state
-        setSongrequests((prevSongrequests) =>
+        setSortedSongrequests((prevSongrequests) =>
           prevSongrequests.filter((songrequest) => songrequest.id !== id)
         )
         dispatch(
@@ -93,13 +91,13 @@ function Songrequests() {
       <br />
       <ul>
         {sortedSongrequests.map((songrequest) => (
-          <li key={songrequest.id}>
+          <li data-cy="songrequest" key={songrequest.id}>
             <p>
               <strong>{songrequest.song}</strong> requested{' '}
               {formatDate(songrequest.date)} (song from artist:{' '}
               {songrequest.artist})
               {user.role === 'admin' && (
-                <Button data-cy="delete-songrequest-button" variant="danger" type="submit" className="my-2" onClick={() => handleDelete(songrequest.id)}>
+                <Button data-cy="delete-button" variant="danger" type="submit" className="my-2" onClick={() => handleDelete(songrequest.id)}>
                Delete
                 </Button>
               )}

@@ -18,7 +18,7 @@ function Users() {
     userService.getAll().then((usr) => {
       setUsers(usr)
     })
-  }, [newUser,users])
+  }, [newUser])
 
   const handleDelete = (id) => {
 
@@ -66,7 +66,7 @@ function Users() {
             <p>
               <strong>{u.username}</strong> requested{' '}
               {user.role === 'admin' && (
-                <Button variant="danger" onClick={() => handleDelete(u.id)}>
+                <Button data-cy="delete-button" variant="danger" onClick={() => handleDelete(u.id)}>
                 Delete
                 </Button>
 

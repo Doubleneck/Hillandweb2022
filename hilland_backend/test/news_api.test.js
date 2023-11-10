@@ -3,7 +3,7 @@ const helper = require('./test_helper')
 const app = require('../app')
 const api = supertest(app)
 const News = require('../models/news')
-const newsObject = helper.newsObject
+const newsObject = helper.initialNews[0]
 async function postInitialNews(app, ADMINTOKEN, newsObject) {
   return await supertest(app)
     .post('/api/news')
@@ -110,7 +110,6 @@ describe('addition of a new news', () => {
 
   test('succees with proper data if ADMIN', async () => {
     const newsAtStart = await helper.newsInDb()
-    const newsObject = await helper.newsObject
     const response = await api
       .post('/api/news')
       .set('Authorization', `Bearer ${ADMINTOKEN}`)
@@ -129,7 +128,7 @@ describe('addition of a new news', () => {
 
   test('fails with valid data if USER', async () => {
     const newsAtStart = await helper.newsInDb()
-    const newsObject = helper.newsObject
+    const newsObject = helper.initialNews[0]
     const response = await api
       .post('/api/news')
       .set('Authorization', `Bearer ${USERTOKEN}`)
@@ -147,7 +146,7 @@ describe('addition of a new news', () => {
 
   test('fails with status code 400 if not content if ADMIN', async () => {
     const newsAtStart = await helper.newsInDb()
-    const newsObject = helper.newsObject
+    const newsObject = helper.initialNews[0]
     const response = await api
       .post('/api/news')
       .set('Authorization', `Bearer ${ADMINTOKEN}`)
@@ -164,7 +163,6 @@ describe('addition of a new news', () => {
 
   test('fails with status code 400 if not title if ADMIN', async () => {
     const newsAtStart = await helper.newsInDb()
-    const newsObject = helper.newsObject
     const response = await api
       .post('/api/news')
       .set('Authorization', `Bearer ${ADMINTOKEN}`)
@@ -181,8 +179,6 @@ describe('addition of a new news', () => {
 
   test('fails with status code 400 if image is missing if ADMIN', async () => {
     const newsAtStart = await helper.newsInDb()
-    const newsObject = helper.newsObject
-  
     const response = await api
       .post('/api/news')
       .set('Authorization', `Bearer ${ADMINTOKEN}`)
@@ -192,15 +188,9 @@ describe('addition of a new news', () => {
       .field('date', newsObject.date)
   
     expect(response.status).toBe(400)
-  
     const newsAtEnd = await helper.newsInDb()
     expect(newsAtEnd).toHaveLength(newsAtStart.length)
   })
-  
-  
-  
-  
-  
 })
 
 describe('deleting and updating of a news', () => {
