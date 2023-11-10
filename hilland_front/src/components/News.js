@@ -1,11 +1,12 @@
 import React from 'react'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { setNews } from '../reducers/newsReducer'
 import newsService from '../services/news'
 import NewsForm from './NewsForm'
 import NewsObject from './NewsObject'
 import Notification from './Notification'
-import { setNews } from '../reducers/newsReducer'
+
 
 const News =  () => {
   const news= useSelector((state) => state.news)

@@ -1,10 +1,9 @@
 import React from 'react'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { setNotification } from '../reducers/notificationReducer'
 import { useDispatch } from 'react-redux'
 import { setUser } from '../reducers/loginFormReducer'
-import { useNavigate } from 'react-router-dom'
-import Notification from './Notification'
 import newsService from '../services/news'
 import userService from '../services/users'
 import songrequestService from '../services/songrequests'
@@ -13,6 +12,7 @@ import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
 import Form from 'react-bootstrap/Form'
 import Col from 'react-bootstrap/Col'
+import Notification from './Notification'
 
 const LoginForm = () => {
   const [username, setUsername] = useState('')

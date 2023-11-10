@@ -3,10 +3,11 @@ import React from 'react'
 import { setNotification } from '../reducers/notificationReducer'
 import { removeNewsobject } from '../reducers/newsReducer'
 import { useDispatch, useSelector } from 'react-redux'
+import newsService from '../services/news'
+import UpdateNewsForm from './UpdateNewsForm'
 import '../App.css'
 import PropTypes from 'prop-types'
-import UpdateNewsForm from '../components/UpdateNewsForm'
-import newsService from '../services/news'
+
 import Button from 'react-bootstrap/esm/Button'
 
 const NewsObject = ({ newsObject }) => {
