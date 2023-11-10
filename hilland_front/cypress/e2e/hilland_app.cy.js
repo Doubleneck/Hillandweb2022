@@ -120,6 +120,7 @@ describe('when not logged in', function () {
     cy.get('[data-cy="send-songrequest"]').should('not.exist')
     cy.contains('Send us a song request...maybe we’ll play it next Monday!').should('not.exist')
   })
+
   it('non logged user songrequest send fails on homepage if song missing', function () {
     cy.visit('')
     cy.contains('Send us a song request...maybe we’ll play it next Monday!')
@@ -200,17 +201,13 @@ describe('when logged in as ADMIN', function () {
     cy.login({ username: adminUser().username, password: adminUser().password })
     cy.postSongrequest({ artist: 'Johnny Cash', song: 'Folsom Prison Blues' })
     cy.fixture('sample-image.jpg').then((imageContent) => {
-
       cy.postNews({
         title: 'Great News',
         content: 'This is great news',
         url: 'https://www.google.com',
         imageFile: imageContent,
       })
-
     })
-
-
   })
   it('admin can add songrequest', function () {
     cy.visit('')
@@ -321,15 +318,63 @@ describe('when logged in as ADMIN', function () {
     cy.contains('Great news')
   })
 
+  it('admin add news failing if title missing', function () {
+    cy.visit('/news')
+    cy.contains('News')
+    cy.contains('Add News').click()
+    cy.get('[data-cy="content"]').type('This is great news')
+    cy.get('[data-cy="url"]').type('https://www.google.com')
+    cy.get('[data-cy="imageFile"]').attachFile('sample-image.jpg')
+    cy.get('[data-cy="create-button"]').click()
+    cy.contains('content or title missing')
+    cy.contains('Great news').should('not.exist')
+  })
+
+  it('admin add news failing if content missing', function () {
+    cy.visit('/news')
+    cy.contains('News')
+    cy.contains('Add News').click()
+    cy.get('[data-cy="title"]').type('No content here')
+    cy.get('[data-cy="url"]').type('https://www.google.com')
+    cy.get('[data-cy="imageFile"]').attachFile('sample-image.jpg')
+    cy.get('[data-cy="create-button"]').click()
+    cy.contains('content or title missing')
+    cy.contains('No content here').should('not.exist')
+  })
+
+  it('admin add news failing if image missing', function () {
+    cy.visit('/news')
+    cy.contains('News')
+    cy.contains('Add News').click()
+    cy.get('[data-cy="title"]').type('No image in this news')
+    cy.get('[data-cy="content"]').type('This is great news without image')
+    cy.get('[data-cy="url"]').type('https://www.google.com')
+    cy.get('[data-cy="create-button"]').click()
+    cy.contains('image missing')
+    cy.contains('No image in this news').should('not.exist')
+  })
+
+
+
   it('admin can delete news', () => {
     cy.visit('/news')
     cy.contains('News')
-
     cy.contains('Great News')
     cy.get('ul li:last-child [data-cy=delete-button]').click()
-    // cy.get('ul').children().should('have.length', 1)
     cy.contains('Removed Great News from News').should('exist')
     cy.get('ul').children().should('have.length', 0)
+  })
+
+  it('admin can update news', () => {
+    cy.visit('/news')
+    cy.contains('News')
+    cy.contains('Great News')
+    cy.contains('Update News').click()
+    cy.get('[data-cy="title"]').type(' again')
+    cy.get('[data-cy="content"]').type(' again')
+    cy.get('[data-cy="update-button"]').click()
+    cy.contains('Updated Great News again')
+    cy.contains('Great News again').should('exist')
   })
 
 })

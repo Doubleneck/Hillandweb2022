@@ -74,6 +74,7 @@ const UpdateNewsForm = ({ newsObjectToBeUpdated }) => {
               <div className='form-group'>
                 <label>Title:</label>
                 <input
+                  data-cy='title'
                   className='form-control'
                   value={newTitle}
                   onChange={handleTitleChange}
@@ -82,6 +83,7 @@ const UpdateNewsForm = ({ newsObjectToBeUpdated }) => {
               <div className='form-group'>
                 <label>Content:</label>
                 <input
+                  data-cy='content'
                   className='form-control'
                   value={newContent}
                   onChange={handleContentChange}
@@ -90,12 +92,14 @@ const UpdateNewsForm = ({ newsObjectToBeUpdated }) => {
               <div className='form-group'>
                 <label>URL:</label>
                 <input
+                  data-cy='url'
                   className='form-control'
                   value={newURL}
                   onChange={handleURLChange}
                 />
               </div>
               <Button
+                data-cy='update-button'
                 variant='success'
                 type='submit'
                 className='my-2'
