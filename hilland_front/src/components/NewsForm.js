@@ -87,6 +87,7 @@ const NewsForm = () => {
               <div className="form-group">
                 <label>Title:</label>
                 <input
+                  data-cy="title"
                   className="form-control"
                   value={newTitle}
                   onChange={handleTitleChange}
@@ -95,6 +96,7 @@ const NewsForm = () => {
               <div className="form-group">
                 <label>Content:</label>
                 <textarea
+                  data-cy="content"
                   className="form-control"
                   rows="2"
                   value={newContent}
@@ -104,6 +106,7 @@ const NewsForm = () => {
               <div className="form-group">
                 <label>URL:</label>
                 <input
+                  data-cy="url"
                   className="form-control"
                   value={newURL}
                   onChange={handleURLChange}
@@ -112,13 +115,14 @@ const NewsForm = () => {
               <div className="form-group">
                 <label>File:</label>
                 <input
+                  data-cy="imageFile"
                   className="form-control"
                   type="file"
                   accept="image/*"
                   onChange={handlePhotoSelect}
                 />
               </div>
-              <Button variant="success" type="submit" className="my-2">
+              <Button data-cy="create-button"   variant="success" type="submit" className="my-2">
                 Create News
               </Button>
               <Button variant="primary" onClick={toggleFormVisibility}>

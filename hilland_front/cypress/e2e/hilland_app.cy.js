@@ -211,19 +211,18 @@ describe('when logged in as ADMIN', function () {
     cy.get('[data-cy="send-songrequest"]').should('not.exist')
     cy.contains('Send us a song request...maybe we’ll play it next Monday!').should('not.exist')
   })
-  // it('admin can log out from newspage', function () {
-  //   cy.visit('/news')
-  //   cy.get('[data-cy="logout"]').click()
-  //   cy.contains('Staff login')
-  //   cy.get('[data-cy="logout"]').should('not.exist')
-  // })
+  it('admin can log out from newspage', function () {
+    cy.visit('/news')
+    cy.get('[data-cy="logout"]').click()
+    cy.contains('Staff login')
+    cy.get('[data-cy="logout"]').should('not.exist')
+  })
 
-
-  // it('admin can log out from songrequests page ', function () {
-  //   cy.visit('/songrequests')
-  //   cy.get('[data-cy="logout"]').click()
-  //   cy.get('[data-cy="logout"]').should('not.exist')
-  // })
+  it('admin can log out from songrequests page ', function () {
+    cy.visit('/songrequests')
+    cy.get('[data-cy="logout"]').click()
+    cy.get('[data-cy="logout"]').should('not.exist')
+  })
 
   it('admin can see songrequests page ', function () {
     cy.visit('/songrequests')
@@ -288,7 +287,7 @@ describe('when logged in as ADMIN', function () {
   })
 
 
-  it('admin can delete added user', () => {
+  it('admin can delete user', () => {
     cy.visit('/users')
     cy.contains('Users')
     cy.get('ul').children().should('have.length', 2)
@@ -296,6 +295,18 @@ describe('when logged in as ADMIN', function () {
     cy.get('ul li:last-child [data-cy=delete-button]').click()
     cy.get('ul').children().should('have.length', 1)
     cy.contains('Removed successfully').should('exist')
+  })
+
+  it('admin can add news', function () {
+    cy.visit('/news')
+    cy.contains('News')
+    cy.contains('Add News').click()
+    cy.get('[data-cy="title"]').type('Great news')
+    cy.get('[data-cy="content"]').type('This is great news')
+    cy.get('[data-cy="url"]').type('https://www.google.com')
+    cy.get('[data-cy="imageFile"]').attachFile('sample-image.jpg')
+    cy.get('[data-cy="create-button"]').click()
+    cy.contains('Great news')
   })
 
 })
