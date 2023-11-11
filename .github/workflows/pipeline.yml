@@ -57,6 +57,6 @@ jobs:
         run: flyctl deploy --remote-only --config ./fly.toml
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+          
         
           
