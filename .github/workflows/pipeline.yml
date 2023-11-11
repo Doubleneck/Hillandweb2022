@@ -3,7 +3,7 @@ name: Deployment pipeline
 on:
   push:
     branches:
-      - master
+      - main
 
 env:
   NODE_ENV: production
@@ -38,11 +38,12 @@ jobs:
             uses: bahmutov/npm-install@v1
             with:
               working-directory: ./hilland_backend
+              
 
           - name: build client and start server
             working-directory: ./hilland_backend
             run: |
-              npm run start:full:test &
+              npm run build:ui 
    
     
   deploy:    
@@ -51,8 +52,13 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'push' && !contains(toJson(github.event.commits.*.message), '#skip')}}
     steps:
-      - uses: actions/checkout@v3
-      - uses: superfly/flyctl-actions/setup-flyctl@master
-      - run: flyctl deploy --remote-only
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: deploy to fly
+        uses: superfly/flyctl-actions/setup-flyctl@master
+      - name: Flyctl deploy
+        working-directory: ./hilland_backend
+        run: flyctl deploy --remote-only --config ./fly.toml
+         
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
