@@ -15,7 +15,8 @@
     "web-vitals": "^2.1.4",
     "webpack": "^5.89.0",
     "webpack-cli": "^5.1.4",
-    "react-scripts": "5.0.1"
+    "react-scripts": "5.0.1",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
   },
   "scripts": {
     "//start": "Start and open frontend server. Restart on file change",
@@ -53,7 +54,6 @@
   },
   "devDependencies": {
     "@babel/core": "^7.23.3",
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@babel/preset-env": "^7.23.2",
     "@babel/preset-react": "^7.23.3",
     "@testing-library/jest-dom": "^6.1.4",
