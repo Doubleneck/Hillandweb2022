@@ -70,7 +70,7 @@
 BREAK IN THIS PROJECT
 |24.10.2023|4| Fix broken code after break, update deps, clean code, fix Song request form|
 |25.10.2023|2| Maintain code, upgrade LoginForm and Home & News components|
-|26.10.2023|4| Fix S3 delete functionality to use correct rest requests post -> delete, add SongRequest rendering component|
+|26.10.2023|4| Fix S3 delete functionality to use correct rest requests: delete instead of post, add SongRequest rendering component|
 |27.10.2023|6| migrate AWS-SDK v2=>v3 + fix S3 issues, routes and functionality e2e for songrequests + backend tests|
 |29.10.2023|4| add mongo to docker-compose for dev|
 |30.10.2023|2| upgrade tests, fix docker-compose-mongo|
@@ -80,10 +80,10 @@ BREAK IN THIS PROJECT
 |3.11.2023|4| configure docker-compose localstack to mock s3 in dev setup|
 |5.11.2023|6| configure docker-compose localstack to mock s3 in test setup, refactor news tests|
 |6.11.2023|3| configure Github Actions with localstack mock s3 in test setup|
-|7.11.2023|1| Update newsform and updatenewsform components to change invisible after submit|
+|7.11.2023|1| Upgrade newsForm and updateNewsform components to change invisible after submit|
 |7.11.2023|1| Make periodic check if login token is still valid, if not give notification and logout|
 |7.11.2023|3| Add user creation & listing & deletion functionality e2e, change navbars & login/logout|
 |8.11.2023|8| Add Jest unittest & configure local cypress e2e & make tests for login/logout|
-|9.11.2023|7| Configure e2e Github actions CI and add front lint + test,  make more cypress tests for users|
-|10.11.2023|6| Cypress tests for posting, deletinmg updating news, more cypress tests for users, add try catches to routes|
+|9.11.2023|7| Configure e2e Github actions CI and add front lint + test, make more cypress tests for users|
+|10.11.2023|6| Cypress tests for posting, deleting and updating news, more cypress tests for users, add try catches to routes|
 |Total Hours|229|

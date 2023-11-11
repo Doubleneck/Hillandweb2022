@@ -12,7 +12,6 @@ const loginRouter = require('./controllers/login')
 const middleware = require('./utils/middleware')
 const logger = require('./utils/logger')
 const mongoose = require('mongoose')
-
 logger.info('connecting to', config.MONGODB_URI)
 mongoose.set('strictQuery', false)
 mongoose

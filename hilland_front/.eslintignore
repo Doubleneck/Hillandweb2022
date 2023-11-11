@@ -7,3 +7,4 @@ hilland_app.cy.js
 fileTransformer.js
 cypress/
 __mocks__/
+webpack.config.js
