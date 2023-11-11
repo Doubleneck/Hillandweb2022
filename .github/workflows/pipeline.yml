@@ -61,7 +61,6 @@ jobs:
           MONGODB_URI: ${{ secrets.MONGODB_URI }}  
       - name: deploy to fly
         uses: superfly/flyctl-actions/setup-flyctl@master
-
       - name: Flyctl deploy
         working-directory: ./hilland_backend
         run: flyctl deploy --remote-only --config ./fly.toml
