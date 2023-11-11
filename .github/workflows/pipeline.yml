@@ -1,10 +1,8 @@
 name: Deployment pipeline
-
 on:
   push:
     branches:
       - main
-
 env:
   NODE_ENV: production
   AWS_REGION: ${{ secrets.AWS_REGION }}  
@@ -28,17 +26,14 @@ jobs:
     steps:
           - name: Checkout code
             uses: actions/checkout@v3
-            
           - name: install frontend npm dependencies with caching
             uses: bahmutov/npm-install@v1
             with:
               working-directory: ./hilland_front
-
           - name: install backend npm dependencies with caching
             uses: bahmutov/npm-install@v1
             with:
               working-directory: ./hilland_backend
-  
           - name: build client and copy it server
             working-directory: ./hilland_backend
             run: |
