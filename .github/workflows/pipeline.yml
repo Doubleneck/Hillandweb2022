@@ -1,0 +1,58 @@
+name: Deployment pipeline
+
+on:
+  push:
+    branches:
+      - master
+
+env:
+  NODE_ENV: production
+  AWS_REGION: ${{ secrets.AWS_REGION }}  
+  AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}  
+  SECRET: ${{ secrets.SECRET }}  
+  MONGODB_URI: ${{ secrets.MONGODB_URI }}  
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}  
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }} 
+jobs:
+  hilland_pipeline:
+
+    runs-on: ubuntu-latest
+    defaults:
+      run: 
+        working-directory: hilland_backend
+    strategy:
+    
+      matrix:
+        node-version: [18.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+    steps:
+          - name: Checkout code
+            uses: actions/checkout@v3
+            
+          - name: install frontend npm dependencies with caching
+            uses: bahmutov/npm-install@v1
+            with:
+              working-directory: ./hilland_front
+
+          - name: install backend npm dependencies with caching
+            uses: bahmutov/npm-install@v1
+            with:
+              working-directory: ./hilland_backend
+
+          - name: build client and start server
+            working-directory: ./hilland_backend
+            run: |
+              npm run start:full:test &
+   
+    
+  deploy:    
+    needs: [hilland_pipeline]
+    name: Deploy
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'push' && !contains(toJson(github.event.commits.*.message), '#skip')}}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - run: flyctl deploy --remote-only
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
