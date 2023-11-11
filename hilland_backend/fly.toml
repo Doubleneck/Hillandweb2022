@@ -20,12 +20,12 @@ kill_timeout = "5s"
   min_machines_running = 0
   processes = ["app"]
 
-#[deploy]
-#  release_command = "cd hilland_front && npm run build"
+[deploy]
+  #release_command = "cd hilland_backend && npm run build:ui"
 
-#[processes]
-#  app = "node app.js"
+[processes]
+  app = "npm start"
 
-#[build]
-#  [build.args]
-#    NODE_VERSION = "19.1.0"
+[build]
+  [build.args]
+    NODE_VERSION = "19.1.0"
