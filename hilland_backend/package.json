@@ -16,8 +16,7 @@
     "deploy:full": "npm run build:ui && npm run deploy",
     "logs:prod": "fly logs",
     "start:test": "NODE_ENV=test node index.js",
-    "start:full:test": "npm run build:ui && npm run start:test",
-    "build": "webpack --mode production"
+    "start:full:test": "npm run build:ui && npm run start:test"
   },
   "author": "",
   "license": "ISC",

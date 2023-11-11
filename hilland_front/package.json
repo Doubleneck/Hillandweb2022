@@ -29,7 +29,7 @@
     "cypress:open": "cypress open",
     "//test:e2e": "Run all end to end tests in terminal \n    REMEMBER TO:\n    Start backend server in test environment and start frontend server",
     "test:e2e": "cypress run",
-    "build": "webpack --mode production"
+    "build": "react-scripts build"
   },
   "proxy": "http://localhost:3001",
   "eslintConfig": {
