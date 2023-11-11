@@ -55,6 +55,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+      - name: Print MONGODB_URI
+        run: echo "MONGODB_URI:$MONGODB_URI"
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}  
       - name: deploy to fly
         uses: superfly/flyctl-actions/setup-flyctl@master
 
