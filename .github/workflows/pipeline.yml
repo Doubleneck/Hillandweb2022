@@ -44,7 +44,8 @@ jobs:
             working-directory: ./hilland_backend
             run: |
               npm run build:ui 
-   
+            env:   
+              MONGODB_URI: ${{ secrets.MONGODB_URI }}  
     
   deploy:    
     needs: [hilland_pipeline]
