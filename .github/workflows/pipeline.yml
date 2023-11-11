@@ -54,11 +54,7 @@ jobs:
     if: ${{ github.event_name == 'push' && !contains(toJson(github.event.commits.*.message), '#skip')}}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
-      - name: Print MONGODB_URI
-        run: echo "MONGODB_URI:$MONGODB_URI"
-        env:
-          MONGODB_URI: ${{ secrets.MONGODB_URI }}  
+        uses: actions/checkout@v3 
       - name: deploy to fly
         uses: superfly/flyctl-actions/setup-flyctl@master
       - name: Flyctl deploy
