@@ -38,11 +38,12 @@ jobs:
             uses: bahmutov/npm-install@v1
             with:
               working-directory: ./hilland_backend
+              
 
           - name: build client and start server
             working-directory: ./hilland_backend
             run: |
-              npm run start:full:test &
+              npm run build:ui 
    
     
   deploy:    
