@@ -2,7 +2,11 @@ name: hilland_backend CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: 
+    - main
+  pull_request: 
+    branches: [main] 
+    types: [opened, synchronize]   
 env:
   NODE_ENV: test
   TEST_MONGODB_URI: mongodb://localhost:27017/testing
