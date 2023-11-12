@@ -55,6 +55,7 @@ jobs:
           # Add deployment commands here
           else
             echo "Build folder not found. Skipping deployment."
+            exit 1  # Terminate the script with a non-zero exit code
           fi  
       - name: deploy to fly
         uses: superfly/flyctl-actions/setup-flyctl@master  
