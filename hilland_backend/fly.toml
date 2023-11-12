@@ -12,7 +12,11 @@ kill_timeout = "5s"
 [env]
   PORT = "3001"
   MONGODB_URI = "{{ MONGODB_URI }}"
-  SECRET = "{{ MONGODB_URI }}"
+  SECRET = "{{ SECRET }}"
+  AWS_SECRET_ACCESS_KEY = "{{ AWS_SECRET_ACCESS_KEY }}"
+  AWS_ACCESS_KEY_ID = "{{ AWS_ACCESS_KEY_ID }}"
+  AWS_REGION  = "{{ AWS_REGION }}"
+  AWS_S3_BUCKET = "{{ AWS_S3_BUCKET }}"
 
 [http_service]
   internal_port = 3001 # ensure that this is same as PORT
