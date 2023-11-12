@@ -22,7 +22,6 @@ kill_timeout = "5s"
 
 [deploy]
   
-
 [processes]
   app = "npm start"
 
