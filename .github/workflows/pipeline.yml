@@ -24,6 +24,13 @@ jobs:
     steps:
           - name: Checkout code
             uses: actions/checkout@v3
+          - name: Print commit SHAs
+            run: |
+              echo "Commit before push: ${{ github.event.before }}"
+              echo "Latest commit in push: ${{ github.sha }}"
+        
+              echo "Changed files:"
+              git diff --name-only "${{ github.event.before }}" "${{ github.sha }}"  
    #       - name: install frontend npm dependencies with caching
    #         uses: bahmutov/npm-install@v1
    #         with:
