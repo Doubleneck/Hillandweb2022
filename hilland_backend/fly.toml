@@ -10,7 +10,7 @@ kill_timeout = "5s"
 
 [env]
   PORT = "3001"
- 
+  MONGODB_URI = "{{ MONGODB_URI }}"
 
 [http_service]
   internal_port = 3001 # ensure that this is same as PORT
