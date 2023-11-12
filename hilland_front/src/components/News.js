@@ -30,7 +30,8 @@ const News =  () => {
 
   return (
 
-    <div>
+    <div className="mx-auto ">
+
       {user === '' ? (
         <>
         </>
@@ -43,12 +44,14 @@ const News =  () => {
         </div>
       )}
       <p></p>
-      <h1 className="text-center" >News:</h1>
+      <h1 className="mx-auto text-center" >News:</h1>
       <p></p>
-      <div className="mx-auto">
-        <ul className="gallerynogrid mx-auto">
+      <div className="mx-auto text-center ">
+
+        <ul className="gallery ">
           {news.map((newsObject) => (
-            <li key={newsObject.id} className="mx-auto">
+            <li key={newsObject.id} >
+
               <NewsObject newsObject={newsObject} />
             </li>
 
@@ -56,6 +59,7 @@ const News =  () => {
 
         </ul>
       </div>
+
     </div>
   )
 }
