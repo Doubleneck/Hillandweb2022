@@ -1,4 +1,4 @@
 **/node_modules
 .env
-build
+hilland_front/build
 mongo_data/
