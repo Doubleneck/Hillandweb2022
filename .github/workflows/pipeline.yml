@@ -10,15 +10,14 @@ env:
   SECRET: ${{ secrets.SECRET }}  
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}  
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }} 
+  
 jobs:
   hilland_pipeline:
-
     runs-on: ubuntu-latest
     defaults:
       run: 
         working-directory: hilland_backend
     strategy:
-    
       matrix:
         node-version: [18.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
@@ -56,6 +55,4 @@ jobs:
         run: flyctl deploy --remote-only --config ./fly.toml
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-          
-        
           
