@@ -14,9 +14,9 @@ env:
 jobs:
   hilland_pipeline:
     runs-on: ubuntu-latest
-    defaults:
-      run: 
-        working-directory: hilland_backend
+    #defaults:
+      #run: 
+        #working-directory: hilland_backend
     strategy:
       matrix:
         node-version: [18.x]
@@ -49,11 +49,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3 
       - name: deploy to fly
-        uses: superfly/flyctl-actions/setup-flyctl@master
-      - name: build client and copy it server
-        working-directory: ./hilland_backend
-        run: |
-          npm run build:ui   
+        uses: superfly/flyctl-actions/setup-flyctl@master  
       - name: print working directory
         working-directory: ./hilland_backend
         run: pwd && ls -a
