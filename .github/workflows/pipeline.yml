@@ -14,9 +14,9 @@ env:
 jobs:
   hilland_pipeline:
     runs-on: ubuntu-latest
-    #defaults:
-      #run: 
-        #working-directory: hilland_backend
+    defaults:
+      run: 
+        working-directory: hilland_backend
     strategy:
       matrix:
         node-version: [18.x]
@@ -48,6 +48,14 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3 
+      - name: Check for Build Folder
+        run: |
+          if [ -d "build" ]; then
+          echo "Build folder found. Proceeding with deployment."
+          # Add deployment commands here
+          else
+            echo "Build folder not found. Skipping deployment."
+          fi  
       - name: deploy to fly
         uses: superfly/flyctl-actions/setup-flyctl@master  
       - name: print working directory
