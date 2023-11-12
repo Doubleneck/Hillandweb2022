@@ -45,14 +45,15 @@ const News =  () => {
       <p></p>
       <h1 className="text-center" >News:</h1>
       <p></p>
-      <div className="text-center">
+      <div className="mx-auto">
         <ul className="gallerynogrid mx-auto">
           {news.map((newsObject) => (
             <li key={newsObject.id} className="mx-auto">
-
               <NewsObject newsObject={newsObject} />
             </li>
+
           ))}
+
         </ul>
       </div>
     </div>

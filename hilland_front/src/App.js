@@ -82,7 +82,7 @@ const App = () => {
 
   return (
     <Router>
-      <Navbar collapseOnSelect expand="lg" className="justify-content-center color-nav" >
+      <Navbar collapseOnSelect expand="lg" className="mx-auto color-nav" >
         <Navbar.Toggle aria-controls="responsive-navbar-nav" className="mx-auto"> <img style={{ width: 170, height: 85 }} src={myLogo} alt="Hilland logo"/> </Navbar.Toggle>
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="justify-content-center">
@@ -115,11 +115,11 @@ const App = () => {
             <p></p>
           </>
         ) : (
-          <><Notification /></>
+          <div className='d-flex justify-content-between align-items-center'><Notification /></div>
         )}
       </>
       <Routes>
-        <Route path="/news" element={<News/>} />
+        <Route path="/news" element={< News/>} />
         <Route path="/" element={<Home />} />
         <Route path="/videos" element={<Videos  />} />
         <Route path="/truckercaps" element={<TruckerCaps  />} />
