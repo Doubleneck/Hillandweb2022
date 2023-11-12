@@ -40,17 +40,21 @@ const NewsObject = ({ newsObject }) => {
 
   return (
     <div >
-      <ul className='gallery ' >
+      <ul className='mx-auto' >
         <li>
           <h3 className="text-center">{newsObject.title}</h3>
         </li>
         <li>
           {' '}
-          <img  src={newsObject.imageURL} alt='news' className='img-fluid shadow-4'/>{' '}
+          <img  src={newsObject.imageURL} alt='news' className='img-fluid shadow-4' style={{ maxWidth: '100%', height: 'auto' }}/>{' '}
         </li>
-        <li className="text-center">{newsObject.content}</li>
-        <li className="text-center">
-          <a href={'https://' + newsObject.url}>{newsObject.url}</a>
+        <p></p>
+        <li className="mx-auto">{newsObject.content}</li>
+        <p></p>
+        <li className="mx-auto">
+          <Button variant="secondary" href={'https://' + newsObject.url} target="_blank">
+        More info
+          </Button>
           <p></p>
           <p></p>
         </li>
