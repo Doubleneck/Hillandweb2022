@@ -23,26 +23,19 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     steps:
           - name: Checkout code
-            uses: actions/checkout@v3
-          - name: Print commit SHAs
+            uses: actions/checkout@v3 
+          - name: install frontend npm dependencies with caching
+            uses: bahmutov/npm-install@v1
+            with:
+              working-directory: ./hilland_front
+          - name: install backend npm dependencies with caching
+            uses: bahmutov/npm-install@v1
+            with:
+              working-directory: ./hilland_backend
+          - name: build client and copy it server
+            working-directory: ./hilland_backend
             run: |
-              echo "Commit before push: ${{ github.event.before }}"
-              echo "Latest commit in push: ${{ github.sha }}"
-        
-              echo "Changed files:"
-              git diff --name-only "${{ github.event.before }}" "${{ github.sha }}"  
-   #       - name: install frontend npm dependencies with caching
-   #         uses: bahmutov/npm-install@v1
-   #         with:
-   #           working-directory: ./hilland_front
-   #       - name: install backend npm dependencies with caching
-   #         uses: bahmutov/npm-install@v1
-   #         with:
-   #           working-directory: ./hilland_backend
-   #       - name: build client and copy it server
-   #         working-directory: ./hilland_backend
-   #         run: |
-   #           npm run build:ui 
+              npm run build:ui 
               
 
   deploy:    
@@ -56,16 +49,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3 
-        
-      - name: Check for Build Folder
-        run: |
-          if git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -q '^build/'; then
-            echo "Build folder found in changes. Proceeding with deployment."
-            # Add deployment commands here
-          else
-            echo "Build folder not found in changes. Skipping deployment."
-            exit 1  # Terminate the script with a non-zero exit code
-          fi 
       - name: deploy to fly
         uses: superfly/flyctl-actions/setup-flyctl@master  
       - name: print working directory
