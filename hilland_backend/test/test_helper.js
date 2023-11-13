@@ -1,5 +1,6 @@
 const News = require('../models/news')
 const User = require('../models/user')
+const ArchiveItem = require('../models/archiveitem')
 const Songrequests = require('../models/songrequest')
 const bcrypt = require('bcrypt')
 const passwordHash = bcrypt.hash('Someuser@someuser1', 10)
@@ -15,6 +16,12 @@ const initialNews = [{
   imageFile: mockImageData, 
 }]
 
+const initialArchiveItem = [{
+  title: 'Test Archive Item',
+  content: 'This is a test archive content.',
+  year: 2022,
+  imageFile: mockImageData, 
+}]
 
 const initialSongRequests = [
   {
@@ -60,6 +67,10 @@ const usersInDb = async () => {
   return users.map((u) => u.toJSON())
 }
 
+const archivesInDb = async () => {
+  const archives = await ArchiveItem.find({})
+  return archives.map((u) => u.toJSON())
+}
 
 const newSong = () => ({
   song: 'new song',
@@ -93,9 +104,11 @@ module.exports = {
   newsInDb,
   usersInDb,
   songRequestsInDb,
+  archivesInDb,
   userUser,
   adminUser,
   newUser,
   initialNews,
+  initialArchiveItem,
   newSong
 }
