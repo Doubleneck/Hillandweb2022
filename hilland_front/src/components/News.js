@@ -39,7 +39,9 @@ const News =  () => {
         <div>
           <Notification />
           <div className="text-center">
+            {user.role === 'admin' &&
             <NewsForm />
+            }
           </div>
         </div>
       )}
