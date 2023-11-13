@@ -16,6 +16,15 @@ These two tasks will joint to each other, since the everyday users can make song
 - Documentation is in English.
 - Application uses Node.js backend and React+Redux front with Mongo.db cloud database and AWS S3 & Localstack for images.
 
+## CI/CD, testing, linting and Docker dev/test-environment
+- [x] Working CI Github Actions: server with proper tests and linting
+- [x] Working CI Github Actions: client with proper e2e tests and linting 
+- [x] Working CD Github Actions: pipeline releases as soon as new pr is merget to main
+- [x] Docker compose for local dev and testing: Note! Localstack dev is not PRO-version, so images are not saved persistently, they disappear if compose runs down.
+
+## TESTING
+- Jest with Localstack and lint backend
+- Some jest-dom component tests and Cypress e2e with with Localstack and lint client
 
 ## Users
 
@@ -47,8 +56,6 @@ These two tasks will joint to each other, since the everyday users can make song
 
 (optional):
 
-- [ ] user can see a list of Hilland Mondays songs
-- [ ] user can vote favourite Hilland Mondays songs
 - [ ] user can upload song attachements: pdf, link. 
 - [ ] user can download song attachements: pdf, link.
 

@@ -13,14 +13,13 @@ These two tasks will joint to each other, since the everyday users can make song
 My main purpose was to learn to be able to use images in React-Node app, and my solution is to use Amazon AWS S3 for uploading and fetching images and Localstack fortesting/dev.
 
 
-- [link to the demo app](https://hillandweb.fly.dev)
+- [link to the demo app](https://hillandrecords.fly.dev)
 
 Missing parts (to be finished) at the moment:
 - [ ] Missing functional parts of the app at the moment can bee seen in software requirements document 
 - [x] most of backend testing
 - [x] e2e testing (Cypress)
 - [x] e2e CI 
-- [ ] testing documentation
 - [ ] users manual
 
 

@@ -87,4 +87,6 @@ BREAK IN THIS PROJECT
 |9.11.2023|7| Configure e2e Github actions CI and add front lint + test, make more cypress tests for users|
 |10.11.2023|6| Cypress tests for posting, deleting and updating news, more cypress tests for users, add try catches to routes|
 |11.11.2023|12| Add CD pipeline, configure Fly deploy and make preliminary automatic deploy on main push|
-|Total Hours|241|
+|12.11.2023|6| Configure a simple CD and branch protection, upgrade ymls to make Actions work properly, update documentation|
+|12.11.2023|2| Tweak front News rendering|
+|Total Hours|249|
