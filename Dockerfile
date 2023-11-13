@@ -21,8 +21,14 @@ ENV NODE_ENV production
 
 COPY . .
 
-RUN npm install
+RUN cd hilland_front && npm install && cd .. \
+    && cd hilland_backend && npm install && npm run build:ui \
+    && cd .. && mv hilland_backend/* . \
+    && rm -rf hilland_backend && rm -rf hilland_front && npm install
+#RUN mv hilland_backend/* . && rm -rf hilland_backend && npm install 
+
 FROM debian:bullseye
+
 
 LABEL fly_launch_runtime="nodejs"
 
@@ -32,4 +38,7 @@ COPY --from=builder /app /app
 WORKDIR /app
 ENV NODE_ENV production
 ENV PATH /root/.volta/bin:$PATH
+
+CMD ["npm", "start"]  
+
 
