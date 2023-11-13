@@ -48,21 +48,12 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3 
-      - name: Check for Build Folder
-        run: |
-          if [ -d hilland_backend/build ]; then
-            echo "Build folder found in hilland_backend. Proceeding with the build."
-          else
-            echo "Build folder not found in hilland_backend. Skipping the build."
-          exit 1  # Terminate the script with a non-zero exit code
-          fi   
+ 
       - name: deploy to fly
         uses: superfly/flyctl-actions/setup-flyctl@master  
       - name: print working directory
-        working-directory: ./hilland_backend
         run: pwd && ls -a
       - name: Flyctl deploy
-        working-directory: ./hilland_backend
         run: flyctl deploy --remote-only --config ./fly.toml
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
