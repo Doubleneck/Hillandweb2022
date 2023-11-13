@@ -52,16 +52,17 @@ const NewsObject = ({ newsObject }) => {
         <li >{newsObject.content}</li>
         <p></p>
         <li className="mx-auto">
-          <Button variant="secondary" href={'https://' + newsObject.url} target="_blank">
+          {newsObject.url !== '' && (
+            <>
+              <Button variant="secondary" href={'https://' + newsObject.url} target="_blank">
         More info
-          </Button>
+              </Button>
+            </>
+          )}
           <p></p>
           <p></p>
         </li>
-        {user === '' ? (
-          <>
-          </>
-        ) : (
+        {user.role === 'admin' && (
           <div>
             <Button data-cy="delete-button" variant="danger" value={newsObject} onClick={handleDelete}>
               delete

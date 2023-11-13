@@ -132,9 +132,11 @@ const NewsForm = () => {
           </Card.Body>
         </Card>
       ) : (
-        <Button variant="primary" onClick={toggleFormVisibility}>
+        <>
+          <Button variant="primary" onClick={toggleFormVisibility}>
           Add News
-        </Button>
+          </Button>
+        </>
       )}
     </div>
 
