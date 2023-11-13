@@ -1,0 +1,36 @@
+# fly.toml app configuration file generated for hillandrecords on 2023-11-11T15:14:37+02:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+
+app = "hillandrecords"
+primary_region = "arn"
+kill_signal = "SIGINT"
+kill_timeout = "5s"
+
+[env]
+  PORT = "3001"
+  MONGODB_URI = "{{ MONGODB_URI }}"
+  SECRET = "{{ SECRET }}"
+  AWS_SECRET_ACCESS_KEY = "{{ AWS_SECRET_ACCESS_KEY }}"
+  AWS_ACCESS_KEY_ID = "{{ AWS_ACCESS_KEY_ID }}"
+  AWS_REGION  = "{{ AWS_REGION }}"
+  AWS_S3_BUCKET = "{{ AWS_S3_BUCKET }}"
+
+[http_service]
+  internal_port = 3001 # ensure that this is same as PORT
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ["app"]
+
+[deploy]
+  
+[processes]
+  app = "npm start"
+
+[build]
+  [build.args]
+    NODE_VERSION = "19.1.0"
