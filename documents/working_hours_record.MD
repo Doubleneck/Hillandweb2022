@@ -89,4 +89,5 @@ BREAK IN THIS PROJECT
 |11.11.2023|12| Add CD pipeline, configure Fly deploy and make preliminary automatic deploy on main push|
 |12.11.2023|6| Configure a simple CD and branch protection, upgrade ymls to make Actions work properly, update documentation|
 |12.11.2023|2| Tweak front News rendering|
-|Total Hours|249|
+|13.11.2023|5| Add Archives feature backend + tests|
+|Total Hours|254|
