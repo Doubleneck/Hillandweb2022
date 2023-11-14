@@ -91,4 +91,4 @@ BREAK IN THIS PROJECT
 |12.11.2023|2| Tweak front News rendering|
 |13.11.2023|5| Add Archives feature backend + tests|
 |14.11.2023|7| Add Archives feature front|
-|Total Hours|261|
+|Total Hours|246|
