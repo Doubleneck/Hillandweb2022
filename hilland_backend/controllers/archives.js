@@ -6,6 +6,7 @@ const { adminCredentialsValidator, userLoggedInValidator } = require('../utils/m
 const storage = multer.memoryStorage() // Store files in memory
 const upload = multer({ storage })
 const validateYear = require('../utils/yearvalidator')
+let s3
 if (process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'dev') {
   s3 = require('../s3_mock.js')
 } else {
