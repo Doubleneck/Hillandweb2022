@@ -7,6 +7,7 @@ import { setUser } from '../reducers/loginFormReducer'
 import newsService from '../services/news'
 import userService from '../services/users'
 import songrequestService from '../services/songrequests'
+import archiveService from '../services/archives'
 import loginService from '../services/login'
 import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
@@ -41,6 +42,7 @@ const LoginForm = () => {
       songrequestService.setToken(user.token)
       newsService.setToken(user.token)
       userService.setToken(user.token)
+      archiveService.setToken(user.token)
       dispatch(setUser(user))
       setUsername('')
       setPassword('')

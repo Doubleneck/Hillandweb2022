@@ -14,6 +14,7 @@ import Notification from './components/Notification.js'
 import newsService from './services/news.js'
 import songrequestService from './services/songrequests.js'
 import userService from './services/users.js'
+import archiveService from './services/archives.js'
 import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
 import Home from './components/Home.js'
@@ -23,8 +24,7 @@ import Users from './components/Users.js'
 import LoginForm from './components/LoginForm.js'
 import TruckerCaps from './components/TruckerCaps.js'
 import SongRequests from './components/SongRequests.js'
-
-
+import Archives from './components/Archives.js'
 
 const App = () => {
   const user = useSelector((state) => state.loginForm.user)
@@ -44,6 +44,7 @@ const App = () => {
         newsService.setToken(parsedUser.token)
         songrequestService.setToken(parsedUser.token)
         userService.setToken(parsedUser.token)
+        archiveService.setToken(parsedUser.token)
       } else {
         logout()
       }
@@ -77,7 +78,7 @@ const App = () => {
     newsService.setToken(null)
     songrequestService.setToken(null)
     userService.setToken(null)
-
+    archiveService.setToken(null)
   }
 
   return (
@@ -91,7 +92,7 @@ const App = () => {
             <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/videos">VIDEOS</NavLink>
             <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/releases">RELEASES</NavLink>
             <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/truckercaps">TRUCKER CAPS</NavLink>
-            <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/archive">ARCHIVE</NavLink>
+            <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/archives">ARCHIVE</NavLink>
             {user.role==='admin' && (
               <NavLink style={padding} className="linkText m-auto text-decoration-none songRequestLink" to="/USERS">USERS</NavLink>
             )}
@@ -123,6 +124,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/videos" element={<Videos  />} />
         <Route path="/truckercaps" element={<TruckerCaps  />} />
+        <Route path="/archives" element={<Archives  />} />
         <Route path="/login" element={<LoginForm  />} />
         {user && (
           <Route path="/songrequests" element={<SongRequests />} />

@@ -27,6 +27,11 @@ module.exports = {
   'plugins': [
     'react'
   ],
+  'settings': {
+    'react': {
+      'version': 'detect' // or specify your React version (e.g., "16.8.0")
+    }
+  },
   'rules': {
     'indent': [
       'error',
