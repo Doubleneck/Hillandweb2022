@@ -5,6 +5,7 @@ const ArchiveItem = require('../models/archiveitem')
 const { adminCredentialsValidator, userLoggedInValidator } = require('../utils/middleware')  
 const storage = multer.memoryStorage() // Store files in memory
 const upload = multer({ storage })
+const validateYear = require('../utils/yearvalidator')
 let s3
 if (process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'dev') {
   s3 = require('../s3_mock.js')
@@ -36,13 +37,24 @@ archivesRouter.get('/:id', async (request, response) => {
 })
 
 archivesRouter.put('/:id', userLoggedInValidator, adminCredentialsValidator, async (request, response) => {
+
   try {
     const id = request.params.id
 
     if (!id || !validator.isMongoId(id)) {
-      return response.status(400).json({ error: 'Invalid news ID format' })
+      return response.status(400).json({ error: 'Invalid archives ID format' })
     }
 
+    if (!validateYear(request.body.year)) {
+      return response.status(400).json({
+        error: 'year must be a number between 2014 and present year',
+      })
+    }
+    if (!request.body.year || !request.body.title) {
+      return response.status(400).json({
+        error: 'year or title missing',
+      })
+    }
     const archiveItemToUpdate = {
       title: request.body.title,
       content: request.body.content,
@@ -66,6 +78,11 @@ archivesRouter.put('/:id', userLoggedInValidator, adminCredentialsValidator, asy
 archivesRouter.post('/', userLoggedInValidator, adminCredentialsValidator, upload.single('imageFile'),async (request, response) => {
   
   try {
+    if (!validateYear(request.body.year)) {
+      return response.status(400).json({
+        error: 'year must be a number between 2014 and present year',
+      })
+    }
     if (!request.body.year || !request.body.title) {
       return response.status(400).json({
         error: 'year or title missing',
