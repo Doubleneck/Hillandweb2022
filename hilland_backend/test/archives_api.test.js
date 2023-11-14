@@ -168,7 +168,7 @@ describe('addition of a new archive item', () => {
     expect(response.status).toBe(400)
     const archivesAtEnd = await helper.archivesInDb() 
     expect(archivesAtEnd  ).toHaveLength(archivesAtStart.length)
-    expect(response.body.error).toEqual('year or title missing')
+    expect(response.body.error).toEqual('year must be a number between 2014 and present year')
   })
 
   test('fails with status code 400 if not imagefile if ADMIN', async () => {
