@@ -141,7 +141,7 @@ describe('addition of a new news', () => {
     expect(response.status).toBe(401)
     const newsAtEnd = await helper.newsInDb()
     expect(newsAtEnd).toHaveLength(newsAtStart.length)
-  
+    expect(response.body.error).toEqual('you don´t have rights for this operation')
   })
 
   test('fails with status code 400 if not content if ADMIN', async () => {
@@ -159,6 +159,7 @@ describe('addition of a new news', () => {
     expect(response.status).toBe(400)
     const newsAtEnd = await helper.newsInDb()
     expect(newsAtEnd).toHaveLength(newsAtStart.length)
+    expect(response.body.error).toEqual('content or title missing')
   })
 
   test('fails with status code 400 if not title if ADMIN', async () => {
@@ -175,6 +176,7 @@ describe('addition of a new news', () => {
     expect(response.status).toBe(400)
     const newsAtEnd = await helper.newsInDb()
     expect(newsAtEnd).toHaveLength(newsAtStart.length)
+    expect(response.body.error).toEqual('content or title missing')
   })
 
   test('fails with status code 400 if image is missing if ADMIN', async () => {
@@ -190,6 +192,7 @@ describe('addition of a new news', () => {
     expect(response.status).toBe(400)
     const newsAtEnd = await helper.newsInDb()
     expect(newsAtEnd).toHaveLength(newsAtStart.length)
+    expect(response.body.error).toEqual('image missing')
   })
 })
 
@@ -215,13 +218,14 @@ describe('deleting and updating of a news', () => {
     const newsAtStart = await helper.newsInDb()
     const newsToDelete = newsAtStart[0]
   
-    await api
+    const response = await api
       .delete(`/api/news/${newsToDelete.id}`)
       .set('Authorization', `Bearer ${USERTOKEN}`)
       .expect(401)
 
     const newsAtEnd = await helper.newsInDb()
     expect(newsAtEnd).toHaveLength(newsAtStart.length)
+    expect(response.body.error).toEqual('you don´t have rights for this operation')
   })
 
   test('deleting a news fails if not login', async () => {
@@ -229,12 +233,13 @@ describe('deleting and updating of a news', () => {
     const newsAtStart = await helper.newsInDb()
     const newsToDelete = newsAtStart[0]
     
-    await api
+    const response = await api
       .delete(`/api/news/${newsToDelete.id}`)
       .expect(401)
   
     const newsAtEnd = await helper.newsInDb()
     expect(newsAtEnd).toHaveLength(newsAtStart.length)
+    expect(response.body.error).toEqual('Authentication failed')
    
   })
 
@@ -258,7 +263,7 @@ describe('deleting and updating of a news', () => {
     const newsAtStart = await helper.newsInDb()
     const newsToUpdate = newsAtStart[0]
     newsToUpdate.content = 'Updated content'
-    await api
+    const response = await api
       .put(`/api/news/${newsToUpdate.id}`)
       .set('Authorization', `Bearer ${USERTOKEN}`)
       .send(newsToUpdate)
@@ -268,13 +273,14 @@ describe('deleting and updating of a news', () => {
 
     expect(newsAtEnd[0].content).not.toEqual('Updated content')
     expect(newsAtEnd).toHaveLength(newsAtStart.length)
+    expect(response.body.error).toEqual('you don´t have rights for this operation')
   })
 
   test('updating a news fails if not login', async () => {
     const newsAtStart = await helper.newsInDb()
     const newsToUpdate = newsAtStart[0]
     newsToUpdate.content = 'Updated content'
-    await api
+    const response = await api
       .put(`/api/news/${newsToUpdate.id}`)
       .send(newsToUpdate)
       .expect(401)
@@ -283,6 +289,7 @@ describe('deleting and updating of a news', () => {
 
     expect(newsAtEnd[0].content).not.toEqual('Updated content')
     expect(newsAtEnd).toHaveLength(newsAtStart.length)
+    expect(response.body.error).toEqual('invalid token')
   })
 })
 

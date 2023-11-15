@@ -3,6 +3,7 @@ const User = require('../models/user')
 const Songrequest = require('../models/songrequest')
 const News = require('../models/news')
 const Archive = require('../models/archiveitem')
+const Release = require('../models/release')
 const helper = require('../test/test_helper')
 const bcrypt = require('bcrypt')
 
@@ -16,10 +17,10 @@ router.post('/reset', async (request, response) => {
     await Songrequest.deleteMany({})
     await News.deleteMany({})
     await Archive.deleteMany({})
+    await Release.deleteMany({})
     const testUsers = [helper.userUser(), helper.adminUser()]
     const saltRounds = 10
   
-    
     for (let user of testUsers) {
       const passwordHash = await bcrypt.hash(user.password, saltRounds)
       user.passwordHash = passwordHash
