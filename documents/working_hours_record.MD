@@ -92,4 +92,5 @@ BREAK IN THIS PROJECT (SUBTL 152)
 |13.11.2023|5| Add Archives feature backend + tests|
 |14.11.2023|7| Add Archives feature front|
 |15.11.2023|2| Add tests Archives feature e2e|
-|Total Hours|261|
+|15.11.2023|4| Add Releases feature backend + tests|
+|Total Hours|265|
