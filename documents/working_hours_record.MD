@@ -67,7 +67,7 @@
 |5.3.2023|3| Fix App to use Update-route to avoid Safari rendering problems|
 |6.3.2023|1| fix news useEffects to render news correctly without extra routes in Safari also|
 |7.3.2023|1| refactor updateNews & createNews to use state updates instead of fech|
-BREAK IN THIS PROJECT
+BREAK IN THIS PROJECT (SUBTL 152)
 |24.10.2023|4| Fix broken code after break, update deps, clean code, fix Song request form|
 |25.10.2023|2| Maintain code, upgrade LoginForm and Home & News components|
 |26.10.2023|4| Fix S3 delete functionality to use correct rest requests: delete instead of post, add SongRequest rendering component|
@@ -91,4 +91,5 @@ BREAK IN THIS PROJECT
 |12.11.2023|2| Tweak front News rendering|
 |13.11.2023|5| Add Archives feature backend + tests|
 |14.11.2023|7| Add Archives feature front|
-|Total Hours|246|
+|15.11.2023|2| Add tests Archives feature e2e|
+|Total Hours|261|
