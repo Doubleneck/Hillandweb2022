@@ -245,6 +245,40 @@ describe('deleting and updating of an archive item', () => {
     expect(archivesAtEnd).toHaveLength(archivesAtStart.length)
   })
 
+  test('updating an archive item fails if no title if ADMIN', async () => {
+    const archivesAtStart = await helper.archivesInDb() 
+    const archiveItemToUpdate = archivesAtStart[0]
+    archiveItemToUpdate.content = 'Updated archive item content'
+    archiveItemToUpdate.title = ''
+    const response = await api
+      .put(`/api/archives/${archiveItemToUpdate.id}`)
+      .set('Authorization', `Bearer ${ADMINTOKEN}`)
+      .send(archiveItemToUpdate)
+      .expect(400)
+
+    const archivesAtEnd = await helper.archivesInDb() 
+    expect(response.body.error).toEqual('year or title missing')
+    expect(archivesAtEnd[0].content).not.toEqual('Updated archive item content')
+    expect(archivesAtEnd).toHaveLength(archivesAtStart.length)
+  })
+
+  test('updating an archive item fails if no year if ADMIN', async () => {
+    const archivesAtStart = await helper.archivesInDb() 
+    const archiveItemToUpdate = archivesAtStart[0]
+    archiveItemToUpdate.content = 'Updated archive item content'
+    archiveItemToUpdate.year = ''
+    const response = await api
+      .put(`/api/archives/${archiveItemToUpdate.id}`)
+      .set('Authorization', `Bearer ${ADMINTOKEN}`)
+      .send(archiveItemToUpdate)
+      .expect(400)
+
+    const archivesAtEnd = await helper.archivesInDb() 
+    expect(response.body.error).toEqual('year must be a number between 2014 and present year')
+    expect(archivesAtEnd[0].content).not.toEqual('Updated archive item content')
+    expect(archivesAtEnd).toHaveLength(archivesAtStart.length)
+  })
+
   test('updating an archive item fails if USER', async () => {
     const archivesAtStart = await helper.archivesInDb() 
     const archiveItemToUpdate = archivesAtStart[0]
