@@ -32,7 +32,7 @@ jobs:
             uses: bahmutov/npm-install@v1
             with:
               working-directory: ./hilland_backend
-          - name: build client and copy it server
+          - name: build client and copy it to server
             working-directory: ./hilland_backend
             run: |
               npm run build:ui 
