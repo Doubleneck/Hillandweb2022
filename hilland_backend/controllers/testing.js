@@ -2,11 +2,12 @@ const router = require('express').Router()
 const User = require('../models/user')
 const Songrequest = require('../models/songrequest')
 const News = require('../models/news')
+const Archive = require('../models/archiveitem')
 const helper = require('../test/test_helper')
 const bcrypt = require('bcrypt')
 
 
-// Test environment purpoeses only, resets db to a base state for testing
+// Test environment purposes only, resets db to a base state for testing
 router.post('/reset', async (request, response) => {
   let savedUsers = []
 
@@ -14,6 +15,7 @@ router.post('/reset', async (request, response) => {
     await User.deleteMany({})
     await Songrequest.deleteMany({})
     await News.deleteMany({})
+    await Archive.deleteMany({})
     const testUsers = [helper.userUser(), helper.adminUser()]
     const saltRounds = 10
   

@@ -117,7 +117,7 @@ const UpdateArchiveForm = ({ archiveObjectToBeUpdated, onArchiveUpdated }) => {
         </Card>
       ) : (
         <Button variant='primary' onClick={toggleFormVisibility}>
-          Update Archive item
+          Update Archive Item
         </Button>
       )}
     </div>

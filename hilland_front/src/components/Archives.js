@@ -87,6 +87,7 @@ const Archives =  () => {
       ) : (
         <div>
           <Notification />
+
           <div className="text-center">
             {user.role === 'admin' &&
             <ArchiveForm onArchiveAdded={handleArchiveAdded}/>
@@ -96,10 +97,12 @@ const Archives =  () => {
       )}
       <p></p>
       <p></p>
+      <h2 className="text-center">Hilland Mondays Archive</h2>
+      <p> </p>
       <div>
         {reversedYears.map((year) => (
           <div key={year}>
-            <h2>Memories from {year}:</h2>
+            <h3>Memories from {year}:</h3>
             <ul className="gallery">
               {groupedItems[year].map((item, index) => (
                 <li key={index}>
