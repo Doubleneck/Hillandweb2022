@@ -4,7 +4,7 @@ const app = require('../app')
 const api = supertest(app)
 const ArchiveItem = require('../models/archiveitem')
 
-const archiveObject = helper.initialArchiveItem[0]
+const archiveObject = helper.initialArchiveItems[0]
 async function postInitialArchiveItem(app, ADMINTOKEN, archiveObject) {
   return await supertest(app)
     .post('/api/archives')
@@ -102,11 +102,8 @@ describe('viewing a specific archive item', () => {
 
 describe('addition of a new archive item', () => {
   beforeEach(async () => {
-    try {
-      await ArchiveItem.deleteMany({})
-    } catch (error) {
-      console.error('Error deleting archive item  entries:', error)
-    }
+    await ArchiveItem.deleteMany({})
+    await postInitialArchiveItem(app, ADMINTOKEN, archiveObject)
   })
 
   test('succees with proper data if ADMIN', async () => {
@@ -139,6 +136,7 @@ describe('addition of a new archive item', () => {
     const archivesAtEnd = await helper.archivesInDb() 
     expect(archivesAtEnd  ).toHaveLength(archivesAtStart.length)
     expect(response.body.content).not.toEqual('Added another archive item')
+    expect(response.body.error).toEqual('you don´t have rights for this operation')
   })  
 
   test('fails with status code 400 if not title if ADMIN', async () => {
@@ -260,6 +258,7 @@ describe('deleting and updating of an archive item', () => {
     expect(response.body.error).toEqual('year or title missing')
     expect(archivesAtEnd[0].content).not.toEqual('Updated archive item content')
     expect(archivesAtEnd).toHaveLength(archivesAtStart.length)
+    expect(response.body.error).toEqual('year or title missing')
   })
 
   test('updating an archive item fails if no year if ADMIN', async () => {
@@ -277,6 +276,7 @@ describe('deleting and updating of an archive item', () => {
     expect(response.body.error).toEqual('year must be a number between 2014 and present year')
     expect(archivesAtEnd[0].content).not.toEqual('Updated archive item content')
     expect(archivesAtEnd).toHaveLength(archivesAtStart.length)
+    expect(response.body.error).toEqual('year must be a number between 2014 and present year')
   })
 
   test('updating an archive item fails if USER', async () => {
@@ -293,6 +293,7 @@ describe('deleting and updating of an archive item', () => {
     expect(response.body.error).toEqual('you don´t have rights for this operation')
     expect(archivesAtEnd[0].content).not.toEqual('Updated archive item content')
     expect(archivesAtEnd).toHaveLength(archivesAtStart.length)
+    expect(response.body.error).toEqual('you don´t have rights for this operation')
   })
 
   test('updating an archive item fails if not login', async () => {
@@ -308,6 +309,7 @@ describe('deleting and updating of an archive item', () => {
     expect(response.body.error).toEqual('invalid token')
     expect(archivesAtEnd[0].content).not.toEqual('Updated archive item content')
     expect(archivesAtEnd).toHaveLength(archivesAtStart.length)
+    expect(response.body.error).toEqual('invalid token')
   })
   
 })
