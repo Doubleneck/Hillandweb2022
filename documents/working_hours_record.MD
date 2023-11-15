@@ -90,4 +90,5 @@ BREAK IN THIS PROJECT
 |12.11.2023|6| Configure a simple CD and branch protection, upgrade ymls to make Actions work properly, update documentation|
 |12.11.2023|2| Tweak front News rendering|
 |13.11.2023|5| Add Archives feature backend + tests|
-|Total Hours|254|
+|14.11.2023|7| Add Archives feature front|
+|Total Hours|246|
