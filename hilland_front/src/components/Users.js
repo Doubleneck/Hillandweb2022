@@ -23,7 +23,7 @@ function Users() {
   const handleDelete = (id) => {
 
     // Show a confirmation alert when deleting a user
-    const confirmUIserDeletion = window.confirm('Are you sure you want to create an admin user?')
+    const confirmUIserDeletion = window.confirm('Are you sure you want to delete user?')
     if (!confirmUIserDeletion) {
       return // Cancel the user deletion
     }
@@ -64,7 +64,7 @@ function Users() {
         {users.map((u) => (
           <li key={u.id}>
             <p>
-              <strong>{u.username}</strong> requested{' '}
+              <strong>{u.username}</strong> {' '}
               {user.role === 'admin' && (
                 <Button data-cy="delete-button" variant="danger" onClick={() => handleDelete(u.id)}>
                 Delete
