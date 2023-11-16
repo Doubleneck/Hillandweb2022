@@ -42,11 +42,14 @@ These two tasks will joint to each other, since the everyday users can make song
 
 - [x] user can see news
 - [x] user can use Trucker caps link to navigate to the Hattu Helsinki net store 
-- [ ] user can see releases
+- [x] user can see releases
 - [x] user can see videos
-- [ ] user can see archive (a collection of historical images)
+- [x] user can see archive (a collection of historical images)
 - [x] user can send a song request
 
+(optional, further development):
+- [ ] Musicians / Band section to introduce players
+- [ ] Contact / info page
 
 ### Logged users:
 
@@ -63,7 +66,7 @@ These two tasks will joint to each other, since the everyday users can make song
 
 - [x] admin can do everything a normal user can
 - [x] admin can add, remove and update news
-- [ ] admin can add, remove and update releases
-- [ ] admin can add, remove and update archive
+- [x] admin can add, remove and update releases
+- [x] admin can add, remove and update archive
 - [x] admin can remove items from requested songs list 
 
