@@ -48,6 +48,7 @@ const ReleaseObject = ({ releaseObject, onReleaseRemoved }) => {
         <p></p>
         <li >{releaseObject.content}</li>
         <p></p>
+
         <li className="mx-auto">
           {releaseObject.buyLink !== '' && (
             <>
@@ -58,7 +59,7 @@ const ReleaseObject = ({ releaseObject, onReleaseRemoved }) => {
           )}
           {releaseObject.listenLink !== '' && (
             <>
-              <Button variant="info" href={'https://' + releaseObject.buyLink} target="_blank">
+              <Button variant="info" href={'https://' + releaseObject.listenLink} target="_blank">
         Listen
               </Button>
             </>
