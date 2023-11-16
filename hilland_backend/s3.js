@@ -7,12 +7,7 @@ const s3Bucket = process.env.AWS_S3_BUCKET
 const s3Region = process.env.AWS_REGION
 const accessKeyId = process.env.AWS_ACCESS_KEY_ID
 const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY
-const currentDate = new Date()
-// Add 60 minutes (60 minutes * 60 seconds * 1000 milliseconds) to the current date
-const futureDate = new Date(currentDate.getTime() + 60 * 60 * 1000)
-const {
-  getSignedUrl
-} = require('@aws-sdk/s3-request-presigner')
+
 const {
   S3Client,
   PutObjectCommand,
@@ -28,21 +23,6 @@ const s3 = new S3({
   secretAccessKey,
   signatureVersion: 'v4',
 })
-
-//this function is currently not used
-async function generateS3UploadURL() {
-  const rawBytes = await randomBytes(16)
-  const imageName = rawBytes.toString('hex')
-
-  const params = {
-    Bucket: s3Bucket ,
-    Key: imageName,
-    expiresIn: futureDate
-  }
-
-  const uploadURL = await getSignedUrl(s3, new PutObjectCommand(params))
-  return uploadURL
-}
 
 
 async function uploadImageToS3(imageFileBuffer) {
@@ -90,6 +70,5 @@ async function deleteImageFromS3(id) {
   }
 }
 
-module.exports.generateUploadURL = generateS3UploadURL
 module.exports.deleteImageFromS3 = deleteImageFromS3
 module.exports.uploadImageToS3 = uploadImageToS3
