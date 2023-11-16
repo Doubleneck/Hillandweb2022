@@ -36,6 +36,8 @@ jobs:
         cache-dependency-path: './hilland_backend/package-lock.json'
     - name: Clear npm Cache
       run: npm cache clean --force    
+    - name: Install localstack_ext
+      run: npm install localstack_ext  
     - name: Start MongoDB
       uses: supercharge/mongodb-github-action@1.8.0
       with:
