@@ -51,6 +51,7 @@ jobs:
           # Set the AWS credentials for LocalStack
         AWS_SECRET_ACCESS_KEY: test
         AWS_ACCESS_KEY_ID: test
+        LOCALSTACK_API_KEY: ${{ secrets.LOCALSTACK_API_KEY }}
     - name: Run Tests against LocalStack
       run: |
           awslocal s3 mb s3://test
