@@ -103,6 +103,11 @@ describe('when not logged in', function () {
     cy.contains('Hilland Mondays Archive')
   })
 
+  it('non logged user can see Releases page', function () {
+    cy.visit('/releases')
+    cy.contains('Hilland Records Releases')
+  })
+
   it('non logged user can not see songrequests page ', function () {
     cy.visit('/songrequests')
     cy.contains('Song requests').should('not.exist')
@@ -182,6 +187,11 @@ describe('when logged in as USER', function () {
     cy.contains('Legendary Hilland Trucker Caps:')
   })
 
+  it('user can see Releases page', function () {
+    cy.visit('/releases')
+    cy.contains('Hilland Records Releases')
+  })
+
   it('user can see songrequests page ', function () {
     cy.visit('/songrequests')
     cy.contains('Song requests')
@@ -217,6 +227,17 @@ describe('when logged in as ADMIN', function () {
         title: 'Arhive item #1',
         content: 'This is great archive item',
         year: 2022,
+        imageFile: imageContent,
+      })
+    })
+
+    cy.fixture('sample-image.jpg').then((imageContent) => {
+      cy.postRelease({
+        title: 'Release #1',
+        content: 'This is great release',
+        year: 2022,
+        buyLink: 'https://www.google.com',
+        listenLink: 'https://www.google.com',
         imageFile: imageContent,
       })
     })
@@ -274,6 +295,11 @@ describe('when logged in as ADMIN', function () {
   it('admin can see songrequests page ', function () {
     cy.visit('/songrequests')
     cy.contains('Song requests')
+  })
+
+  it('admin can see relases  page ', function () {
+    cy.visit('/releases')
+    cy.contains('Hilland Records Releases')
   })
 
   it('admin can delete a song request', () => {
@@ -387,6 +413,96 @@ describe('when logged in as ADMIN', function () {
     cy.contains('Great News again').should('exist')
   })
 
+  it('admin can add release', function () {
+    cy.visit('/releases')
+    cy.contains('Hilland Records Releases')
+    cy.contains('Add New Release').click()
+    cy.get('[data-cy="title"]').type('Great New Release')
+    cy.get('[data-cy="content"]').type('This is a great release')
+    cy.get('[data-cy="buylink"]').type('www.google.com')
+    cy.get('[data-cy="listenlink"]').type('www.google.com')
+    cy.get('[data-cy="year"]').type('2022')
+    cy.get('[data-cy="imageFile"]').attachFile('sample-image.jpg')
+    cy.get('[data-cy="create-button"]').click()
+    cy.contains('Great New Release')
+  })
+
+  it('admin add release failing if title missing', function () {
+    cy.visit('/releases')
+    cy.contains('Hilland Records Releases')
+    cy.contains('Add New Release').click()
+    cy.get('[data-cy="content"]').type('This is a great release')
+    cy.get('[data-cy="buylink"]').type('www.google.com')
+    cy.get('[data-cy="listenlink"]').type('www.google.com')
+    cy.get('[data-cy="year"]').type('2022')
+    cy.get('[data-cy="imageFile"]').attachFile('sample-image.jpg')
+    cy.get('[data-cy="create-button"]').click()
+    cy.contains('year or title missing')
+    cy.contains('This is a great new archive item').should('not.exist')
+  })
+
+  it('admin add release failing if year missing', function () {
+    cy.visit('/releases')
+    cy.contains('Hilland Records Releases')
+    cy.contains('Add New Release').click()
+    cy.get('[data-cy="title"]').type('Great New Release')
+    cy.get('[data-cy="content"]').type('This is a great release')
+    cy.get('[data-cy="buylink"]').type('www.google.com')
+    cy.get('[data-cy="listenlink"]').type('www.google.com')
+    cy.get('[data-cy="imageFile"]').attachFile('sample-image.jpg')
+    cy.get('[data-cy="create-button"]').click()
+    cy.contains('year or title missing')
+    cy.contains('This is a great new archive item').should('not.exist')
+  })
+  it('admin add release failing if year out of range', function () {
+    cy.visit('/releases')
+    cy.contains('Hilland Records Releases')
+    cy.contains('Add New Release').click()
+    cy.get('[data-cy="title"]').type('Great New Release')
+    cy.get('[data-cy="content"]').type('This is a great release')
+    cy.get('[data-cy="year"]').type('2000')
+    cy.get('[data-cy="buylink"]').type('www.google.com')
+    cy.get('[data-cy="listenlink"]').type('www.google.com')
+    cy.get('[data-cy="imageFile"]').attachFile('sample-image.jpg')
+    cy.get('[data-cy="create-button"]').click()
+    cy.contains('year must be a number between 2005 and present year')
+    cy.contains('This is a great new archive item').should('not.exist')
+  })
+
+  it('admin add release failing if image missing', function () {
+    cy.visit('/releases')
+    cy.contains('Hilland Records Releases')
+    cy.contains('Add New Release').click()
+    cy.get('[data-cy="title"]').type('Great New Release')
+    cy.get('[data-cy="content"]').type('This is a great release')
+    cy.get('[data-cy="year"]').type('2006')
+    cy.get('[data-cy="buylink"]').type('www.google.com')
+    cy.get('[data-cy="listenlink"]').type('www.google.com')
+    cy.get('[data-cy="create-button"]').click()
+    cy.contains('image missing')
+    cy.contains('This is a great new archive item').should('not.exist')
+  })
+
+  it('admin can delete release', () => {
+    cy.visit('/releases')
+    cy.contains('Hilland Records Releases')
+    cy.contains('Release #1')
+    cy.get('ul li:last-child [data-cy=delete-button]').click()
+    cy.contains('Removed Release #1 from releases').should('exist')
+  })
+
+  it('admin can update a release', () => {
+    cy.visit('/releases')
+    cy.contains('Hilland Records Releases')
+    cy.contains('Update Release').click()
+    cy.get('[data-cy="title"]').type(' again')
+    cy.get('[data-cy="content"]').type(' again')
+    cy.get('[data-cy="update-button"]').click()
+    cy.contains('Updated Release #1 again')
+    cy.contains('Release #1 again').should('exist')
+  })
+
+
   it('admin can add archive item', function () {
     cy.visit('/archives')
     cy.contains('Hilland Mondays Archive')
@@ -466,5 +582,8 @@ describe('when logged in as ADMIN', function () {
     cy.contains('Updated Arhive item #1')
     cy.contains('Arhive item #1 again').should('exist')
   })
+
+
+
 })
 
