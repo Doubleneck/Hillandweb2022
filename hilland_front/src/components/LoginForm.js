@@ -14,6 +14,7 @@ import Container from 'react-bootstrap/Container'
 import Form from 'react-bootstrap/Form'
 import Col from 'react-bootstrap/Col'
 import Notification from './Notification'
+import releaseService from '../services/releases'
 
 const LoginForm = () => {
   const [username, setUsername] = useState('')
@@ -43,6 +44,7 @@ const LoginForm = () => {
       newsService.setToken(user.token)
       userService.setToken(user.token)
       archiveService.setToken(user.token)
+      releaseService.setToken(user.token)
       dispatch(setUser(user))
       setUsername('')
       setPassword('')

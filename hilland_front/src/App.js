@@ -15,6 +15,7 @@ import newsService from './services/news.js'
 import songrequestService from './services/songrequests.js'
 import userService from './services/users.js'
 import archiveService from './services/archives.js'
+import releaseService from './services/releases.js'
 import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
 import Home from './components/Home.js'
@@ -25,6 +26,7 @@ import LoginForm from './components/LoginForm.js'
 import TruckerCaps from './components/TruckerCaps.js'
 import SongRequests from './components/SongRequests.js'
 import Archives from './components/Archives.js'
+import Releases from './components/Releases.js'
 
 const App = () => {
   const user = useSelector((state) => state.loginForm.user)
@@ -45,6 +47,7 @@ const App = () => {
         songrequestService.setToken(parsedUser.token)
         userService.setToken(parsedUser.token)
         archiveService.setToken(parsedUser.token)
+        releaseService.setToken(parsedUser.token)
       } else {
         logout()
       }
@@ -79,6 +82,7 @@ const App = () => {
     songrequestService.setToken(null)
     userService.setToken(null)
     archiveService.setToken(null)
+    releaseService.setToken(null)
   }
 
   return (
@@ -125,6 +129,7 @@ const App = () => {
         <Route path="/videos" element={<Videos  />} />
         <Route path="/truckercaps" element={<TruckerCaps  />} />
         <Route path="/archives" element={<Archives  />} />
+        <Route path="/releases" element={<Releases  />} />
         <Route path="/login" element={<LoginForm  />} />
         {user && (
           <Route path="/songrequests" element={<SongRequests />} />
