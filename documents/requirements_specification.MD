@@ -19,7 +19,7 @@ These two tasks will joint to each other, since the everyday users can make song
 ## CI/CD, testing, linting and Docker dev/test-environment
 - [x] Working CI Github Actions: server with proper tests and linting
 - [x] Working CI Github Actions: client with proper e2e tests and linting 
-- [x] Working CD Github Actions: pipeline releases as soon as new pr is merget to main
+- [x] Working CD Github Actions: pipeline releases as soon as new pr is merged to main
 - [x] Docker compose for local dev and testing: Note! Localstack dev is not PRO-version, so images are not saved persistently, they disappear if compose runs down.
 
 ## TESTING
