@@ -1,8 +1,11 @@
 # User Manual
 
+
+## Clone the repo: 
+
 ```bash
-## Clone the repo: ```
  git clone git@github.com:Doubleneck/Hillandweb2022.git
+```
 
 ## For Backend Development
 
@@ -30,6 +33,7 @@ PORT=3001
 ```
 
 You need also these environment variables to run Localstack
+```bash
 (Create your own AWS_SECRET_ACCESS_KEY and AWS_ACCESS_KEY_ID at AWS :  ```bash S3_MOCK_ENDPOINT=http://localhost:4566
 TEST_S3_MOCK_ENDPOINT=http://localhost:4567
 AWS_SECRET_ACCESS_KEY=
@@ -86,11 +90,17 @@ Start the frontend:
  npm start
 ```
 
-## Run e2e tests:  Make a build, and start backend in the hilland_backend folder:  ```bash
+## Run e2e tests:  Make a build, and start backend in the hilland_backend folder:  
+```bash
  npm run start:full:test
-```  Start an instance of front in the hilland_front folder: ```bash
- npm start```
+```  
+
+Start an instance of front in the hilland_front folder: 
+```bash
+ npm start
+```
 
 Start cypress testing by running in another terminal  hilland_front folder:
 ```bash
- Nom run cypress:open```
+ Nom run cypress:open
+```
