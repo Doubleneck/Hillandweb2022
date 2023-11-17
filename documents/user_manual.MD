@@ -88,7 +88,8 @@ Set now in .env back the databases back to "normal": 
 
 ```bash
 MONGODB_URI=mongodb://the_username:the_password@localhost:3456/the_database
-TEST_MONGODB_URI = =mongodb://the_username:the_password@localhost:3456/the_database
+TEST_MONGODB_URI = mongodb://the_username:the_password@localhost:3456/the_database
+
 ``` 
 
 ## For Frontend Development:
