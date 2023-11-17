@@ -107,9 +107,10 @@ Start the frontend:
 
 ## Run e2e tests:  Make a build, and start backend in the hilland_backend folder: 
 
+
 ```bash
- npm run start:full:test
-```  
+npm run start:full:test
+```
 
 Start an instance of front in the hilland_front folder: 
 
