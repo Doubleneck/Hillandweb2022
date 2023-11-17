@@ -33,9 +33,14 @@ PORT=3001
 ```
 
 You need also these environment variables to run Localstack
-```bash
-(Create your own AWS_SECRET_ACCESS_KEY and AWS_ACCESS_KEY_ID at AWS :  ```bash S3_MOCK_ENDPOINT=http://localhost:4566
+
+(Create your own AWS_SECRET_ACCESS_KEY and AWS_ACCESS_KEY_ID at AWS :  
+
+```bash 
+S3_MOCK_ENDPOINT=http://localhost:4566
 TEST_S3_MOCK_ENDPOINT=http://localhost:4567
+AWS_REGION=eu-central-1
+AWS_S3_BUCKET=hillandwebimgs
 AWS_SECRET_ACCESS_KEY=
 AWS_ACCESS_KEY_ID=
 
@@ -44,13 +49,13 @@ AWS_ACCESS_KEY_ID=
 Run backend tests in the "hilland_backend" directory:
 
 ```bash
-npm run 
-
-test```
+npm run test
+```
 
 
 2. For local development you can initial test users by :
 Setting the .env for test database (TEST_MONGODB_URI) temporarily to be a dev url: 
+
 ```bash
 TEST_MONGODB_URI = =mongodb://the_username:the_password@localhost:3456/the_database
 test```
