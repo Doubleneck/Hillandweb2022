@@ -84,20 +84,19 @@ Admin: 
   password: 'Admin@admin1'
 ```
 
-Set now in .env back the databases back to "normal": 
+Set now in .env back the test and env databases back to "normal": 
 
 ```bash
 MONGODB_URI=mongodb://the_username:the_password@localhost:3456/the_database
-TEST_MONGODB_URI = mongodb://the_username:the_password@localhost:3456/the_database
-
-``` 
+TEST_MONGODB_URI=mongodb://the_username:the_password@localhost:3457/the_test_database
+```
 
 ## For Frontend Development:
  
 In the "hilland_front" directory, install dependencies: 	
 
 ```bash
- npm install
+npm install
 ```
 
 Start the frontend:
