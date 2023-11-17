@@ -20,11 +20,11 @@ My main purpose was to learn to be able to use images in React-Node app, and my 
 
 This is a React/Node aplication with Redux and React Router, Jest and Cypress tests.
 Application uses Amazon AWS S3 for images and LocalStack for testing/dev enviroments. 
-Note, for running this application locally with Docker , you have to get your own AWS credentials for localstack: AWS_SECRET_ACCESS_KEY and AWS_ACCESS_KEY_ID.
+Note: for running this application locally with Docker , you have to get your own AWS credentials for localstack: AWS_SECRET_ACCESS_KEY and AWS_ACCESS_KEY_ID.
 All the others needed are in user manual.
 
 Repository uses Github Actions, the main branch is protected and the workflow is:
-- CI is run always on push to the feature baranch
+- CI is run always on push to the feature branch
 - CD runs deployment to Fly.io always if merged to main branch. Deploy can be skipped with #skip in commit.
    -there is a short build part before deploy, just to check that build succees. The actual building in Fly is done in Dockerfile.
 
