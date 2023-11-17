@@ -18,7 +18,8 @@ My main purpose was to learn to be able to use images in React-Node app, and my 
 
 ## Workflow and technologies
 
-This is a React/Node aplication with Redux and React Router, Jest and Cypress tests.
+This is a React/Node aplication with Redux and React Router, Jest and Cypress tests. Mongo Cloud for staging, local mongo and test db in Docker compose. Staging server is Fly.io.
+
 Application uses Amazon AWS S3 for images and LocalStack for testing/dev enviroments. 
 Note: for running this application locally with Docker , you have to get your own AWS credentials for localstack: AWS_SECRET_ACCESS_KEY and AWS_ACCESS_KEY_ID.
 All the others needed are in user manual.
