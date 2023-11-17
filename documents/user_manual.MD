@@ -17,7 +17,7 @@ npm install
 Start MongoDB and LocalStack S3  with Docker Compose, in the "hilland_backend" directory:
 
 NOTE: LocalStack here is not pro-version. It means that if you run docker-compose down, images will disappear.
-This works quite fin for dev-purposes, it´s also possible to use f.ex. cloud mongo if persistence needed.
+This works quite fine for dev-purposes. It´s also possible to use f.ex. cloud mongo if persistence needed.
 
 ```bash
  docker compose -f docker-compose.dev.yml up
