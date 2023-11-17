@@ -124,5 +124,17 @@ Start cypress testing by running in another terminal  hilland_front folder:
 ```bash
  npm run cypress:open
 ```
+## Local dev environment:
+Start the backend:
 
+```bash
+ npm run dev
+```
+
+Start the front:
+
+```bash
+ npm start
+```
+And make sure your docker-compose is running.
 
