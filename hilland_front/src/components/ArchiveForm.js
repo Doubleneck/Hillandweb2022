@@ -65,7 +65,7 @@ const ArchiveForm = ({ onArchiveAdded }) => {
       const archiveObject = await archiveService.create(archiveItem)
       onArchiveAdded(archiveObject)
       dispatch(
-        setNotification(`A news: ${archiveObject.title} added!`, 5, 'update')
+        setNotification(`An archive item: ${archiveObject.title} added!`, 5, 'update')
       )
     } catch (error) {
       dispatch(
