@@ -30,7 +30,7 @@ const News =  () => {
 
   return (
 
-    <div className="mx-auto ">
+    <div className="mx-auto" >
 
       {user === '' ? (
         <>
