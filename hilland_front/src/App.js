@@ -92,7 +92,7 @@ const App = () => {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="justify-content-center">
             <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/">HOME</NavLink>
-            <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/news">NEWS</NavLink>
+            <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/news" >NEWS</NavLink>
             <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/videos">VIDEOS</NavLink>
             <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/releases">RELEASES</NavLink>
             <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/truckercaps">TRUCKER CAPS</NavLink>
