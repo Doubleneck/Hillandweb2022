@@ -94,4 +94,6 @@ BREAK IN THIS PROJECT (SUBTL 152)
 |15.11.2023|2| Add tests Archives feature e2e|
 |15.11.2023|4| Add Releases feature backend + tests|
 |16.11.2023|2| Add Releases feature front|
-|Total Hours|267|
+|12.12.2023|4| Upgrade app visual appearance, upgrade mongo cluster|
+|13.12.2023|3| build redirections and sertificates: update app to use the real ip address|
+|Total Hours|274|
