@@ -24,7 +24,7 @@ const Home = () => (
       />
     </CenteredContent>
     <p></p>
-    <h2 className="text-center">Live Country Music in Helsinki Every Monday Since 2014, visit Hilland Mondays:</h2>
+    <h2 className="text-center">Visit Hilland Mondays</h2>
 
     <p className="text-center">
       Every Monday our weekly country music club at Juttutupa, Helsinki offers an

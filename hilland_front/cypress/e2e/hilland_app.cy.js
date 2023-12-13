@@ -79,7 +79,7 @@ describe('when not logged in', function () {
 
   it('non logged user can see homepage', function () {
     cy.visit('')
-    cy.contains('Hilland Mondays - American Heritage')
+    cy.contains('Hilland Mondays - Live Country Music Every Monday')
   })
 
 
@@ -169,7 +169,7 @@ describe('when logged in as USER', function () {
   })
   it('user can see homepage', function () {
     cy.visit('')
-    cy.contains('Hilland Mondays - American Heritage')
+    cy.contains('Hilland Mondays - Live Country Music Every Monday')
   })
 
   it('user can see newspage', function () {
@@ -274,7 +274,7 @@ describe('when logged in as ADMIN', function () {
   })
   it('admin can see homepage', function () {
     cy.visit('')
-    cy.contains('Hilland Mondays - American Heritage')
+    cy.contains('Hilland Mondays - Live Country Music Every Monday')
   })
 
   it('admin can see newspage', function () {
