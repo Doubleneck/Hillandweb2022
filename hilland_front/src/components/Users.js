@@ -12,7 +12,9 @@ function Users() {
   const user = useSelector((state) => state.loginForm.user)
   const [users, setUsers] = useState([])
   const [newUser, setNewUser] = useState(null)
-
+  const confirmUserDeletion = () => {
+    return window.confirm('Are you sure you want to delete the user?')
+  }
 
   useEffect(() => {
     userService.getAll().then((usr) => {
@@ -22,9 +24,7 @@ function Users() {
 
   const handleDelete = (id) => {
 
-    // Show a confirmation alert when deleting a user
-    const confirmUIserDeletion = window.confirm('Are you sure you want to delete user?')
-    if (!confirmUIserDeletion) {
+    if (!confirmUserDeletion()) {
       return // Cancel the user deletion
     }
 
@@ -64,14 +64,14 @@ function Users() {
         {users.map((u) => (
           <li key={u.id}>
             <p>
-              <strong>{u.username}</strong> {' '}
+              <strong>{u.username }  </strong> {' '}
               {user.role === 'admin' && (
                 <Button data-cy="delete-button" variant="danger" onClick={() => handleDelete(u.id)}>
                 Delete
                 </Button>
 
               )}
-
+              <> {u.role}</>
             </p>
           </li>
         ))}

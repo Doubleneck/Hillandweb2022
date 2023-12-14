@@ -1,16 +1,15 @@
 import axios from 'axios'
-const baseUrl = '/api/archives'
-let token = null
+import { useToken } from '../hooks/useToken'
 
-const setToken = (newToken) => {
-  token = `bearer ${newToken}`
-}
+const baseUrl = '/api/archives'
+
 const getAll = () => {
   const request = axios.get(baseUrl)
   return request.then((response) => response.data)
 }
 
 const create = async (archiveObject) => {
+  const token = useToken()
   const config = {
     headers: {
       'Authorization': token,
@@ -27,7 +26,7 @@ const create = async (archiveObject) => {
 }
 
 const update = async (id, newObject) => {
-
+  const token = useToken()
   const config = {
     headers: {
       'Authorization': token,
@@ -39,10 +38,11 @@ const update = async (id, newObject) => {
 }
 
 const remove = async (id) => {
+  const token = useToken()
   const config = {
     headers: { Authorization: token },
   }
   await axios.delete(`${baseUrl}/${id}`, config)
 }
 
-export default { getAll, create, update, remove, setToken }
+export default { getAll, create, update, remove }
