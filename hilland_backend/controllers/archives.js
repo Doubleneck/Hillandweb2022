@@ -20,125 +20,108 @@ archivesRouter.get('/', async (req, res) => {
 
 archivesRouter.get('/:id', async (request, response) => {
   
-  try{
-    const id = request.params.id
 
-    if (!id || !validator.isMongoId(id)) {
-      return response.status(400).json({ error: 'Invalid archiveItem ID format' })
-    }
-    const archives = await ArchiveItem.findById(request.params.id)
-    if (archives) {
-      response.json(archives)
-    } else {
-      response.status(404).end()
-    }} catch  (error) {
-    response.status(500).json({ error: 'Internal Server Error' })
+  const id = request.params.id
+
+  if (!id || !validator.isMongoId(id)) {
+    return response.status(400).json({ error: 'Invalid archiveItem ID format' })
+  }
+  const archives = await ArchiveItem.findById(request.params.id)
+  if (archives) {
+    response.json(archives)
+  } else {
+    response.status(404).end()
   }
 })
 
 archivesRouter.put('/:id', userLoggedInValidator, adminCredentialsValidator, async (request, response) => {
 
-  try {
-    const id = request.params.id
+  const id = request.params.id
 
-    if (!id || !validator.isMongoId(id)) {
-      return response.status(400).json({ error: 'Invalid archives ID format' })
-    }
-
-    if (!validateYear(request.body.year)) {
-      return response.status(400).json({
-        error: 'year must be a number between 2014 and present year',
-      })
-    }
-    if (!request.body.year || !request.body.title) {
-      return response.status(400).json({
-        error: 'year or title missing',
-      })
-    }
-    const archiveItemToUpdate = {
-      title: request.body.title,
-      content: request.body.content,
-      year: request.body.year,
-      imageURL: request.body.imageURL,
-    }
-
-    const updatedArchiveItem = await ArchiveItem.findByIdAndUpdate(id, archiveItemToUpdate, { new: true })
-
-    if (!updatedArchiveItem) {
-      return response.status(404).json({ error: 'Archive item not found' })
-    }
-
-    response.json(updatedArchiveItem)
-  } catch (error) {
-    console.error(error)
-    response.status(500).json({ error: 'Internal Server Error' })
+  if (!id || !validator.isMongoId(id)) {
+    return response.status(400).json({ error: 'Invalid archives ID format' })
   }
+
+  if (!validateYear(request.body.year)) {
+    return response.status(400).json({
+      error: 'year must be a number between 2014 and present year',
+    })
+  }
+  if (!request.body.year || !request.body.title) {
+    return response.status(400).json({
+      error: 'year or title missing',
+    })
+  }
+  const archiveItemToUpdate = {
+    title: request.body.title,
+    content: request.body.content,
+    year: request.body.year,
+    imageURL: request.body.imageURL,
+  }
+
+  const updatedArchiveItem = await ArchiveItem.findByIdAndUpdate(id, archiveItemToUpdate, { new: true })
+
+  if (!updatedArchiveItem) {
+    return response.status(404).json({ error: 'Archive item not found' })
+  }
+
+  response.json(updatedArchiveItem)
 })
 
 archivesRouter.post('/', userLoggedInValidator, adminCredentialsValidator, upload.single('imageFile'),async (request, response) => {
   
-  try {
-    if (!validateYear(request.body.year)) {
-      return response.status(400).json({
-        error: 'year must be a number between 2014 and present year',
-      })
-    }
-    if (!request.body.year || !request.body.title) {
-      return response.status(400).json({
-        error: 'year or title missing',
-      })
-    }
-  
-    if (!request.file) {
-      return response.status(400).json({
-        error: 'image missing',
-      })
-    }
-    const imageFileBuffer =  request.file.buffer
-    // Upload the image to Amazon S3
-    const s3Url = await s3.uploadImageToS3(imageFileBuffer)
-    const newItem = new ArchiveItem({
-      title: request.body.title,
-      content: request.body.content,
-      year: request.body.year,
-      imageURL: s3Url,
+  if (!validateYear(request.body.year)) {
+    return response.status(400).json({
+      error: 'year must be a number between 2014 and present year',
     })
-    // continue with creating a new archive item entry to save archive item to MongoDB
-    const savedArchiveItem = await newItem.save()
-    response.status(201).json(savedArchiveItem)
-  } catch (error) {
-    console.error('Error uploading image to S3:', error)
-  } 
+  }
+  if (!request.body.year || !request.body.title) {
+    return response.status(400).json({
+      error: 'year or title missing',
+    })
+  }
+  
+  if (!request.file) {
+    return response.status(400).json({
+      error: 'image missing',
+    })
+  }
+  const imageFileBuffer =  request.file.buffer
+  // Upload the image to Amazon S3
+  const s3Url = await s3.uploadImageToS3(imageFileBuffer)
+  const newItem = new ArchiveItem({
+    title: request.body.title,
+    content: request.body.content,
+    year: request.body.year,
+    imageURL: s3Url,
+  })
+  // continue with creating a new archive item entry to save archive item to MongoDB
+  const savedArchiveItem = await newItem.save()
+  response.status(201).json(savedArchiveItem)
+
 })
 
 //This is the route for deleting archives, it´s also handling the deletion of the image from S3
 archivesRouter.delete('/:id', userLoggedInValidator, adminCredentialsValidator, async (request, response) => {
 
-  
-  try {
-    if (!request.params.id) {
-      return response.status(400).json({
-        error: 'id missing',
-      })
-    }
-    const archiveItemToBeRemoved = await ArchiveItem.findById(request.params.id)
-    const toBeRemovedS3Id = await archiveItemToBeRemoved.imageURL.split('/').pop()
-
-    if (!archiveItemToBeRemoved) {
-      return response.status(404).json({
-        error: 'Archive item not found',
-      })
-    }
-    await s3.deleteImageFromS3(toBeRemovedS3Id)
-    await ArchiveItem.findByIdAndRemove(request.params.id)
-      
-    return response.status(204).end()
-  }  catch (error) {
-    console.error('Error:', error)
+  if (!request.params.id) {
     return response.status(400).json({
-      error: 'Something went wrong when deleting the archive item',
+      error: 'id missing',
     })
   }
+  const archiveItemToBeRemoved = await ArchiveItem.findById(request.params.id)
+  const toBeRemovedS3Id = await archiveItemToBeRemoved.imageURL.split('/').pop()
+
+  if (!archiveItemToBeRemoved) {
+    return response.status(404).json({
+      error: 'Archive item not found',
+    })
+  }
+  await s3.deleteImageFromS3(toBeRemovedS3Id)
+  await ArchiveItem.findByIdAndRemove(request.params.id)
+      
+  return response.status(204).end()
+
 })
 
 module.exports = archivesRouter
