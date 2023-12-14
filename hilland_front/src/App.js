@@ -23,7 +23,7 @@ import Users from './components/Users.js'
 import LoginForm from './components/LoginForm.js'
 import TruckerCaps from './components/TruckerCaps.js'
 import SongRequests from './components/SongRequests.js'
-
+import ContactInfo from './components/ContactInfo.js'
 
 
 const App = () => {
@@ -92,6 +92,7 @@ const App = () => {
             <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/releases">RELEASES</NavLink>
             <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/truckercaps">TRUCKER CAPS</NavLink>
             <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/archive">ARCHIVE</NavLink>
+            <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/contact">CONTACT</NavLink>
             {user.role==='admin' && (
               <NavLink style={padding} className="linkText m-auto text-decoration-none songRequestLink" to="/USERS">USERS</NavLink>
             )}
@@ -123,6 +124,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/videos" element={<Videos  />} />
         <Route path="/truckercaps" element={<TruckerCaps  />} />
+        <Route path="/contact" element={<ContactInfo />} />
         <Route path="/login" element={<LoginForm  />} />
         {user && (
           <Route path="/songrequests" element={<SongRequests />} />
