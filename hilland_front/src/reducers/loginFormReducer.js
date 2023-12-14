@@ -1,5 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
-const initialState = { username: '', password: '', user: '' }
+
+const initialState = {
+  username: '',
+  password: '',
+  user: '',
+
+}
 
 const loginFormSlice = createSlice({
   name: 'loginForm',

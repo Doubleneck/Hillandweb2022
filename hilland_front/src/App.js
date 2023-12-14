@@ -8,14 +8,9 @@ import {
   Routes, Route, NavLink, Link
 } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { setUser } from './reducers/loginFormReducer.js'
+import { setUser, resetCredentials } from './reducers/loginFormReducer.js'
 import { setNotification } from './reducers/notificationReducer.js'
 import Notification from './components/Notification.js'
-import newsService from './services/news.js'
-import songrequestService from './services/songrequests.js'
-import userService from './services/users.js'
-import archiveService from './services/archives.js'
-import releaseService from './services/releases.js'
 import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
 import Home from './components/Home.js'
@@ -27,6 +22,7 @@ import TruckerCaps from './components/TruckerCaps.js'
 import SongRequests from './components/SongRequests.js'
 import Archives from './components/Archives.js'
 import Releases from './components/Releases.js'
+
 
 const App = () => {
   const user = useSelector((state) => state.loginForm.user)
@@ -43,11 +39,6 @@ const App = () => {
       const expiresAtMillis = decodedToken.exp * 1000
       if (expiresAtMillis > Date.now()) {
         dispatch(setUser(parsedUser))
-        newsService.setToken(parsedUser.token)
-        songrequestService.setToken(parsedUser.token)
-        userService.setToken(parsedUser.token)
-        archiveService.setToken(parsedUser.token)
-        releaseService.setToken(parsedUser.token)
       } else {
         logout()
       }
@@ -77,12 +68,8 @@ const App = () => {
 
   function logout() {
     dispatch(setUser(''))
+    dispatch(resetCredentials())
     window.localStorage.clear()
-    newsService.setToken(null)
-    songrequestService.setToken(null)
-    userService.setToken(null)
-    archiveService.setToken(null)
-    releaseService.setToken(null)
   }
 
   return (

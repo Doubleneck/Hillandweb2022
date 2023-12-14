@@ -1,11 +1,9 @@
 import axios from 'axios'
+import { useToken } from '../hooks/useToken'
 const baseUrl = '/api/songrequests'
-let token = null
 
-const setToken = (newToken) => {
-  token = `bearer ${newToken}`
-}
 const getAll = () => {
+  const token = useToken()
   const config = {
     headers: { Authorization: token },
   }
@@ -15,6 +13,7 @@ const getAll = () => {
 }
 
 const create = async (newObject) => {
+  const token = useToken()
   const config = {
     headers: { Authorization: token },
   }
@@ -23,6 +22,7 @@ const create = async (newObject) => {
 }
 
 const update = async (id, newObject) => {
+  const token = useToken()
   const config = {
     headers: { Authorization: token },
   }
@@ -31,10 +31,11 @@ const update = async (id, newObject) => {
 }
 
 const remove = async (id) => {
+  const token = useToken()
   const config = {
     headers: { Authorization: token },
   }
   await axios.delete(`${baseUrl}/${id}`, config)
 }
 
-export default { getAll, create, update, remove, setToken }
+export default { getAll, create, update, remove }
