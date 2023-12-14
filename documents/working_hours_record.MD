@@ -96,4 +96,5 @@ BREAK IN THIS PROJECT (SUBTL 152)
 |16.11.2023|2| Add Releases feature front|
 |12.12.2023|4| Upgrade app visual appearance, upgrade mongo cluster|
 |13.12.2023|3| build redirections and sertificates: update app to use the real ip address|
-|Total Hours|274|
+|14.12.2023|6| Refactor backend to use express-async-errors, refactor token handling, new component contact info, upgrade contents|
+|Total Hours|282|
