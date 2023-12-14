@@ -15,7 +15,7 @@ const TruckerCaps = () => (
 
     <h3 className="text-center text-primary" >Available now at Hattu Helsinki Online Store!</h3>
     <div className="text-center">
-      <a href={'https://www.hattuhelsinki.fi/epages/hattuhelsinki.sf/fi_FI/?ObjectID=5232740'}>
+      <a href={'https://hattuhelsinki.fi/products/hilland-records-trucker-cap?_pos=1&_psq=hilland&_ss=e&_v=1.0'}>
         <Button >Buy From Hattu Helsinki</Button>
       </a>
     </div>

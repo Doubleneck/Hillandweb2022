@@ -1,13 +1,15 @@
 const News = require('../models/news')
 const User = require('../models/user')
+const Songrequest = require('../models/songrequest')
 const ArchiveItem = require('../models/archiveitem')
-const Songrequests = require('../models/songrequest')
+const Release = require('../models/release')
 const bcrypt = require('bcrypt')
 const passwordHash = bcrypt.hash('Someuser@someuser1', 10)
 const path = require('path')
 const fs = require('fs')
 const imagePath = path.resolve(__dirname, '../assets/test_image.jpeg')
 const mockImageData = fs.readFileSync(imagePath)
+
 const initialNews = [{
   title: 'Test News',
   content: 'This is a test news article.',
@@ -16,10 +18,19 @@ const initialNews = [{
   imageFile: mockImageData, 
 }]
 
-const initialArchiveItem = [{
+const initialArchiveItems = [{
   title: 'Test Archive Item',
   content: 'This is a test archive content.',
   year: 2022,
+  imageFile: mockImageData, 
+}]
+
+const initialReleases = [{
+  title: 'Test Release',
+  content: 'This is a test release.',
+  year: 2016,
+  buyLink: 'https://example.com',
+  listenLink: 'https://example.com',
   imageFile: mockImageData, 
 }]
 
@@ -55,7 +66,7 @@ const nonExistingId = async () => {
   return news._id.toString()
 }
 const songRequestsInDb = async () => {
-  const songrequests = await Songrequests.find({})
+  const songrequests = await Songrequest.find({})
   return songrequests.map((s) => s.toJSON())
 }
 const newsInDb = async () => {
@@ -70,6 +81,11 @@ const usersInDb = async () => {
 const archivesInDb = async () => {
   const archives = await ArchiveItem.find({})
   return archives.map((u) => u.toJSON())
+}
+
+const releasesInDb = async () => {
+  const releases = await Release.find({})
+  return releases.map((u) => u.toJSON())
 }
 
 const newSong = () => ({
@@ -105,10 +121,12 @@ module.exports = {
   usersInDb,
   songRequestsInDb,
   archivesInDb,
+  releasesInDb,
   userUser,
   adminUser,
   newUser,
   initialNews,
-  initialArchiveItem,
+  initialArchiveItems,
+  initialReleases,
   newSong
 }

@@ -8,12 +8,9 @@ import {
   Routes, Route, NavLink, Link
 } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { setUser } from './reducers/loginFormReducer.js'
+import { setUser, resetCredentials } from './reducers/loginFormReducer.js'
 import { setNotification } from './reducers/notificationReducer.js'
 import Notification from './components/Notification.js'
-import newsService from './services/news.js'
-import songrequestService from './services/songrequests.js'
-import userService from './services/users.js'
 import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
 import Home from './components/Home.js'
@@ -23,6 +20,8 @@ import Users from './components/Users.js'
 import LoginForm from './components/LoginForm.js'
 import TruckerCaps from './components/TruckerCaps.js'
 import SongRequests from './components/SongRequests.js'
+import Archives from './components/Archives.js'
+import Releases from './components/Releases.js'
 import ContactInfo from './components/ContactInfo.js'
 
 
@@ -41,9 +40,6 @@ const App = () => {
       const expiresAtMillis = decodedToken.exp * 1000
       if (expiresAtMillis > Date.now()) {
         dispatch(setUser(parsedUser))
-        newsService.setToken(parsedUser.token)
-        songrequestService.setToken(parsedUser.token)
-        userService.setToken(parsedUser.token)
       } else {
         logout()
       }
@@ -73,11 +69,8 @@ const App = () => {
 
   function logout() {
     dispatch(setUser(''))
+    dispatch(resetCredentials())
     window.localStorage.clear()
-    newsService.setToken(null)
-    songrequestService.setToken(null)
-    userService.setToken(null)
-
   }
 
   return (
@@ -87,11 +80,11 @@ const App = () => {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="justify-content-center">
             <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/">HOME</NavLink>
-            <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/news">NEWS</NavLink>
+            <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/news" >NEWS</NavLink>
             <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/videos">VIDEOS</NavLink>
             <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/releases">RELEASES</NavLink>
             <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/truckercaps">TRUCKER CAPS</NavLink>
-            <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/archive">ARCHIVE</NavLink>
+            <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/archives">ARCHIVE</NavLink>
             <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/contact">CONTACT</NavLink>
             {user.role==='admin' && (
               <NavLink style={padding} className="linkText m-auto text-decoration-none songRequestLink" to="/USERS">USERS</NavLink>
@@ -124,7 +117,9 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/videos" element={<Videos  />} />
         <Route path="/truckercaps" element={<TruckerCaps  />} />
-        <Route path="/contact" element={<ContactInfo />} />
+        <Route path="/archives" element={<Archives  />} />
+        <Route path="/releases" element={<Releases  />} />
+        <Route path="/contact" element={<ContactInfo  />} />
         <Route path="/login" element={<LoginForm  />} />
         {user && (
           <Route path="/songrequests" element={<SongRequests />} />

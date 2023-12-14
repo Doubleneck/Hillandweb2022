@@ -16,4 +16,5 @@ db.createCollection('users')
 db.createCollection('songrequests')
 db.createCollection('news')
 db.createCollection('archives')
+db.createCollection('releases')
 /* eslint-disable no-undef */

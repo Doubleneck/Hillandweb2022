@@ -13,17 +13,25 @@ These two tasks will joint to each other, since the everyday users can make song
 My main purpose was to learn to be able to use images in React-Node app, and my solution is to use Amazon AWS S3 for uploading and fetching images and Localstack fortesting/dev.
 
 
-- [link to the demo app](https://hillandrecords.fly.dev)
+- [link to the app](https://www.hillandrecords.com)
 
-Missing parts (to be finished) at the moment:
-- [ ] Missing functional parts of the app at the moment can bee seen in software requirements document 
-- [x] most of backend testing
-- [x] e2e testing (Cypress)
-- [x] e2e CI 
-- [ ] users manual
+
+## Workflow and technologies
+
+This is a React/Node aplication with Redux and React Router, Jest and Cypress tests. Mongo Cloud for staging, local mongo and test db in Docker compose. Staging server is Fly.io.
+
+Application uses Amazon AWS S3 for images and LocalStack for testing/dev enviroments. 
+Note: for running this application locally with Docker , you have to get your own AWS credentials for localstack: AWS_SECRET_ACCESS_KEY and AWS_ACCESS_KEY_ID.
+All the others needed are in user manual.
+
+Repository uses Github Actions, the main branch is protected and the workflow is:
+- CI is run always on push to the feature branch
+- CD runs deployment to Fly.io always if merged to main branch. Deploy can be skipped with #skip in commit.
+   -there is a short build part before deploy, just to check that build succees. The actual building in Fly is done in Dockerfile.
 
 
 ## Documentation
 
 - [software requirements](https://github.com/Doubleneck/Hillandweb2022/blob/main/documents/requirements_specification.MD)  
+- [user manual ](https://github.com/Doubleneck/Hillandweb2022/blob/main/documents/user_manual.MD)  
 - [working hours ](https://github.com/Doubleneck/Hillandweb2022/blob/main/documents/working_hours_record.MD)  

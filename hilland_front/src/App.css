@@ -1,5 +1,11 @@
 .App {
   text-align: center;
+  
+}
+
+body {
+  background-color: rgb(244, 240, 238) ; /* Set to your desired shade of gray */
+  margin: 0; /* Remove default body margin */
 }
 
 .App-logo {
@@ -32,20 +38,33 @@
  
 .color-nav {
     background-color: rgb(122, 0, 0);
-    
+
 }
 .songRequestLink {
   background-color: #030001; /* Change the color to your desired color */
 }
-.linkText{ color: rgb(220, 188, 166) ; }
+
+
+
+.linkText,
+.linkText a {
+    color: rgb(220, 188, 166) !important;
+    text-decoration: none !important; /* Assuming you want to remove underlines */
+}
+
+.linkText.active,
+.linkText.active a,
+.linkText.selected,
+.linkText.selected a {
+    color: rgb(238, 245, 240) !important;
+}
 
 .newsText{ color: rgb(150, 75, 31) ; }
 /* Modify brand and text color */
- 
+/*border: .1rem solid #ccc;*/
 .gallery {
   padding: .5rem;
   margin: .5rem;
-  border: .1rem solid #ccc;
   float: none;
   display: inline-block;
 }
@@ -67,3 +86,5 @@
     transform: rotate(360deg);
   }
 }
+
+

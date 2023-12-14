@@ -14,7 +14,7 @@ const CenteredContent = ({ children }) => (
 const Home = () => (
   <div className="gallery">
     <p></p>
-    <h1 className="text-center">Hilland Mondays - American Heritage</h1>
+    <h1 className="text-center">Hilland Mondays - Live Country Music Every Monday</h1>
     <p></p>
     <CenteredContent>
       <img
@@ -24,14 +24,8 @@ const Home = () => (
       />
     </CenteredContent>
     <p></p>
-    <h2 className="text-center">Live Country Music in Helsinki Every Monday Since 2014</h2>
-    <CenteredContent>
-      <div data-cy= "songrequest-form" style={{ display: 'inline-block' }}>
-        <SongRequestForm />
-      </div>
-    </CenteredContent>
-    <p></p>
-    <h2 className="text-center">Visit Hilland Mondays:</h2>
+    <h2 className="text-center">Visit Hilland Mondays</h2>
+
     <p className="text-center">
       Every Monday our weekly country music club at Juttutupa, Helsinki offers an
       international level two-hour live music experience with a six-piece top-notch band: Hilland Playboys!
@@ -43,6 +37,12 @@ const Home = () => (
         className="img-fluid shadow-4 mx-auto"
         alt="Hilland Playboys band"
       />
+    </CenteredContent>
+    <p></p>
+    <CenteredContent>
+      <div data-cy= "songrequest-form" style={{ display: 'inline-block' }}>
+        <SongRequestForm />
+      </div>
     </CenteredContent>
     <p></p>
     <h2 className="text-center">Welcome to Juttutupa:</h2>

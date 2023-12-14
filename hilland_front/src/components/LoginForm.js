@@ -4,15 +4,13 @@ import { useNavigate } from 'react-router-dom'
 import { setNotification } from '../reducers/notificationReducer'
 import { useDispatch } from 'react-redux'
 import { setUser } from '../reducers/loginFormReducer'
-import newsService from '../services/news'
-import userService from '../services/users'
-import songrequestService from '../services/songrequests'
 import loginService from '../services/login'
 import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
 import Form from 'react-bootstrap/Form'
 import Col from 'react-bootstrap/Col'
 import Notification from './Notification'
+
 
 const LoginForm = () => {
   const [username, setUsername] = useState('')
@@ -38,9 +36,6 @@ const LoginForm = () => {
       })
 
       window.localStorage.setItem('loggedUser', JSON.stringify(user))
-      songrequestService.setToken(user.token)
-      newsService.setToken(user.token)
-      userService.setToken(user.token)
       dispatch(setUser(user))
       setUsername('')
       setPassword('')

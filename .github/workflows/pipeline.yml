@@ -32,7 +32,7 @@ jobs:
             uses: bahmutov/npm-install@v1
             with:
               working-directory: ./hilland_backend
-          - name: build client and copy it server
+          - name: build client and copy it to server
             working-directory: ./hilland_backend
             run: |
               npm run build:ui 
@@ -43,16 +43,12 @@ jobs:
     env:
       MONGODB_URI: ${{ secrets.MONGODB_URI }} 
     runs-on: ubuntu-latest
-    
     if: ${{ github.event_name == 'push' && !contains(toJson(github.event.commits.*.message), '#skip')}}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3 
- 
       - name: deploy to fly
         uses: superfly/flyctl-actions/setup-flyctl@master  
-      - name: print working directory
-        run: pwd && ls -a
       - name: Flyctl deploy
         run: flyctl deploy --remote-only --config ./fly.toml
         env:

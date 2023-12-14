@@ -4,18 +4,18 @@ const express = require('express')
 require('express-async-errors')
 const app = express()
 const cors = require('cors')
-const s3urlRouter = require('./controllers/s3url')
 const newsRouter = require('./controllers/news')
 const usersRouter = require('./controllers/users')
 const songrequestsRouter = require('./controllers/songrequests')
 const loginRouter = require('./controllers/login')
 const archivesRouter = require('./controllers/archives')
+const releasesRouter = require('./controllers/releases')
 const middleware = require('./utils/middleware')
 const logger = require('./utils/logger')
 const mongoose = require('mongoose')
 logger.info('connecting to', config.MONGODB_URI)
 mongoose.set('strictQuery', false)
-mongoose
+mongoose 
   .connect(config.MONGODB_URI)
   .then(() => {
     logger.info('connected to MongoDB')
@@ -28,9 +28,9 @@ app.use(express.static('build'))
 app.use(express.json())
 app.use(middleware.requestLogger)
 app.use(middleware.tokenExtractor)
-app.use('/api/s3url', middleware.userExtractor, s3urlRouter)
 app.use('/api/login', loginRouter)
 app.use('/api/news', middleware.userExtractor, newsRouter)
+app.use('/api/releases', releasesRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/archives', archivesRouter)
 app.use('/api/songrequests', songrequestsRouter)
@@ -48,6 +48,5 @@ app.get('/*', function(req, res) {
 
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
-
 
 module.exports = app
