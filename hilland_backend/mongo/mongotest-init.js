@@ -10,11 +10,10 @@ db.createUser({
   ],
 })
   
-  
-  
 db.createCollection('users')
 db.createCollection('songrequests')
 db.createCollection('news')
 db.createCollection('archives')
 db.createCollection('releases')
+db.createCollection('media')
 /* eslint-disable no-undef */
