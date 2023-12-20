@@ -23,7 +23,7 @@ import SongRequests from './components/SongRequests.js'
 import Archives from './components/Archives.js'
 import Releases from './components/Releases.js'
 import ContactInfo from './components/ContactInfo.js'
-
+import Media from './components/Media.js'
 
 const App = () => {
   const user = useSelector((state) => state.loginForm.user)
@@ -85,6 +85,7 @@ const App = () => {
             <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/releases">RELEASES</NavLink>
             <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/truckercaps">TRUCKER CAPS</NavLink>
             <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/archives">ARCHIVE</NavLink>
+            <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/media">MEDIA</NavLink>
             <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/contact">CONTACT</NavLink>
             {user.role==='admin' && (
               <NavLink style={padding} className="linkText m-auto text-decoration-none songRequestLink" to="/USERS">USERS</NavLink>
@@ -119,6 +120,7 @@ const App = () => {
         <Route path="/truckercaps" element={<TruckerCaps  />} />
         <Route path="/archives" element={<Archives  />} />
         <Route path="/releases" element={<Releases  />} />
+        <Route path="/media" element={<Media />} />
         <Route path="/contact" element={<ContactInfo  />} />
         <Route path="/login" element={<LoginForm  />} />
         {user && (
