@@ -50,48 +50,33 @@ const Media =  () => {
   }
 
   return (
-
     <div >
-      <p></p>
-      <h2 className="mx-auto text-center">Hilland Records Bio:</h2>
-
-      <p></p>
-
+      <h2 className="mx-auto text-center m-4">Hilland Records Bio:</h2>
       <div >
         <Bio />
       </div>
-      <p></p>
-      {user === '' && (
-
+      {user && user.role === 'admin' && (
         <div>
           <Notification />
-
           <div className="text-center">
-            {user.role === 'admin' &&
-
-            <MediaForm onMediaAdded={handleMediaAdded}/>
-            }
+            <div className="text-center">
+              <MediaForm onMediaAdded={handleMediaAdded} />
+            </div>
           </div>
         </div>
       )}
-      <h2 className="text-center">Images for Media:</h2>
-
-
-      <div>
+      <h2 className="mx-auto text-center mt-4">Images for Media:</h2>
+      <div className="mx-auto text-center">
         <ul className="gallery ">
           {mediaItems.map((mediaObject) => (
             <li key={mediaObject.id} >
-
               <MediaObject mediaObject={mediaObject} onMediaRemoved={handleMediaRemoved}/>
             </li>
-
           ))}
-
         </ul>
-
-
       </div>
     </div>
+
   )
 }
 

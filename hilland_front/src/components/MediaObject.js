@@ -57,6 +57,19 @@ const MediaObject = ({ mediaObject, onMediaRemoved }) => {
           />
         </li>
         <p></p>
+
+        {/* Download button */}
+        <div className = "text-center">
+          <Button
+            data-cy="download-button"
+            variant="primary"
+            onClick={handleDownload}
+          >
+            Download image
+            (or right-click and select &quot; Save image as...&quot;)
+          </Button>
+        </div>
+        <p></p>
         {user.role === 'admin' && (
           <div>
             <Button
@@ -69,17 +82,6 @@ const MediaObject = ({ mediaObject, onMediaRemoved }) => {
             </Button>{' '}
           </div>
         )}
-        {/* Download button */}
-        <div>
-          <Button
-            data-cy="download-button"
-            variant="primary"
-            onClick={handleDownload}
-          >
-            Download image
-            (or right-click and select &quot; Save image as...&quot;)
-          </Button>
-        </div>
       </ul>
     </div>
   )
