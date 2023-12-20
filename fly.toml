@@ -3,7 +3,6 @@
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-
 app = "hillandrecords"
 primary_region = "arn"
 kill_signal = "SIGINT"
@@ -12,9 +11,6 @@ kill_timeout = "5s"
 [env]
   PORT = "3001"
   MONGODB_URI = "{{ MONGODB_URI }}"
-  SECRET = "{{ SECRET }}"
-  AWS_SECRET_ACCESS_KEY = "{{ AWS_SECRET_ACCESS_KEY }}"
-  AWS_ACCESS_KEY_ID = "{{ AWS_ACCESS_KEY_ID }}"
   AWS_REGION  = "{{ AWS_REGION }}"
   AWS_S3_BUCKET = "{{ AWS_S3_BUCKET }}"
 
