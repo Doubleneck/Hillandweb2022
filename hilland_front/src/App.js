@@ -11,8 +11,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setUser, resetCredentials } from './reducers/loginFormReducer.js'
 import { setNotification } from './reducers/notificationReducer.js'
 import Notification from './components/Notification.js'
-import Nav from 'react-bootstrap/Nav'
-import Navbar from 'react-bootstrap/Navbar'
+import { Navbar, Nav, NavbarText } from 'react-bootstrap'
 import Home from './components/Home.js'
 import News from './components/News.js'
 import Videos from './components/Videos.js'
@@ -76,7 +75,13 @@ const App = () => {
   return (
     <Router>
       <Navbar collapseOnSelect expand="lg" className="mx-auto color-nav" >
-        <Navbar.Toggle aria-controls="responsive-navbar-nav" className="mx-auto"> <img style={{ width: 170, height: 85 }} src={myLogo} alt="Hilland logo"/> </Navbar.Toggle>
+
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" className="mx-auto color-nav">
+          <img style={{ width: 170, height: 85 }} src={myLogo} alt="Hilland logo" />
+          <NavbarText className="text-center">
+            <span className="navbar-toggler-icon" style={{ color: 'white' }}></span>
+          </NavbarText>
+        </Navbar.Toggle>
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="justify-content-center">
             <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/">HOME</NavLink>
