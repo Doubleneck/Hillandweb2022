@@ -46,7 +46,7 @@ const NewsObject = ({ newsObject }) => {
         </li>
         <li>
           {' '}
-          <img  src={newsObject.imageURL} alt='news' className='img-fluid shadow-4 mx-auto d-block' style={{ maxWidth: '100%', height: 'auto' }}/>{' '}
+          <img  src={newsObject.imageURL} alt='news' className='custom-img' style={{ maxWidth: '97%', height: 'auto' }}/>{' '}
         </li>
         <p></p>
         <li >{newsObject.content}</li>
