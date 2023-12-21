@@ -75,8 +75,9 @@ const App = () => {
   return (
     <Router>
       <Navbar collapseOnSelect expand="lg" className="mx-auto color-nav" >
-
+        <img style={{ width: 170, height: 85 }} src={myLogo} alt="Hilland logo" className="logo d-none d-md-block" />
         <Navbar.Toggle aria-controls="responsive-navbar-nav" className="mx-auto color-nav">
+
           <img style={{ width: 170, height: 85 }} src={myLogo} alt="Hilland logo" />
           <NavbarText className="text-center">
             <span className="navbar-toggler-icon" style={{ color: 'white' }}></span>
@@ -84,12 +85,13 @@ const App = () => {
         </Navbar.Toggle>
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="justify-content-center">
+
             <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/">HOME</NavLink>
             <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/news" >NEWS</NavLink>
+            <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/mondays">HILLAND MONDAYS</NavLink>
             <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/videos">VIDEOS</NavLink>
             <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/releases">RELEASES</NavLink>
             <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/truckercaps">TRUCKER CAPS</NavLink>
-            <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/archives">ARCHIVE</NavLink>
             <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/media">MEDIA</NavLink>
             <NavLink style={padding} className="linkText m-auto text-decoration-none" to="/contact">CONTACT</NavLink>
             {user.role==='admin' && (
@@ -123,7 +125,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/videos" element={<Videos  />} />
         <Route path="/truckercaps" element={<TruckerCaps  />} />
-        <Route path="/archives" element={<Archives  />} />
+        <Route path="/mondays" element={<Archives  />} />
         <Route path="/releases" element={<Releases  />} />
         <Route path="/media" element={<Media />} />
         <Route path="/contact" element={<ContactInfo  />} />

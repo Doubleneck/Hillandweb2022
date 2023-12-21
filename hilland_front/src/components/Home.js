@@ -13,43 +13,44 @@ const CenteredContent = ({ children }) => (
 
 const Home = () => (
   <div className="gallery">
-    <p></p>
-    <h1 className="text-center">Hilland Mondays - Live Country Music Every Monday</h1>
-    <p></p>
+    <h2 className="text-center m-4">Hilland Mondays - Live Country Music Every Monday in Helsinki</h2>
     <CenteredContent>
       <img
         src="https://hillandwebimgs.s3.eu-central-1.amazonaws.com/FRONTPAGEIMG"
-        className="img-fluid shadow-4 mx-auto"
+        className="img-fluid shadow-4 mx-auto custom-img"
         alt="musicians playing"
       />
     </CenteredContent>
-    <p></p>
-    <h2 className="text-center">Visit Hilland Mondays</h2>
-
-    <p className="text-center">
-      Every Monday our weekly country music club at Juttutupa, Helsinki offers an
-      international level two-hour live music experience with a six-piece top-notch band: Hilland Playboys!
+    <h2 className="text-center m-4">Visit Hilland Mondays</h2>
+    <p className="text-center m-4">
+      Every Monday from 2014 our weekly country music club at Juttutupa, Helsinki offers a
+      two-hour live music experience with a six-piece top-notch band: Hilland Playboys!
     </p>
-    <p></p>
     <CenteredContent>
       <img
         src="https://hillandwebimgs.s3.eu-central-1.amazonaws.com/PLAYBOYS.jpg"
-        className="img-fluid shadow-4 mx-auto"
+        className="img-fluid shadow-4 mx-auto custom-img"
         alt="Hilland Playboys band"
       />
     </CenteredContent>
-    <p></p>
+    <div className="text-center m-4 ">
+
+      <iframe className="gallery" src='https://www.youtube.com/embed/s0uiwJ-5Jj0'
+        frameBorder='0'
+        allow='autoplay; encrypted-media'
+        width="100%"
+        height="360"
+        allowFullScreen
+        title='video'
+      />
+    </div>
+    <h2 className="text-center m-4">Welcome to Juttutupa:</h2>
+    <GoogleMap />
     <CenteredContent>
-      <div data-cy= "songrequest-form" style={{ display: 'inline-block' }}>
+      <div className="text-center m-4" data-cy= "songrequest-form" style={{ display: 'inline-block' }}>
         <SongRequestForm />
       </div>
     </CenteredContent>
-    <p></p>
-    <h2 className="text-center">Welcome to Juttutupa:</h2>
-    <p></p>
-    <GoogleMap />
-    <p></p>
-    <p></p>
     <CenteredContent>
       <a href={'https://www.facebook.com/hillandrecords/'}>
         <img style={{ width: 85, height: 85 }} src={fbLogo} alt="Facebook logo" />
