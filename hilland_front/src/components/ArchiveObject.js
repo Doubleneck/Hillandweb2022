@@ -43,7 +43,7 @@ const ArchiveObject = ({  archiveObject,onArchiveRemoved }) => {
         </li>
         <li>
           {' '}
-          <img  src={archiveObject.imageURL} alt='news' className='img-fluid shadow-4 mx-auto d-block' style={{ maxWidth: '100%', height: 'auto' }}/>{' '}
+          <img  src={archiveObject.imageURL} alt='news' className='img-fluid shadow-4 mx-auto d-block custom-img' style={{ maxWidth: '97%', height: 'auto' }}/>{' '}
         </li>
         <p></p>
         <li >{archiveObject.content}</li>

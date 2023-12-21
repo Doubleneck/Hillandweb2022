@@ -98,7 +98,7 @@ const Archives =  () => {
       <p></p>
       <p></p>
       <h2 className="text-center m-4">Hilland Mondays</h2>
-      <p>Since 2104 Hilland Mondays country club in Juttutupa, has been a part of Helsinki live music scene. We started at Boothill and moved to Juttutupa 2016. </p>
+      <p>Since 2014 Hilland Mondays has been a part of Helsinki live music scene. We play every Monday at Juttutupa (map on the front page). The club started at Boothill and moved to Juttutupa 2016. </p>
       <div>
         {reversedYears.map((year) => (
           <div key={year}>
