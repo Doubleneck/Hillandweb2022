@@ -88,3 +88,17 @@ body {
 }
 
 
+@media (min-width: 768px) {
+  .custom-img {
+    max-width: 70%; /* Adjust the percentage to your preference */
+  }
+}
+
+/* Add this to your CSS file or in your component's style tag */
+@media (min-width: 768px) {
+  .logo {
+    display: block; /* Display the logo as a block element */
+    margin-right: auto; /* Auto margin for centering on the right */
+    margin-left: auto; /* Auto margin for centering on the left */
+  }
+}

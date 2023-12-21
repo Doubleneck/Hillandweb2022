@@ -99,8 +99,8 @@ describe('when not logged in', function () {
   })
 
   it('non logged user can see Archive page', function () {
-    cy.visit('/archives')
-    cy.contains('Hilland Mondays Archive')
+    cy.visit('/mondays')
+    cy.contains('Hilland Mondays')
   })
 
   it('non logged user can see Releases page', function () {
@@ -504,8 +504,8 @@ describe('when logged in as ADMIN', function () {
 
 
   it('admin can add archive item', function () {
-    cy.visit('/archives')
-    cy.contains('Hilland Mondays Archive')
+    cy.visit('/mondays')
+    cy.contains('Hilland Mondays')
     cy.contains('Add New One To Archives').click()
     cy.get('[data-cy="title"]').type('Great New Archive Item')
     cy.get('[data-cy="content"]').type('This is a great archive item')
@@ -516,8 +516,8 @@ describe('when logged in as ADMIN', function () {
   })
 
   it('admin add archive item failing if title missing', function () {
-    cy.visit('/archives')
-    cy.contains('Hilland Mondays Archive')
+    cy.visit('/mondays')
+    cy.contains('Hilland Mondays')
     cy.contains('Add New One To Archives').click()
     cy.get('[data-cy="content"]').type('This is a great new archive item')
     cy.get('[data-cy="year"]').type('2022')
@@ -528,8 +528,8 @@ describe('when logged in as ADMIN', function () {
   })
 
   it('admin add archive item failing if year missing', function () {
-    cy.visit('/archives')
-    cy.contains('Hilland Mondays Archive')
+    cy.visit('/mondays')
+    cy.contains('Hilland Mondays')
     cy.contains('Add New One To Archives').click()
     cy.get('[data-cy="title"]').type('Great New Archive Item')
     cy.get('[data-cy="content"]').type('This is a great new archive item')
@@ -539,8 +539,8 @@ describe('when logged in as ADMIN', function () {
     cy.contains('This is a great new archive item').should('not.exist')
   })
   it('admin add archive item failing if year out of range', function () {
-    cy.visit('/archives')
-    cy.contains('Hilland Mondays Archive')
+    cy.visit('/mondays')
+    cy.contains('Hilland Mondays')
     cy.contains('Add New One To Archives').click()
     cy.get('[data-cy="year"]').type('2012')
     cy.get('[data-cy="title"]').type('Great New Archive Item')
@@ -552,8 +552,8 @@ describe('when logged in as ADMIN', function () {
   })
 
   it('admin add archive item failing if image missing', function () {
-    cy.visit('/archives')
-    cy.contains('Hilland Mondays Archive')
+    cy.visit('/mondays')
+    cy.contains('Hilland Mondays')
     cy.contains('Add New One To Archives').click()
     cy.get('[data-cy="year"]').type('2018')
     cy.get('[data-cy="title"]').type('Great New Archive Item')
@@ -564,8 +564,8 @@ describe('when logged in as ADMIN', function () {
   })
 
   it('admin can delete archive item', () => {
-    cy.visit('/archives')
-    cy.contains('Hilland Mondays Archive')
+    cy.visit('/mondays')
+    cy.contains('Hilland Mondays')
     cy.contains('Arhive item #1')
     cy.get('ul li:last-child [data-cy=delete-button]').click()
     cy.contains('Removed Arhive item #1 from Archives').should('exist')
@@ -573,8 +573,8 @@ describe('when logged in as ADMIN', function () {
   })
 
   it('admin can update archive item', () => {
-    cy.visit('/archives')
-    cy.contains('Hilland Mondays Archive')
+    cy.visit('/mondays')
+    cy.contains('Hilland Mondays')
     cy.contains('Update Archive Item').click()
     cy.get('[data-cy="title"]').type(' again')
     cy.get('[data-cy="content"]').type(' again')

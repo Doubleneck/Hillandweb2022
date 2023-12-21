@@ -97,12 +97,12 @@ const Archives =  () => {
       )}
       <p></p>
       <p></p>
-      <h2 className="text-center">Hilland Mondays Archive</h2>
-      <p> </p>
+      <h2 className="text-center m-4">Hilland Mondays</h2>
+      <p>Since 2104 Hilland Mondays country club in Juttutupa, has been a part of Helsinki live music scene. We started at Boothill and moved to Juttutupa 2016. </p>
       <div>
         {reversedYears.map((year) => (
           <div key={year}>
-            <h3>Memories from {year}:</h3>
+
             <ul className="gallery">
               {groupedItems[year].map((item, index) => (
                 <li key={index}>
